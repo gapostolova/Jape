@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class User {
@@ -22,8 +23,11 @@ public class User {
 	private boolean isVerified;
 	private String verificationKey;
 	private TreeSet<Gag> gags;
-
+	//				Gag, 1/-1 (liked, disliked)
+	private TreeMap<Gag, Integer> likedGags;
+	private TreeMap<Comment, Integer> likedComments;
 	private TreeSet<Video> videos;
+	
 	
 	private static final String EMAIL_PATTERN =
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -155,7 +159,39 @@ public class User {
 		this.gags = gags;
 	}
 
+	public void setLikedGags(TreeMap<Gag, Integer> likedGags){
+		this.likedGags = likedGags;
+	}
 
+	public void addLikedGag(Gag gag, int vote){
+		//if someone messed with the html
+		//do not insert the liked post
+		if(vote>1 || vote <-1 || vote == 0){
+			return;
+		}
+		likedGags.put(gag, vote);
+	}
+	
+	public void removeLikedGag(Gag gag){
+		likedGags.remove(gag);
+	}
+	
+	public void setLikedComments(TreeMap<Comment, Integer> likedComments){
+		this.likedComments = likedComments;
+	}
+
+	public void addLikedComment(Comment comment, int vote){
+		//if someone messed with the html
+		//do not insert the liked post
+		if(vote>1 || vote <-1 || vote == 0){
+			return;
+		}
+		likedComments.put(comment, vote);
+	}
+	
+	public void removeLikedComment(Comment comment){
+		likedComments.remove(comment);
+	}
 
 
 	public void setDescription(String description) {
