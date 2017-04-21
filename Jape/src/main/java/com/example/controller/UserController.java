@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MyController {
+public class UserController {
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String sayHi(Model viewModel) {
@@ -21,8 +21,10 @@ public class MyController {
 		
 		viewModel.addAttribute("Text","Hello");
 		
-		return "home";
+		return "index";  
 	}
+	
+	
 	
 	@RequestMapping(value="/mindex", method=RequestMethod.GET)
 	public String sayBye(Model viewModel) {
