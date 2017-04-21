@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -64,7 +65,8 @@ public class UserDAO {
 				User user = new User(res.getString("username"), res.getString("email"), res.getString("password"), res.getInt("user_id"), res.getBoolean("nsfw"), res.getString("profile_pic"), res.getString("gender"),res.getDate("birthday").toLocalDate(), res.getString("description"), res.getBoolean("admin"), res.getBoolean("is_verified"), res.getString("verification_key"));
 				//add gags/videos and comments
 				user.setGags(usersGags(user.getUserId()));
-				
+				user.setLikedGags(likedGags(user.getUserId()));
+				user.setLikedComments(likedComments(user.getUserId()));
 				
 				
 				allUsers.put(user.getEmail(), user);
@@ -139,9 +141,32 @@ public class UserDAO {
 		}
 		return category;
 		
-
 	}
 	
+	//all liked/disliked gags of user
+	private TreeMap<Long, Integer> likedGags(Long userId) throws SQLException{
+		TreeMap<Long, Integer> liked = new TreeMap<>();
+		String sql = "select gag_id, points from liked_gags where user_id = " + userId + ";";
+		PreparedStatement st = conn.prepareStatement(sql);
+		ResultSet res = st.executeQuery();
+		while(res.next()){
+			liked.put(res.getLong("gag_id"), res.getInt("points"));
+		}
+		return liked;
+		
+	}
+	
+	//all liked/disliked comments of user
+		private TreeMap<Long, Integer> likedComments(Long userId) throws SQLException{
+			TreeMap<Long, Integer> liked = new TreeMap<>();
+			String sql = "select comment_id, points from liked_comments where user_id = " + userId + ";";
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while(res.next()){
+				liked.put(res.getLong("comment_id"), res.getInt("points"));
+			}
+			return liked;	
+		}
 	
 	public synchronized boolean isVerified(String email) throws SQLException {
 		if(exists(email)){
@@ -199,7 +224,7 @@ public class UserDAO {
 	}
 	
 	
-	
+
 	
 	
 	

@@ -23,10 +23,12 @@ public class User {
 	private boolean isVerified;
 	private String verificationKey;
 	private TreeSet<Gag> gags;
-	//				Gag, 1/-1 (liked, disliked)
-	private TreeMap<Gag, Integer> likedGags;
-	private TreeMap<Comment, Integer> likedComments;
+	//			Gag id, 1/-1 (liked, disliked)
+	private TreeMap<Long, Integer> likedGags;
+	private TreeMap<Long, Integer> likedComments;
 	private TreeSet<Video> videos;
+	
+	// reported gags; reported comments
 	
 	
 	private static final String EMAIL_PATTERN =
@@ -159,38 +161,38 @@ public class User {
 		this.gags = gags;
 	}
 
-	public void setLikedGags(TreeMap<Gag, Integer> likedGags){
+	public void setLikedGags(TreeMap<Long, Integer> likedGags){
 		this.likedGags = likedGags;
 	}
 
-	public void addLikedGag(Gag gag, int vote){
+	public void addLikedGag(Long gagId, int vote){
 		//if someone messed with the html
 		//do not insert the liked post
 		if(vote>1 || vote <-1 || vote == 0){
 			return;
 		}
-		likedGags.put(gag, vote);
+		likedGags.put(gagId, vote);
 	}
 	
 	public void removeLikedGag(Gag gag){
 		likedGags.remove(gag);
 	}
 	
-	public void setLikedComments(TreeMap<Comment, Integer> likedComments){
+	public void setLikedComments(TreeMap<Long, Integer> likedComments){
 		this.likedComments = likedComments;
 	}
 
-	public void addLikedComment(Comment comment, int vote){
+	public void addLikedComment(Long commentId, int vote){
 		//if someone messed with the html
 		//do not insert the liked post
 		if(vote>1 || vote <-1 || vote == 0){
 			return;
 		}
-		likedComments.put(comment, vote);
+		likedComments.put(commentId, vote);
 	}
 	
-	public void removeLikedComment(Comment comment){
-		likedComments.remove(comment);
+	public void removeLikedComment(Comment commentId){
+		likedComments.remove(commentId);
 	}
 
 
@@ -278,12 +280,14 @@ public class User {
 	}
 
 
+
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", email=" + email + ", password=" + password + ", userId=" + userId
 				+ ", viewNsfwContent=" + viewNsfwContent + ", profilePic=" + profilePic + ", gender=" + gender
 				+ ", dateOfBirth=" + dateOfBirth + ", description=" + description + ", admin=" + admin + ", isVerified="
-				+ isVerified + ", verificationKey=" + verificationKey + ", gags=" + gags + ", videos=" + videos + "]\n";
+				+ isVerified + ", verificationKey=" + verificationKey + ", gags=" + gags + ",\n likedGags=" + likedGags
+				+ ", likedComments=" + likedComments + ", videos=" + videos + "]";
 	}
 
 
