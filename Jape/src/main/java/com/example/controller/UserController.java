@@ -1,16 +1,20 @@
 package com.example.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.example.model.UserManager;
+import com.example.model.dao.UserDAO;
+
+import com.example.model.dao.RegisterDAO;
 
 @Controller
 public class UserController {
@@ -21,39 +25,104 @@ public class UserController {
 		
 		viewModel.addAttribute("Text","Hello");
 		
-		return "index";  
+		return "register";  
 	}
 	
-	
-	
-	@RequestMapping(value="/mindex", method=RequestMethod.GET)
-	public String sayBye(Model viewModel) {
-		// talk with model
-		Product product = new Product("Kiselo zele", 50);
+	@RequestMapping (value="/login", method=RequestMethod.POST)
+	public String login(Model viewModel, HttpServletRequest request) {
+		String email = request.getParameter("email");
+		String password = request.getParameter("pass");
+		HttpSession session = request.getSession();
 		
-		List<Product> products = new ArrayList<Product>();
-		products.add(product);
-		products.add(new Product("Kisela krastavica", 13));
-		products.add(new Product("Kisel portokal", 83));
-		products.add(new Product("Kisel limon", 73));
-		products.add(new Product("Kisel greipfrut", 13));
-		products.add(new Product("Kisel banan", 43));
-		products.add(new Product("Kiselo mlqko", 33));
+		try {
+			if(UserDAO.getInstance().getAllUsers().containsKey(email)) {
+				session.setAttribute("notAMember", "It seems like you don't have an account yet! ");
+				return "register";
+			}
+		} catch (SQLException e) {
+			//error page
+			System.out.println("Could not getAllUsers in LoginServlet: " + e.getMessage());
+		}
 		
-		viewModel.addAttribute("Text","Bye");
-		viewModel.addAttribute("products", products);
-		
-		viewModel.addAttribute(new Product("", 0));
-		
-		return "listproducts";
+		try {
+			String url = "";
+			if(UserManager.getInstance().validateLogin(email, password)) {
+				session.setAttribute("logged", true);
+				session.setAttribute("user", UserDAO.getInstance().getUser(email));
+				url = "index";
+			}
+			else {
+				url = "login";
+			}
+			return url;
+		} catch (SQLException e) {
+			//error page
+		}
+		return "";
 	}
 	
-	@RequestMapping(value="/mindex", method=RequestMethod.POST)
-	public String addProduct(@ModelAttribute Product product) {
-		// add to DAO
-		System.out.println(product);
+	 @RequestMapping (value="/logout", method=RequestMethod.POST)
+	 public String logout(Model viewModel, HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+			session.setAttribute("logged", false);
+	        session.invalidate();
+	        return "index";
+	 }
+	 
+	 @RequestMapping (value="/register", method=RequestMethod.POST)
+	 public String register(Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		String username = req.getParameter("username");
 		
-		return "listproducts";
-	}
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+	
+		String passConfirm = req.getParameter("passConfirm");
+		
+		
+		if(!password.equals(passConfirm)){
+			session.setAttribute("registerResult", "pass not match");
+			return "register";
+		}
+		
+		if(RegisterDAO.getInstance().register(username, email, password)){	
+			session.setAttribute("registerResult", "verify");
+			return "register";
+		}
+		else{
+			//error page
+		}
+		return "";
+	 }
+	 
+	 @RequestMapping (value="/verification", method=RequestMethod.GET)
+	 public String verify(Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		String email = req.getParameter("email");
+		String key = req.getParameter("verificationKey");
+		try {
+			
+			if(!UserDAO.getInstance().exists(email)){
+				session.setAttribute("verificationResult", "acc not exist");
+			}
+			else { 
+				if(!UserDAO.getInstance().isVerified(email)){
+					if(UserDAO.getInstance().verify(email,key)) {
+						session.setAttribute("verificationResult", "ok");
+					}
+					else { 
+						session.setAttribute("verificationResult", "again");
+					}
+				}	
+				else {
+					session.setAttribute("verificationResult", "already ok");
+					}
+			}
+			return "verification";
+		} catch (SQLException e) {
+			 //error page	 
+		}
+		return "";
+	 }
 	
 }

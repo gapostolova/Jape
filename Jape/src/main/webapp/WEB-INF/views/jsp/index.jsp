@@ -8,11 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="getcontent" method="GET">
+<form action="register" method="POST">
 <input type="submit" value="Click for content"/></form>
-<c:forEach var="gag" items="${sessionScope.gags}"> 
- <!-- <input type="image" name="image"src="${pageContext.request.contextPath}/WebContent/pics/${gag.getFullName()}" width="50"> -->
-  <img  src="PictureServlet?name=" width="50" /> 
-</c:forEach>
 </body>
 </html>
