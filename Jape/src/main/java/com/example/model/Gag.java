@@ -1,12 +1,16 @@
 package com.example.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.TreeSet;
+import org.apache.commons.io.FileUtils;
 
 public class Gag implements Comparable<Gag> {
 	
+	private static final String PATH = "C:\\Users\\User\\Desktop\\IT Talents\\Jape\\Jape\\src\\main\\webapp\\WEB-INF\\views\\pics\\";
 	private static final int DEFAULT_GAG_ID = -1;
 	private String gag;
 	private String title;
@@ -18,6 +22,7 @@ public class Gag implements Comparable<Gag> {
 	private boolean isPublic;
 	private TreeSet<Comment> comments;
 	private String type;
+	private String encoded;
 	
 	
 	//constructor for when a gag is added
@@ -39,6 +44,8 @@ public class Gag implements Comparable<Gag> {
 		this.upvotes = 0;
 		this.category = new ArrayList<>();
 		this.gagID = DEFAULT_GAG_ID;
+		
+		this.encode();
 	}
 	
 
@@ -60,6 +67,7 @@ public class Gag implements Comparable<Gag> {
 			this.type = type;
 		}
 		this.category = new ArrayList<>();
+		this.encode();
 	}
 	
 	public long getUserId() {
@@ -168,5 +176,19 @@ public class Gag implements Comparable<Gag> {
 	
 	public String getFullName() {
 		return this.gag + "." + this.type;
+	}
+	
+	private void encode() {
+		File file = new File(PATH + this.getFullName());
+		try {
+			this.encoded = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(file));
+		} catch (IOException e) {
+			System.out.println("Couldn't encode!" + e);
+		}
+	}
+
+
+	public String getEncode() {
+		return this.encoded;
 	}
 }
