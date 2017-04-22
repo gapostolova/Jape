@@ -281,10 +281,10 @@ public class UserDAO {
 			long id = res.getLong(1);
 			u.setUserId(id);
 			res.close();
-		    System.out.println("User inserted successfuly into DB");
+		    System.out.println("User inserted successfuly into DB. UserDAO");
 		    
 		} catch (SQLException e) {
-			System.out.println("Couldn't insert user into DB.");
+			System.out.println("Couldn't insert user into DB. UserDAO");
 		} finally {
 			try {
 				pst.close();

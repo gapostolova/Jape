@@ -33,10 +33,10 @@
       
       <div class="tab-content">
         <div id="signup">   
-        <c:if test ="${sessionScope.notAMember!=null}">
-<h1> <c:out value="${sessionScope.notAMember}"></c:out></h1>
+        <c:if test ="${sessionScope.registerResult!=null}">
+<h1> <c:out value="${sessionScope.registerResult}"></c:out></h1>
 </c:if>
-<c:set var="notAMember" value=" " scope="session"></c:set>
+<c:set var="registerResult" value=" " scope="session"></c:set>
           <h1>Sign up for free!</h1>
           
           

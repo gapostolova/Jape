@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
 
 import com.example.model.UserManager;
 import com.example.model.dao.UserDAO;
@@ -25,7 +33,13 @@ public class UserController {
 		
 		viewModel.addAttribute("Text","Hello");
 		
-		return "register";  
+		return "index";  
+	}
+	
+	@RequestMapping(value="/register", method=RequestMethod.GET)
+	public String goToRegister(Model viewModel) {
+		// talk with model viewModel.addAttribute("Text","Hello");
+		return  "register";
 	}
 	
 	@RequestMapping (value="/login", method=RequestMethod.POST)
@@ -61,6 +75,12 @@ public class UserController {
 		return "";
 	}
 	
+	 @RequestMapping (value="/popUp", method=RequestMethod.GET)
+	 public String popUp(Model viewModel, HttpServletRequest request) {
+	        return "popUp";
+	 }
+	
+	
 	 @RequestMapping (value="/logout", method=RequestMethod.POST)
 	 public String logout(Model viewModel, HttpServletRequest request) {
 		 HttpSession session = request.getSession();
@@ -79,13 +99,15 @@ public class UserController {
 	
 		String passConfirm = req.getParameter("passConfirm");
 		
-		
+		//if passwords in password and confirm password
+		//did not match
 		if(!password.equals(passConfirm)){
 			session.setAttribute("registerResult", "pass not match");
 			return "register";
 		}
-		
+		//if user is inserted into db
 		if(RegisterDAO.getInstance().register(username, email, password)){	
+			//should send email to verify account
 			session.setAttribute("registerResult", "verify");
 			return "register";
 		}
@@ -95,34 +117,54 @@ public class UserController {
 		return "";
 	 }
 	 
+	 
+	 
 	 @RequestMapping (value="/verification", method=RequestMethod.GET)
-	 public String verify(Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
+	 @ResponseBody
+	 public String verify(@RequestParam String email,@RequestParam String verificationKey, Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		String email = req.getParameter("email");
-		String key = req.getParameter("verificationKey");
+		
+		
+		System.out.println(email); 
+		System.out.println(verificationKey);
+		
+		
+		
+		//String email = req.getParameter("email");
+		//String key = req.getParameter("verificationKey");
+		System.out.println("Vyv verification sme ");
+		System.out.println(email);
+		System.out.println(verificationKey);
 		try {
 			
 			if(!UserDAO.getInstance().exists(email)){
 				session.setAttribute("verificationResult", "acc not exist");
+				return "notverified";
 			}
 			else { 
+				 
 				if(!UserDAO.getInstance().isVerified(email)){
-					if(UserDAO.getInstance().verify(email,key)) {
-						session.setAttribute("verificationResult", "ok");
+					if(UserDAO.getInstance().verify(email,verificationKey)) {
+						System.out.println("Account verified!");
+					
+						session.setAttribute("verificationResult", "Account verified!");
+						return "verified";
 					}
 					else { 
-						session.setAttribute("verificationResult", "again");
+						session.setAttribute("verificationResult", "Sorry, could not verify :(");
+						return "notverified";
 					}
 				}	
 				else {
-					session.setAttribute("verificationResult", "already ok");
+					session.setAttribute("verificationResult", "Account already verified...");
+					return "alreadyverified";
 					}
 			}
-			return "verification";
+			
 		} catch (SQLException e) {
 			 //error page	 
 		}
-		return "";
+		return "notverified";
 	 }
 	
 }

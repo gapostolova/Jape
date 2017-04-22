@@ -10,15 +10,16 @@ public class SendEmail {
     public static void sendVerificationMail (String email, String username, String verificationKey){
         try{
         	System.out.println("Da VLIZA");
+        	System.out.println("user email is : "+email);
             String host ="smtp.gmail.com" ;
             String sender = "ittalents.gj@gmail.com";
             String pass = "ittalents";
             String from = "ittalents.gj@gmail.com";
-            String link = "http://localhost:8080/9gag/verification?email=" +
+            String link = "http://localhost:8080/Jape/verification?email=" +
             				email + "&verificationKey=" + verificationKey;
-            String subject = "Confirm your email address on 9gag";
-            String messageText = "Hi " + username + ",\nYou've created a new 9gag account using " + email 
-            		+ " as your email address. Please click on the link below to verify your account." 
+            String subject = "Confirm your email address on Jape";
+            String messageText = "Hi " + username + ",\nYou've created a new Jape account using " + email 
+            		+ " as your email address. Please click on the link to verify your account." 
             		+ "\n" + link;
             boolean sessionDebug = false;
 
@@ -47,7 +48,7 @@ public class SendEmail {
            System.out.println("message send successfully");
         }catch(Exception ex)
         {
-            System.out.println("Not sent" + ex.getMessage());
+            System.out.println("Not sent " + ex.getMessage());
         }
 
     }
