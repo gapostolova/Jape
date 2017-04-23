@@ -68,7 +68,7 @@ public boolean register(String username, String email, String password){
 					
 				    System.out.println("User inserted successfuly into DB. RegisterDAO");
 				    
-				   UserDAO.getInstance().addUser(user);
+				  // UserDAO.getInstance().addUser(user);
 					SendEmail.sendVerificationMail(email, username, uuid);
 						
 					return true;

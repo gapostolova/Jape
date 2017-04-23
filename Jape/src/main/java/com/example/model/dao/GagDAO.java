@@ -1,11 +1,14 @@
 package com.example.model.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -90,45 +93,58 @@ public class GagDAO {
 	
 	
 	
-	public Map<Long, Gag> hotGags(){
-		TreeMap<Long, Gag> hot = new TreeMap<>();
+	public List<Gag> hotGags(){
+		//TreeMap<Long, Gag> hot = new TreeMap<>();
+		ArrayList<Gag> hot = new ArrayList<>();
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() >= MIN_HOT_GAG_UPVOTES){
-				hot.put(gag.getGagID(), gag);
+				//hot.put(gag.getGagID(), gag);
+				hot.add(gag);
 			}
 		}
-		return Collections.unmodifiableMap(hot);
+		//return Collections.unmodifiableMap(hot);
+		return Collections.unmodifiableList(hot);
 	}
 	
-	public Map<Long, Gag> trendingGags(){
-		TreeMap<Long, Gag> trending = new TreeMap<>();
+	public List<Gag> trendingGags(){
+		//TreeMap<Long, Gag> trending = new TreeMap<>();
+		ArrayList<Gag> trending = new ArrayList<>();
+		
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_HOT_GAG_UPVOTES && gag.getUpvotes() >= MIN_TRENDING_GAG_UPVOTES){
-				trending.put(gag.getGagID(), gag);
+				//trending.put(gag.getGagID(), gag);
+				trending.add(gag);
 			}
 		}
-		return Collections.unmodifiableMap(trending);
+		//return Collections.unmodifiableMap(trending);
+		return Collections.unmodifiableList(trending);
 	}
 	
 	
-	public Map<Long, Gag> freshGags(){
-		TreeMap<Long, Gag> fresh = new TreeMap<>();
+	public List<Gag> freshGags(){
+		//TreeMap<Long, Gag> fresh = new TreeMap<>();
+		ArrayList<Gag> fresh = new ArrayList<>();
+				
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_TRENDING_GAG_UPVOTES){
-				fresh.put(gag.getGagID(), gag);
+				//fresh.put(gag.getGagID(), gag);
+				fresh.add(gag);
 			}
 		}
-		return Collections.unmodifiableMap(fresh);
+		//return Collections.unmodifiableMap(fresh);
+		return Collections.unmodifiableList(fresh);
 	}
 	
-	public Map<Long, Gag> categoryGags(String category){
-		TreeMap<Long, Gag> categories = new TreeMap<>();
+	public List<Gag> categoryGags(String category){
+		//TreeMap<Long, Gag> categories = new TreeMap<>();
+		ArrayList<Gag> categories = new ArrayList<>();
 		for(Gag gag : allGags.values()){
 			if(gag.hasCategory(category)){
-				categories.put(gag.getGagID(), gag);
+				categories.add(gag);
 			}
 		}
-		return Collections.unmodifiableMap(categories);
+		//return Collections.unmodifiableMap(categories);
+		return  Collections.unmodifiableList(categories);
 	} 
 	
 	public void deleteComment(Comment c) {

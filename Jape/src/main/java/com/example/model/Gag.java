@@ -104,7 +104,7 @@ public class Gag implements Comparable<Gag> {
 	
 	public boolean hasCategory(String categor){
 		for(Category cat : category){
-			if(cat.getCategoryName().equals(categor.toUpperCase())){
+			if(cat.getCategoryName().equals(categor.trim().toUpperCase())){
 				return true;
 			}
 		}
