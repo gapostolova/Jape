@@ -24,13 +24,15 @@ public class RegisterDAO {
 		return instance;
 	}
 	
-public boolean register(String username, String email, String password){
+public boolean register(String username, String email, String password) throws SQLException{
 		
 		if (conn != null) {
 			
 			String sql = "SELECT email FROM users WHERE email=?";
 			PreparedStatement s;
 			try {
+				conn.setAutoCommit(false);
+				
 				s = conn.prepareStatement(sql);
 				s.setString(1, email);
 				ResultSet r = s.executeQuery();
@@ -63,19 +65,22 @@ public boolean register(String username, String email, String password){
 					long id = res.getLong(1);
 					user.setUserId(id);
 					
-					
-					
-					
 				    System.out.println("User inserted successfuly into DB. RegisterDAO");
 				    
+
 				  // UserDAO.getInstance().addUser(user);
+
 					SendEmail.sendVerificationMail(email, username, uuid);
-						
+					
+					conn.commit();
 					return true;
 				}
 			} catch (SQLException e) {
 				System.out.println("SQL not responsive: " + e.getMessage());
+				conn.rollback();
 				return false;
+			} finally {
+				conn.setAutoCommit(true);
 			}
 		}
 		return false;
