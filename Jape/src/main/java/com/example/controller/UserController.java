@@ -42,6 +42,12 @@ public class UserController {
 		return  "register";
 	}
 	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login(Model viewModel) {
+		// talk with model viewModel.addAttribute("Text","Hello");
+		return  "login";
+	}
+	
 	@RequestMapping (value="/login", method=RequestMethod.POST)
 	public String login(Model viewModel, HttpServletRequest request) {
 		String email = request.getParameter("email");
@@ -49,9 +55,12 @@ public class UserController {
 		HttpSession session = request.getSession();
 		
 		try {
-			if(UserDAO.getInstance().getAllUsers().containsKey(email)) {
-				session.setAttribute("notAMember", "It seems like you don't have an account yet! ");
-				return "register";
+			//
+			if(!UserDAO.getInstance().getAllUsers().containsKey(email)) {
+				System.out.println(UserDAO.getInstance().getAllUsers().containsKey(email));
+				session.setAttribute("notAMember", "Wrong username or password!");
+				System.out.println("wrong email + " + email);
+				return "login";
 			}
 		} catch (SQLException e) {
 			//error page
@@ -61,18 +70,26 @@ public class UserController {
 		try {
 			String url = "";
 			if(UserManager.getInstance().validateLogin(email, password)) {
+				if(!UserDAO.getInstance().isVerified(email)){
+					session.setAttribute("notAMember", "Account not verified!");
+					System.out.println("Account not verified");
+					return "login";
+				}
 				session.setAttribute("logged", true);
 				session.setAttribute("user", UserDAO.getInstance().getUser(email));
+				System.out.println("kk, " + email + " has logged in");
 				url = "index";
 			}
 			else {
+				System.out.println("wrong password");
 				url = "login";
 			}
 			return url;
 		} catch (SQLException e) {
-			//error page
+			System.out.println("SQL Exception in login UserController  +" + e.getMessage());
+			return "errorPage";
 		}
-		return "";
+		
 	}
 	
 	 @RequestMapping (value="/popUp", method=RequestMethod.GET)
