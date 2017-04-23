@@ -50,8 +50,6 @@ public class UserDAO {
 		
 	}
 	
-	
-	
 	public synchronized Map<String , User> getAllUsers() throws SQLException{
 		
 		if(allUsers.isEmpty() || dataHasChanged == true){
@@ -78,9 +76,9 @@ public class UserDAO {
 	
 	
 	//get all gags of user with id : userId
-	private synchronized TreeSet<Gag> usersGags(long userId) throws SQLException{
+	private synchronized TreeMap<Long, Gag> usersGags(long userId) throws SQLException{
 		
-		TreeSet<Gag> gags = new TreeSet<Gag>();
+		TreeMap<Long, Gag> gags = new TreeMap<Long, Gag>();
 		String sql = "SELECT gag_id, content, nsfw, title, points, public, type, user_id FROM gags WHERE user_id = " + userId + ";";
 		PreparedStatement st = conn.prepareStatement(sql);
 		ResultSet res = st.executeQuery();
@@ -94,12 +92,10 @@ public class UserDAO {
 			gag.setComments(comments);	
 			//fill comments
 			CommentDAO.getInstance().addComments(comments);
-			gags.add(gag);
+			gags.put(gag.getGagID(), gag);
 		}
 		return gags;
 	}
-	
-	
 	
 	private synchronized TreeSet<Comment> comments(long gagId) throws SQLException{
 		

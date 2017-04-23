@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -22,7 +23,7 @@ public class User {
 	private boolean admin;
 	private boolean isVerified;
 	private String verificationKey;
-	private TreeSet<Gag> gags;
+	private TreeMap<Long, Gag> gags; //id, gag
 	//			Gag id, 1/-1 (liked, disliked)
 	private TreeMap<Long, Integer> likedGags;
 	private TreeMap<Long, Integer> likedComments;
@@ -52,7 +53,7 @@ public class User {
 		this.viewNsfwContent = false;
 		this.dateOfBirth = LocalDate.parse(defaultBirthday);
 		this.admin = false;
-		this.gags = new TreeSet<>();
+		this.gags = new TreeMap<>();
 		this.isVerified = false;
 		this.verificationKey = " ";
 		
@@ -83,7 +84,7 @@ public class User {
 		this.isVerified = isVerified;
 		this.verificationKey = verificationKey;
 		
-		this.gags = new TreeSet<Gag>();
+		this.gags = new TreeMap<Long, Gag>();
 		this.videos = new TreeSet<>();
 		
 	}
@@ -104,7 +105,7 @@ public class User {
 
 	public void addGag(Gag gag){
 		
-		gags.add(gag);
+		gags.put(gag.getGagID(), gag);
 	}
 	
 
@@ -157,7 +158,7 @@ public class User {
 
 
 
-	public void setGags(TreeSet<Gag> gags) {
+	public void setGags(TreeMap<Long, Gag> gags) {
 		this.gags = gags;
 	}
 
@@ -247,8 +248,8 @@ public class User {
 		return admin;
 	}
 	
-	public Set<Gag> getGags() {
-		return Collections.unmodifiableSet(gags);
+	public Map<Long, Gag> getGags() {
+		return Collections.unmodifiableMap(gags);
 	}
 	
 	@Override
@@ -297,15 +298,4 @@ public class User {
 		}
 		return isVerified;	
 	}
-
-
-
-
-
-	
-	
-	
-	
-
-
 }

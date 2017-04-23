@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -21,12 +22,12 @@ public class GagDAO {
 
 	private static final int MIN_TRENDING_GAG_UPVOTES = 500;
 	private static final int MIN_HOT_GAG_UPVOTES = 2000;
-	public static TreeSet<Gag> allGags;
+	private static TreeMap<Long, Gag> allGags;
 	private static GagDAO instance;
 	private	Connection conn = DBManager.getInstance().getConnection();
 	
 	private GagDAO () {
-		allGags = new TreeSet<>();
+		allGags = new TreeMap<>();
 	}
 	
 	public static synchronized GagDAO getInstance() {
@@ -35,23 +36,21 @@ public class GagDAO {
 		return instance;
 	}
 	
-	
-
-
-	public synchronized Set<Gag> getAllGags() {
+	public synchronized Map<Long, Gag> getAllGags() throws SQLException {
 		
 		try {
 			Map<String, User> users = UserDAO.getInstance().getAllUsers();
 			for(User user : users.values()){
-				Set<Gag> gags =  user.getGags();
-				allGags.addAll(gags);
+				Map<Long, Gag> gags =  user.getGags();
+				allGags.putAll(gags);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Could not get users from UserDAO in GagDAO: "+ e.getMessage());
+			throw e;
 		}
 		
-		return Collections.unmodifiableSet(allGags);
+		return Collections.unmodifiableMap(allGags);
 	}
 	
 	public void addGag(Gag gag) throws SQLException{
@@ -91,52 +90,52 @@ public class GagDAO {
 	
 	
 	
-	public Set<Gag> hotGags(){
-		TreeSet<Gag> hot = new TreeSet<>();
-		for(Gag gag : allGags){
+	public Map<Long, Gag> hotGags(){
+		TreeMap<Long, Gag> hot = new TreeMap<>();
+		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() >= MIN_HOT_GAG_UPVOTES){
-				hot.add(gag);
+				hot.put(gag.getGagID(), gag);
 			}
 		}
-		return Collections.unmodifiableSet(hot);
+		return Collections.unmodifiableMap(hot);
 	}
 	
-	public Set<Gag> trendingGags(){
-		TreeSet<Gag> trending = new TreeSet<>();
-		for(Gag gag : allGags){
+	public Map<Long, Gag> trendingGags(){
+		TreeMap<Long, Gag> trending = new TreeMap<>();
+		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_HOT_GAG_UPVOTES && gag.getUpvotes() >= MIN_TRENDING_GAG_UPVOTES){
-				trending.add(gag);
+				trending.put(gag.getGagID(), gag);
 			}
 		}
-		return Collections.unmodifiableSet(trending);
+		return Collections.unmodifiableMap(trending);
 	}
 	
 	
-	public Set<Gag> freshGags(){
-		TreeSet<Gag> fresh = new TreeSet<>();
-		for(Gag gag : allGags){
+	public Map<Long, Gag> freshGags(){
+		TreeMap<Long, Gag> fresh = new TreeMap<>();
+		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_TRENDING_GAG_UPVOTES){
-				fresh.add(gag);
+				fresh.put(gag.getGagID(), gag);
 			}
 		}
-		return Collections.unmodifiableSet(fresh);
+		return Collections.unmodifiableMap(fresh);
 	}
 	
-	public Set<Gag> categoryGags(String category){
-		TreeSet<Gag> categories = new TreeSet<>();
-		for(Gag gag : allGags){
+	public Map<Long, Gag> categoryGags(String category){
+		TreeMap<Long, Gag> categories = new TreeMap<>();
+		for(Gag gag : allGags.values()){
 			if(gag.hasCategory(category)){
-				categories.add(gag);
+				categories.put(gag.getGagID(), gag);
 			}
 		}
-		return Collections.unmodifiableSet(categories);
+		return Collections.unmodifiableMap(categories);
 	} 
 	
 	public void deleteComment(Comment c) {
 		
 		Gag gagTemp = null;
 		try {
-			for(Gag gag : UserDAO.getInstance().getAllUsers().get(UserDAO.getInstance().getUserEmail(c.getUserId())).getGags()) {
+			for(Gag gag : UserDAO.getInstance().getAllUsers().get(UserDAO.getInstance().getUserEmail(c.getUserId())).getGags().values()) {
 				if(gag.getGagID() == c.getGagId()) {
 					gagTemp = gag;
 					break;
@@ -150,7 +149,7 @@ public class GagDAO {
 	
 	
 	public Gag getGagById(long gagId){
-		for(Gag gag : allGags){
+		for(Gag gag : allGags.values()){
 			if(gag.getGagID() == gagId)
 				return gag;
 		}
@@ -161,6 +160,7 @@ public class GagDAO {
 	//working and tested - deletes gag, deletes all comments assosiated with it
 	public synchronized void deleteGag(Gag gag) throws SQLException {
 		try {
+			conn.setAutoCommit(false);
 			//delete comments assosiated with this gag
 			CommentDAO.getInstance().deleteGagComments(gag);
 			
@@ -177,9 +177,13 @@ public class GagDAO {
 			
 			pst.executeUpdate();
 			
+			conn.commit();
+			
 			} catch (SQLException e) {
 				System.out.println("Could not delete gag in GagDAO: " + e.getMessage());
-				throw new SQLException(e.getMessage());
+				throw e;
+			} finally {
+				conn.setAutoCommit(true);
 			}
 		
 	}
