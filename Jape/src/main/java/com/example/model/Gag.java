@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
 
@@ -186,9 +188,19 @@ public class Gag implements Comparable<Gag> {
 			System.out.println("Couldn't encode!" + e);
 		}
 	}
-
-
+	
 	public String getEncode() {
 		return this.encoded;
+	}
+	
+	public List<Comment> getComments() {
+		ArrayList<Comment> cmnt = new ArrayList<>();
+		cmnt.addAll(this.comments);
+		
+		return Collections.unmodifiableList(cmnt);
+	}
+	
+	public String getGagIDString() {
+		return Long.toString(this.gagID);
 	}
 }
