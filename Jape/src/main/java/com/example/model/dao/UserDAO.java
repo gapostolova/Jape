@@ -4,25 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.example.model.User;
 import com.example.model.Category;
 import com.example.model.Comment;
 import com.example.model.Gag;
-
-
-
 
 public class UserDAO {
 
@@ -50,27 +42,38 @@ public class UserDAO {
 		
 	}
 	
-	public synchronized Map<String , User> getAllUsers() throws SQLException{
+	public synchronized Map<String , User> getAllUsers() throws SQLException {
 		
 		if(allUsers.isEmpty() || dataHasChanged == true){
 			
-			String sql = "SELECT u.user_id, u.username, u.password, u.email, u.nsfw, u.profile_pic, u.gender, u.birthday, u.description, u.admin, u.is_verified, u.verification_key from users u;";
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet res = st.executeQuery();
-			while(res.next()){
-				
+			PreparedStatement st;
+			try {
+				conn.setAutoCommit(false);
+				String sql = "SELECT u.user_id, u.username, u.password, u.email, u.nsfw, u.profile_pic, u.gender, u.birthday, u.description, u.admin, u.is_verified, u.verification_key from users u;";
+				st = conn.prepareStatement(sql);
+				ResultSet res = st.executeQuery();
+				while(res.next()){
+					
+					User user = new User(res.getString("username"), res.getString("email"), res.getString("password"), res.getInt("user_id"), res.getBoolean("nsfw"), res.getString("profile_pic"), res.getString("gender"),res.getDate("birthday").toLocalDate(), res.getString("description"), res.getBoolean("admin"), res.getBoolean("is_verified"), res.getString("verification_key"));
+					//add gags/videos and comments
+					user.setGags(usersGags(user.getUserId()));
+					user.setLikedGags(likedGags(user.getUserId()));
+					user.setLikedComments(likedComments(user.getUserId()));
+					
+					
+					allUsers.put(user.getEmail(), user);
+				}
 			
-				User user = new User(res.getString("username"), res.getString("email"), res.getString("password"), res.getInt("user_id"), res.getBoolean("nsfw"), res.getString("profile_pic"), res.getString("gender"),res.getDate("birthday").toLocalDate(), res.getString("description"), res.getBoolean("admin"), res.getBoolean("is_verified"), res.getString("verification_key"));
-				//add gags/videos and comments
-				user.setGags(usersGags(user.getUserId()));
-				user.setLikedGags(likedGags(user.getUserId()));
-				user.setLikedComments(likedComments(user.getUserId()));
-				
-				
-				allUsers.put(user.getEmail(), user);
+			dataHasChanged = false;
+			conn.commit();
+			} catch (SQLException e) {
+				System.out.println("Error loading the User collection" + e);
+				conn.rollback();
+				throw e;
+			} finally {
+				conn.setAutoCommit(true);
 			}
 		}
-		dataHasChanged = false;
 		return Collections.unmodifiableMap(allUsers);
 	}
 	
@@ -217,77 +220,6 @@ public class UserDAO {
 		User user = allUsers.get(email);
 		user.addGag(gag);
 		
-	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	//add user --- whole process should be a transaction
-	
-	public void addUser(User u) {
-		PreparedStatement pst = null;
-		
-		try {
-			pst = conn.prepareStatement(
-				"INSERT INTO users (username, password, email, nsfw, profile_pic, gender, birthday, country, description, admin) VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			pst.setString(1, u.getUsername());
-			pst.setString(2, u.getPassword());
-			pst.setString(3, u.getEmail());
-			pst.setBoolean(4, u.isViewNsfwContent());
-			pst.setString(5, u.getProfilePic());
-			pst.setString(6, u.getGender());
-			pst.setDate(7, java.sql.Date.valueOf(u.getDateOfBirth()));
-			pst.setString(9, u.getDescription());
-			pst.setBoolean(10, u.isAdmin());
-			pst.executeUpdate();
-			
-			//add id
-		    ResultSet res = pst.getGeneratedKeys();
-			res.next();
-			long id = res.getLong(1);
-			u.setUserId(id);
-			res.close();
-		    System.out.println("User inserted successfuly into DB. UserDAO");
-		    
-		} catch (SQLException e) {
-			System.out.println("Couldn't insert user into DB. UserDAO");
-		} finally {
-			try {
-				pst.close();
-			} catch (SQLException e) {
-				System.out.println("Couldn't close prepared statement");
-			}
-		}
 	}
 	
 		//delete user

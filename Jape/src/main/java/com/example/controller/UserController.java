@@ -123,12 +123,16 @@ public class UserController {
 			return "register";
 		}
 		//if user is inserted into db
-		if(RegisterDAO.getInstance().register(username, email, password)){	
-			//should send email to verify account
-			session.setAttribute("registerResult", "verify");
-			return "register";
-		}
-		else{
+		try {
+			if(RegisterDAO.getInstance().register(username, email, password)){	
+				//should send email to verify account
+				session.setAttribute("registerResult", "verify");
+				return "register";
+			}
+			else{
+				//error page
+			}
+		} catch (SQLException e) {
 			//error page
 		}
 		return "";
