@@ -64,7 +64,7 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
                 <hr>
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="">
                 <hr>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -202,6 +202,7 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     
+
 
 </body>
 

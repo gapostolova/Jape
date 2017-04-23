@@ -6,20 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Set;
 import java.util.TreeSet;
 
 import com.example.model.Comment;
 import com.example.model.Gag;
 
-
-
 public class CommentDAO {
 
 	public static TreeSet<Comment> allComments;
 	private static CommentDAO instance;
-	private static boolean dataHasChanged;
 	private	Connection conn = DBManager.getInstance().getConnection();
 	
 	private CommentDAO() {
@@ -37,9 +32,11 @@ public class CommentDAO {
 	}
 	
 	//this should be boolean
-	public void addComment(Comment comment) {
+	public void addComment(Comment comment) throws SQLException {
 		
 		try {
+		conn.setAutoCommit(false);
+		
 		String sql = "INSERT INTO `9gag`.`comments` (`time`, `description`, `mothership_id`, `points`, `user_id`, `gag_id`) VALUES (?,?,?,?,?,?)";
 		PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		
@@ -65,15 +62,18 @@ public class CommentDAO {
 		
 		} catch (SQLException e) {
 			System.out.println("couldn't add comment in CommentDAO: " + e.getMessage());
+			conn.rollback();
+			throw e;
+		} finally {
+			conn.setAutoCommit(true);
 		}
-		
-		
 	}
 	
 	
 	//working comment deletion
 	public synchronized void deleteComment(Comment c) throws SQLException {
 		try {
+			conn.setAutoCommit(false);
 			//get all comments that have this comment id as their mother comment
 			
 			String sql = "DELETE FROM `9gag`.`comments` WHERE `comment_id`=? OR mothership_id=?;";
@@ -87,9 +87,13 @@ public class CommentDAO {
 			//delete comment from gag
 			GagDAO.getInstance().deleteComment(c);
 			
+			conn.commit();
 			} catch (SQLException e) {
 				System.out.println("Could not delete comment in deleteComment in CommentDAO: " + e.getMessage());
-				throw new SQLException(e.getMessage());
+				conn.rollback();
+				throw e;
+			} finally {
+				conn.setAutoCommit(true);
 			}
 	}
 	
@@ -110,7 +114,7 @@ public class CommentDAO {
 		
 		} catch (SQLException e) {
 			System.out.println("Error upvoting!");
-			throw new SQLException("Error upvoting!");
+			throw e;
 		}	
 	}
 	
@@ -127,7 +131,7 @@ public class CommentDAO {
 		
 		} catch (SQLException e) {
 			System.out.println("Could not delete comments in for a gag in CommentDAO: " + e.getMessage());
-			throw new SQLException(e.getMessage());
+			throw e;
 		}
 	}
 }
