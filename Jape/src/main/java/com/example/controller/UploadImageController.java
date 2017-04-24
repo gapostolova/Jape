@@ -40,6 +40,7 @@ public class UploadImageController {
 	@ResponseBody
 	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model) throws IOException {
 		File file = new File(FILE_LOCATION + vzemiToqImage);
+		System.out.println("get filename: " + vzemiToqImage);
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 	
@@ -47,7 +48,7 @@ public class UploadImageController {
 	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile, Model model) throws IOException{
 		//multiPartFile.getOriginalFilename() -> change to the name i want it to be
 		File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
-		
+		System.out.println("post filename " + multiPartFile.getOriginalFilename());
 		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		////insert name into db 
 		vzemiToqImage = multiPartFile.getOriginalFilename();

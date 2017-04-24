@@ -77,11 +77,15 @@ public class UserController {
 					System.out.println("Account not verified");
 					return "login";
 				}
+				 
+				User user = UserDAO.getInstance().getUser(email);
 				session.setAttribute("logged", true);
-				session.setAttribute("user", UserDAO.getInstance().getUser(email));
+				session.setAttribute("user", user );
+				session.setAttribute("userGags", user.myGags());
 				System.out.println("kk, " + email + " has logged in");
 				//when profile is done, return index with everything
 				//url = "index";
+				System.out.println(((User)session.getAttribute("user")).getProfilePic());
 				url = "redirect:/profile";
 			}
 			else {

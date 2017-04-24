@@ -3,11 +3,14 @@ package com.example.model;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import com.example.model.dao.GagDAO;
 
 public class User {
 	
@@ -157,6 +160,7 @@ public class User {
 
 
 
+	
 
 	public void setGags(TreeMap<Long, Gag> gags) {
 		this.gags = gags;
@@ -246,6 +250,14 @@ public class User {
 
 	public boolean isAdmin() {
 		return admin;
+	}
+	
+	public ArrayList<Gag> myGags(){
+		ArrayList<Gag> gags = new ArrayList<>();
+		for(Gag gag :  this.gags.values()){
+			gags.add(gag);
+		}
+		return gags;
 	}
 	
 	public Map<Long, Gag> getGags() {

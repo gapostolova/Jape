@@ -60,6 +60,7 @@ a:hover {
 abbr[title] {
     border-bottom: 1px dotted
 }
+
 b,
 strong {
     font-weight: 700
@@ -292,6 +293,28 @@ td,
 th {
     padding: 0
 }
+
+
+.dropdownP {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownP-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdownP:hover .dropdownP-content {
+    display: block;
+}
+
+
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 
 @media print {
@@ -1686,6 +1709,14 @@ pre code {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto
+}
+
+.containerCenter {
+  display: flex;
+  justify-content: center;
+}
+.centerDiv {
+  width: 800px;
 }
 @media (min-width: 768px) {
     .container {
@@ -4207,6 +4238,8 @@ textarea.input-group-sm>.input-group-btn>.btn {
     position: relative;
     display: block
 }
+
+
 .nav>li>a {
     position: relative;
     display: block;

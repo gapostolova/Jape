@@ -72,13 +72,22 @@
                  
                     <c:if test ="${sessionScope.logged!=null }">
 						<c:if test ="${sessionScope.logged == 'true' }">
-						<li> 
-							<a href = "profile"> <c:out value="${sessionScope.user.getUsername()}"></c:out> </a>
+						<li>
+						<div class="dropdownP">
+							<a href = "profile"><img src="profilePic/${sessionScope.user.getProfilePic() }" height="48" width="48"></a>
+									<div class="dropdownP-content">	
+										<a href="profile">Profile</a><br><br>	
+									    <a href="#">Settings</a><br><br>
+									    <a href="logout">LogOut</a>
+ 									 </div>
+						</div>
+
+					
+							
 						</li>
 						
-						<li> 
-							<a href = "logout"> Log Out </a>
-						</li>
+						
+						
 						</c:if>
 						
 						<c:if test ="${sessionScope.logged == 'false' }">
@@ -86,7 +95,7 @@
 	                        	<a href="login" >Log in</a>
 	                   		 </li>
 	                    	 <li >
-	                        	<a href="register" class="btn btn-primary" >Sign up</a>
+	                        	<a   "href="register" class="btn btn-primary" >Sign up</a>
 	                   		 </li>
 						</c:if>
 					</c:if>
