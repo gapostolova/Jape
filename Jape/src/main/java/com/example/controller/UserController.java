@@ -23,11 +23,11 @@ import com.example.model.dao.RegisterDAO;
 public class UserController {
 	
 
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String sayHi(Model viewModel, HttpServletRequest request) {
-		
-		return "index";  
-	}
+//	@RequestMapping(value="/index", method=RequestMethod.GET)
+//	public String sayHi(Model viewModel, HttpServletRequest request) {
+//		
+//		return "index";  
+//	}
 	
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
