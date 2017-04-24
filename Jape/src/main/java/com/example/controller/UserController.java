@@ -36,6 +36,12 @@ public class UserController {
 		return "index";  
 	}
 	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(Model viewModel) {
+		// talk with model viewModel.addAttribute("Text","Hello");
+		return  "profile";
+	}
+	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String goToRegister(Model viewModel) {
 		// talk with model viewModel.addAttribute("Text","Hello");
@@ -45,7 +51,7 @@ public class UserController {
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model viewModel) {
 		// talk with model viewModel.addAttribute("Text","Hello");
-		return  "redirect:login";
+		return  "login";
 	}
 	
 	@RequestMapping (value="/login", method=RequestMethod.POST)
@@ -80,7 +86,9 @@ public class UserController {
 				session.setAttribute("logged", true);
 				session.setAttribute("user", UserDAO.getInstance().getUser(email));
 				System.out.println("kk, " + email + " has logged in");
-				url = "index";
+				//when profile is done, return index with everything
+				//url = "index";
+				url = "profile";
 			}
 			else {
 				System.out.println("wrong password");

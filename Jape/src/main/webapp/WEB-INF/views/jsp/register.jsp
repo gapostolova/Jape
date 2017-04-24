@@ -81,7 +81,7 @@
         <div id="login">   
           <h1>Welcome Back!</h1>
           
-          <form action="logIn" method="post">
+          <form action="login" method="post">
           
             <div class="field-wrap">
             <label>

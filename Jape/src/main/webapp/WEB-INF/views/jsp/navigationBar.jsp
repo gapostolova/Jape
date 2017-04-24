@@ -70,8 +70,28 @@
                     <li>
                     </li>
                  
-                   
-                   
+                    <c:if test ="${sessionScope.logged!=null }">
+						<c:if test ="${sessionScope.logged == 'true' }">
+						<li> 
+							<a href = "profile"> <c:out value="${sessionScope.user.getUsername()}"></c:out> </a>
+						</li>
+						
+						<li> 
+							<a href = ""> Log Out </a>
+						</li>
+						</c:if>
+						
+						<c:if test ="${sessionScope.logged == 'false' }">
+							 <li >
+	                        	<a href="login" >Log in</a>
+	                   		 </li>
+	                    	 <li >
+	                        	<a href="register" class="btn btn-primary" >Sign up</a>
+	                   		 </li>
+						</c:if>
+					</c:if>
+					<c:if test ="${sessionScope.logged==null }">
+					
                       <li >
                         <a href="login" >Log in</a>
                     </li>
@@ -79,6 +99,7 @@
                      
                         <a href="register" class="btn btn-primary" >Sign up</a>
                     </li>
+                    </c:if>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

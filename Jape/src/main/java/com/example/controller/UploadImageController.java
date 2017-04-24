@@ -28,7 +28,7 @@ public class UploadImageController {
 	
 	private String vzemiToqImage;
 
-	private static final String FILE_LOCATION = "/Users/Daskalski/Desktop/UploadedPics/";
+	private static final String FILE_LOCATION = "C:\\Users\\Gabriela\\Desktop\\upload\\";
 	
 	@RequestMapping(value="/upload", method=RequestMethod.GET)
 	public String prepareForUpload() {
@@ -45,7 +45,7 @@ public class UploadImageController {
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile, Model model) throws IOException{
-		
+		//multiPartFile.getOriginalFilename() -> change to the name i want it to be
 		File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
 		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		vzemiToqImage = multiPartFile.getOriginalFilename();
