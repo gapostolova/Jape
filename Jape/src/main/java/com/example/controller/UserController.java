@@ -1,8 +1,5 @@
 package com.example.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
 
 import com.example.model.UserManager;
 import com.example.model.dao.UserDAO;
@@ -27,6 +21,7 @@ import com.example.model.dao.RegisterDAO;
 @Controller
 public class UserController {
 	
+
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String sayHi(Model viewModel) {
 		// talk with model
@@ -42,11 +37,21 @@ public class UserController {
 		return  "profile";
 	}
 	
+
+//	@RequestMapping(value="/index", method=RequestMethod.GET)
+//	public String sayHi(Model viewModel) {
+//		// talk with model
+//		
+//		return "index";  
+//	}
+//	
+
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String goToRegister(Model viewModel) {
 		// talk with model viewModel.addAttribute("Text","Hello");
 		return  "register";
 	}
+
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model viewModel) {
