@@ -12,13 +12,13 @@
 
 <h1>Upload jape:</h1>
 <form method="POST" enctype="multipart/form-data">
-	<input type="file" id="file" name="failche" accept="image/*" required>
-	<input type="text" id="title" placeholder="Enter title" size="30" required>
-	<input type="hidden" id="userId" value="${sessionScope.userId }">
-	<c:out value="Is it safe for work?"></c:out>
+	<input type="file" id="file" name="failche" accept="image/*" required> <br>
+	<input type="text" id="title" name="title" placeholder="Enter title" size="30" required> <br>
+	<input type="hidden" id="userId" name="userId" value="${sessionScope.userId }">
+	<c:out value="Is it safe for work?"></c:out> <br>
 	<input type="radio" id="nsfw" name="nsfw" value="false" checked> It's safe<br>
   <input type="radio" id="nsfw" name="nsfw" value="true"> It's raunchy<br><br>
-  <c:out value="Is this a private jape?"></c:out>
+  <c:out value="Is this a private jape?"></c:out> <br>
   <input type="radio" id="isPublic" name="isPublic" value="true" checked> Show it to the world<br>
   <input type="radio" id="isPublic" name="isPublic" value="false"> It's private<br>
 	<input type="submit" value="Upload now">

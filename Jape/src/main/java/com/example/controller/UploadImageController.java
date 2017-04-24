@@ -30,10 +30,7 @@ import io.undertow.attribute.RequestMethodAttribute;
 @MultipartConfig
 public class UploadImageController {
 	
-	private String vzemiToqImage;
-
-
-	private static final String FILE_LOCATION = "C:\\Users\\User\\Desktop\\IT Talents\\Jape\\Jape\\src\\main\\webapp\\WEB-INF\\views\\pics\\";
+	private static final String FILE_LOCATION = "D:\\pics\\";
 
 	
 	@RequestMapping(value="/upload", method=RequestMethod.GET)
