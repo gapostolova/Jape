@@ -72,6 +72,11 @@ public class Gag implements Comparable<Gag> {
 		this.encode();
 	}
 	
+	public Gag(String gag, String title, long userId, boolean nsfw, boolean isPublic) {
+		this(gag, title, userId, nsfw, isPublic, "gabi"); 
+	
+	}
+	
 	public long getUserId() {
 		return userId;
 	}

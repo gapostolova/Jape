@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.model.Gag;
+import com.example.model.dao.GagDAO;
+
 import io.undertow.attribute.RequestMethodAttribute;
 
 @Controller
@@ -28,30 +32,39 @@ public class UploadImageController {
 	
 	private String vzemiToqImage;
 
-	private static final String FILE_LOCATION = "C:\\Users\\Gabriela\\Desktop\\upload\\";
+
+	private static final String FILE_LOCATION = "C:\\Users\\User\\Desktop\\IT Talents\\Jape\\Jape\\src\\main\\webapp\\WEB-INF\\views\\pics\\";
+
 	
 	@RequestMapping(value="/upload", method=RequestMethod.GET)
 	public String prepareForUpload() {
 		return "upload";
 	}
 	
-
-	@RequestMapping(value="/image/{fileName}", method=RequestMethod.GET)
-	@ResponseBody
-	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model) throws IOException {
-		File file = new File(FILE_LOCATION + vzemiToqImage);
-		Files.copy(file.toPath(), resp.getOutputStream());
-	}
-	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
-	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile, Model model) throws IOException{
-		//multiPartFile.getOriginalFilename() -> change to the name i want it to be
-		File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
+
+	//request params for all fields
+	//put userId in form in jsp!!!!!!!!
+	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile,
+			@RequestParam("title") String title,
+			@RequestParam("userId") Long userId,
+			@RequestParam("nsfw") Boolean nsfw,
+			@RequestParam("isPublic") Boolean isPublic,
+			Model model) throws IOException{
+		try {
+			File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
+			Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			//create gag with requestparams
+			Gag newGag = new Gag(multiPartFile.getOriginalFilename(), title, userId, nsfw, isPublic);
+			//insert into DB and collections
+			GagDAO.getInstance().addGag(newGag);
+			
+			return "profile";
+		} catch (SQLException e) {
+			System.out.println("Error uploading image!!!!" + e);
+			//error page
+		}
 		
-		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		////insert name into db 
-		vzemiToqImage = multiPartFile.getOriginalFilename();
-		model.addAttribute("filename", multiPartFile.getOriginalFilename());
-		return "upload";
+		return "";
 	}
 }

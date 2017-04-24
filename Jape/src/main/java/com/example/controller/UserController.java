@@ -79,6 +79,7 @@ public class UserController {
 				}
 				session.setAttribute("logged", true);
 				session.setAttribute("user", UserDAO.getInstance().getUser(email));
+				session.setAttribute("userId", UserDAO.getInstance().getAllUsers().get(email).getUserId());
 				System.out.println("kk, " + email + " has logged in");
 				//when profile is done, return index with everything
 				//url = "index";

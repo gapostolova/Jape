@@ -23,17 +23,18 @@ import com.example.model.dao.UserDAO;
 @Controller
 public class GagController {
 		
-	private Gag getGag(int page, int position) throws SQLException {
-		UserDAO.getInstance().getAllUsers();
-		GagDAO.getInstance().getAllGags();
-		
-		Gag gag = GagDAO.getInstance().hotGags().get(page * 3 + position);
-		
-		return gag;
-	}
+//	private Gag getGag(int page, int position) throws SQLException {
+//		UserDAO.getInstance().getAllUsers();
+//		GagDAO.getInstance().getAllGags();
+//		
+//		Gag gag = GagDAO.getInstance().hotGags().get(page * 3 + position);
+//		
+//		return gag;
+//	}
 
 	//throws for testing reasons!!!!!
 	//remove!!!
+
 //	@RequestMapping (value="/index", method=RequestMethod.GET)
 //	public String getGags(Model viewModel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
 //		HttpSession session = request.getSession();
@@ -45,18 +46,35 @@ public class GagController {
 //	}
 	
 	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
-	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {
+	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) throws SQLException {
+
 		HttpSession session = request.getSession();
 		
-		try {
-			session.setAttribute("gag", GagDAO.getInstance().getAllGags().get(Long.parseLong(gagId)));
-		} catch (SQLException e) {
-			//error page
-			System.out.println(e);
-		}
+		UserDAO.getInstance().getAllUsers();
+		GagDAO.getInstance().getAllGags();
+		session.setAttribute("gags", GagDAO.getInstance().hotGags());
 		
-		return "viewGag";
+		
+//		int page = Integer.parseInt(request.getParameter("page")!=null?request.getParameter("page"):"0");
+//		for (int i = 0; i < 3; i++) {
+//			session.setAttribute("gag"+i, getGag(page, i));
+//		}
+		return "index";
 	}
+	
+//	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
+//	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		
+//		try {
+//			session.setAttribute("gag", GagDAO.getInstance().getAllGags().get(Long.parseLong(gagId)));
+//		} catch (SQLException e) {
+//			//error page
+//			System.out.println(e);
+//		}
+//		
+//		return "viewGag";
+//	}
 	
 	
 	@RequestMapping (value="/getgags", method=RequestMethod.GET)

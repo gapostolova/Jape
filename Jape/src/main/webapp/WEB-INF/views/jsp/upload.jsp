@@ -1,20 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Upload</title>
 </head>
 <body>
 
-<h1>Upload file please</h1>
+<h1>Upload jape:</h1>
 <form method="POST" enctype="multipart/form-data">
-	<input type="file" id="file" name="failche" accept="image/*">
+	<input type="file" id="file" name="failche" accept="image/*" required>
+	<input type="text" id="title" placeholder="Enter title" size="30" required>
+	<input type="hidden" id="userId" value="${sessionScope.userId }">
+	<c:out value="Is it safe for work?"></c:out>
+	<input type="radio" id="nsfw" name="nsfw" value="false" checked> It's safe<br>
+  <input type="radio" id="nsfw" name="nsfw" value="true"> It's raunchy<br><br>
+  <c:out value="Is this a private jape?"></c:out>
+  <input type="radio" id="isPublic" name="isPublic" value="true" checked> Show it to the world<br>
+  <input type="radio" id="isPublic" name="isPublic" value="false"> It's private<br>
 	<input type="submit" value="Upload now">
 </form>
-<h2>File uploaded with name = ${filename}</h2>	
-
-<img src="image/${filename}">
 </body>
 </html>
