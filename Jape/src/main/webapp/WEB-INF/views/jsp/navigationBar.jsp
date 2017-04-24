@@ -52,7 +52,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index">Jape</a>
-                <a class="navbar-brand" href="login">Log in</a>
+                
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collaps
@@ -77,7 +77,7 @@
 						</li>
 						
 						<li> 
-							<a href = ""> Log Out </a>
+							<a href = "logout"> Log Out </a>
 						</li>
 						</c:if>
 						

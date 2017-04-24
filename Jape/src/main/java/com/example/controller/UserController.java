@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.model.User;
 import com.example.model.UserManager;
 import com.example.model.dao.UserDAO;
 
@@ -22,33 +23,30 @@ import com.example.model.dao.RegisterDAO;
 public class UserController {
 	
 
-	
-	
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String profile(Model viewModel) {
-		// talk with model viewModel.addAttribute("Text","Hello");
-		return  "profile";
-	}
-	
-
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String sayHi(Model viewModel) {
-		// talk with model
+	public String sayHi(Model viewModel, HttpServletRequest request) {
 		
 		return "index";  
 	}
 	
-
-	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String goToRegister(Model viewModel) {
-		// talk with model viewModel.addAttribute("Text","Hello");
-		return  "register";
-	}
-
 	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String profile(Model viewModel, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+			return "redirect:/index";
+		}
+		return  "profile";
+	}
+	
+
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String login(Model viewModel) {
+	public String loginGet(Model viewModel, HttpServletRequest request) {
 		// talk with model viewModel.addAttribute("Text","Hello");
+		HttpSession session = request.getSession();
+		if(session.getAttribute("logged")!= null && (boolean) session.getAttribute("logged")==true){
+			return "redirect:/index";
+		}
 		return  "login";
 	}
 	
@@ -84,7 +82,7 @@ public class UserController {
 				System.out.println("kk, " + email + " has logged in");
 				//when profile is done, return index with everything
 				//url = "index";
-				url = "profile";
+				url = "redirect:/profile";
 			}
 			else {
 				System.out.println("wrong password");
@@ -98,19 +96,41 @@ public class UserController {
 		
 	}
 	
-	 @RequestMapping (value="/popUp", method=RequestMethod.GET)
-	 public String popUp(Model viewModel, HttpServletRequest request) {
-	        return "popUp";
-	 }
+//	 @RequestMapping (value="/popUp", method=RequestMethod.GET)
+//	 public String popUp(Model viewModel, HttpServletRequest request) {
+//	        return "popUp";
+//	 }
 	
+	 
+	 
 	
-	 @RequestMapping (value="/logout", method=RequestMethod.POST)
+	 @RequestMapping (value="/logout", method=RequestMethod.GET)
 	 public String logout(Model viewModel, HttpServletRequest request) {
+		 
 		 HttpSession session = request.getSession();
-			session.setAttribute("logged", false);
+			if(session.getAttribute("logged")!= null && (boolean) session.getAttribute("logged")==false){
+				return "redirect:/index";
+			}
+			//<<display in console result..
+		 User user = (User) session.getAttribute("user");
+		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		 System.out.println("User  " + user.getUsername() + " logged out");
+		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		 //>>
+		 	session.setAttribute("logged", false);
 	        session.invalidate();
-	        return "index";
+	        return "redirect:/index";
 	 }
+	 
+	 @RequestMapping(value="/register", method=RequestMethod.GET)
+		public String goToRegister(Model viewModel, HttpServletRequest request) {
+			HttpSession session = request.getSession();
+			if(session.getAttribute("logged")!= null && (boolean) session.getAttribute("logged")==true){
+				return "redirect:/index";
+			}
+			// talk with model viewModel.addAttribute("Text","Hello");
+			return  "register";
+		}
 	 
 	 @RequestMapping (value="/register", method=RequestMethod.POST)
 	 public String register(Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
