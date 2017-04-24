@@ -22,14 +22,7 @@ import com.example.model.dao.RegisterDAO;
 public class UserController {
 	
 
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String sayHi(Model viewModel) {
-		// talk with model
-		
-		viewModel.addAttribute("Text","Hello");
-		
-		return "index";  
-	}
+	
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(Model viewModel) {
@@ -38,13 +31,13 @@ public class UserController {
 	}
 	
 
-//	@RequestMapping(value="/index", method=RequestMethod.GET)
-//	public String sayHi(Model viewModel) {
-//		// talk with model
-//		
-//		return "index";  
-//	}
-//	
+	@RequestMapping(value="/index", method=RequestMethod.GET)
+	public String sayHi(Model viewModel) {
+		// talk with model
+		
+		return "index";  
+	}
+	
 
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String goToRegister(Model viewModel) {

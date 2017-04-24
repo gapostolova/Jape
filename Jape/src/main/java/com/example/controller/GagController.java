@@ -34,15 +34,15 @@ public class GagController {
 
 	//throws for testing reasons!!!!!
 	//remove!!!
-	@RequestMapping (value="/index", method=RequestMethod.GET)
-	public String getGags(Model viewModel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		HttpSession session = request.getSession();
-		int page = Integer.parseInt(request.getParameter("page")!=null?request.getParameter("page"):"0");
-		for (int i = 0; i < 3; i++) {
-			session.setAttribute("gag"+i, getGag(page, i));
-		}
-		return "index";
-	}
+//	@RequestMapping (value="/index", method=RequestMethod.GET)
+//	public String getGags(Model viewModel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
+//		HttpSession session = request.getSession();
+//		int page = Integer.parseInt(request.getParameter("page")!=null?request.getParameter("page"):"0");
+//		for (int i = 0; i < 3; i++) {
+//			session.setAttribute("gag"+i, getGag(page, i));
+//		}
+//		return "index";
+//	}
 	
 	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
 	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {

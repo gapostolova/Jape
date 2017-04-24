@@ -47,7 +47,9 @@ public class UploadImageController {
 	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile, Model model) throws IOException{
 		//multiPartFile.getOriginalFilename() -> change to the name i want it to be
 		File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
+		
 		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		////insert name into db 
 		vzemiToqImage = multiPartFile.getOriginalFilename();
 		model.addAttribute("filename", multiPartFile.getOriginalFilename());
 		return "upload";
