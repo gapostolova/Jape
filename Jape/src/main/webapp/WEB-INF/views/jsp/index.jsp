@@ -38,10 +38,8 @@
 </head>
 
 <body>
+
 <jsp:include page="navigationBar.jsp" />
-
-    
-
 
     <!-- Page Content -->
     <div class="container">
@@ -64,7 +62,7 @@
                <h2>
                     <a href="#">${sessionScope.gag2.getTitle() }</a>
                 </h2>
-                <a href="view/${sessionScope.gag1.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="" ></a>
+                <a href="view/${sessionScope.gag2.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag2.getEncode()}" alt="" ></a>
                 
                 <hr>
 
@@ -73,7 +71,7 @@
                     <a href="#">${sessionScope.gag3.getTitle() }</a>
                 </h2>
                
-                <a href="view/${sessionScope.gag1.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="" ></a>
+                <a href="view/${sessionScope.gag3.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag3.getEncode()}" alt="" ></a>
                 
                 <hr>
 
