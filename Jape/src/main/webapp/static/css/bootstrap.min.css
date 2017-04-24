@@ -11,7 +11,9 @@ html {
     -ms-text-size-adjust: 100%
 }
 body {
-    margin: 0
+    margin: 0;
+     background: #c1bdba;
+  font-family: 'Titillium Web', sans-serif;
 }
 article,
 aside,
@@ -37,18 +39,23 @@ video {
 }
 audio:not([controls]) {
     display: none;
-    height: 0
+    height: 0;
 }
 [hidden],
 template {
     display: none
 }
 a {
-    background-color: transparent
+    background-color: transparent;
+    text-decoration: none;
+  color: #337AB7;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
 }
 a:active,
 a:hover {
-    outline: 0
+	color: #337AB7;
+    outline: 0;
 }
 abbr[title] {
     border-bottom: 1px dotted
@@ -61,10 +68,15 @@ dfn {
     font-style: italic
 }
 h1 {
+	text-align: center;
+  color: #ffffff;
+  font-weight: 300;
+  margin: 0 0 40px;
     margin: .67em 0;
     font-size: 2em
 }
 mark {
+	
     color: #000;
     background: #ff0
 }
@@ -109,11 +121,9 @@ samp {
     font-family: monospace, monospace;
     font-size: 1em
 }
-button,
-input,
-optgroup,
-select,
-textarea {
+
+
+optgroup {
     margin: 0;
     font: inherit;
     color: inherit
@@ -121,10 +131,104 @@ textarea {
 button {
     overflow: visible
 }
-button,
-select {
-    text-transform: none
+
+input, textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #ffffff;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
 }
+
+select {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background:  #011719;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #ffffff;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: #337AB7;
+}
+
+textarea {
+  border: 2px solid #a0b3b0;
+  resize: vertical;
+}
+
+.field-wrap {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.top-row > div {
+  float: left;
+  width: 48%;
+  margin-right: 4%;
+}
+.top-row > div:last-child {
+  margin: 0;
+}
+
+
+
+
+.button {
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #337AB7;
+  color: #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  
+}
+.button:hover, .button:focus {
+  background: #337AB7;
+}
+
+input[type="radio"]{
+    -webkit-appearance: radio;
+}
+
+.button-block {
+  display: block;
+  width: 100%;
+}
+
+.forgot {
+  margin-top: -20px;
+  text-align: right;
+}
+
+
+
 button,
 html input[type=button],
 input[type=reset],
@@ -1086,10 +1190,8 @@ body {
     color: #333;
     background-color: #fff
 }
-button,
-input,
-select,
-textarea {
+
+select {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit
@@ -1169,18 +1271,18 @@ hr {
 [role=button] {
     cursor: pointer
 }
-.h1,
+
 .h2,
 .h3,
 .h4,
 .h5,
 .h6,
-h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
+	
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
@@ -2595,10 +2697,36 @@ legend {
     border-bottom: 1px solid #e5e5e5
 }
 label {
-    display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 700
+	position: absolute;
+  -webkit-transform: translateY(6px);
+          transform: translateY(6px);
+  left: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+    
+}
+
+label .req {
+  margin: 2px;
+  color: #337AB7;
+}
+
+label.active {
+  -webkit-transform: translateY(50px);
+          transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+label.active .req {
+  opacity: 0;
+}
+
+label.highlight {
+  color: #ffffff;
 }
 input[type=search] {
     -webkit-box-sizing: border-box;
@@ -2635,6 +2763,16 @@ output {
     line-height: 1.42857143;
     color: #555
 }
+
+.form {
+  background: rgba(19, 35, 47, 0.9);
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -4241,12 +4379,50 @@ textarea.input-group-sm>.input-group-btn>.btn {
         border-bottom-color: #fff
     }
 }
+.tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+.tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.tab-group li a {
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+  background: rgba(160, 179, 176, 0.25);
+  color: #a0b3b0;
+  font-size: 20px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+.tab-group li a:hover {
+  background: #337AB7;
+  color: #ffffff;
+}
+.tab-group .active a {
+  background: #337AB7;
+  color: #ffffff;
+}
+
 .tab-content>.tab-pane {
     display: none
 }
 .tab-content>.active {
     display: block
 }
+
+.tab-content > div:last-child {
+  display: none;
+}
+
 .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
