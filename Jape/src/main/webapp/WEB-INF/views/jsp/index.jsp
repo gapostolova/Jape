@@ -37,63 +37,24 @@
 
 </head>
 
+
 <body>
+
 <jsp:include page="navigationBar.jsp" />
 
-    
-
-
     <!-- Page Content -->
-    <div class="container">
+    <div id="gags" class="container">
 
-        <div class="row">
-
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-
-                <!-- First Blog Post -->
-                <h2>
-                    <a href="#">${sessionScope.gag1.getTitle() }</a>
-                </h2>
-                <hr>
-                <a href="view/${sessionScope.gag1.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="" ></a>
-                <hr>
-                <hr>
-
-                <!-- Second Blog Post -->
-               <h2>
-                    <a href="#">${sessionScope.gag2.getTitle() }</a>
-                </h2>
-                <a href="view/${sessionScope.gag1.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="" ></a>
-                
-                <hr>
-
-                <!-- Third Blog Post -->
-               <h2>
-                    <a href="#">${sessionScope.gag3.getTitle() }</a>
-                </h2>
-               
-                <a href="view/${sessionScope.gag1.getGagIDString() }"><img class="img-responsive" src="data:image/jpeg;base64,${sessionScope.gag1.getEncode()}" alt="" ></a>
-                
-                <hr>
-
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">&larr; Older</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">Newer &rarr;</a>
-                    </li>
-                </ul>
-
-            </div>
+				<c:forEach var="gag" items="${sessionScope.gags }">
+				<c:out value="${gag.getTitle() }"></c:out><br> <br>
+				<img src="image/${gag.getGagID()}" width="300"/> <hr> <br> <br> <br>
+				</c:forEach>
 
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
 
                 <!-- Blog Search Well -->
-                <div class="well">
+                <div class="well" >
                     <h4>Search Jape</h4>
                     <div class="input-group">
                         <input type="text" class="form-control">
@@ -125,16 +86,7 @@
 
         <hr>
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </footer>
+       
 
   
     <!-- /.container -->

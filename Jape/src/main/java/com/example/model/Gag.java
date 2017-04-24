@@ -12,7 +12,6 @@ import org.apache.commons.io.FileUtils;
 
 public class Gag implements Comparable<Gag> {
 	
-	private static final String PATH = "C:\\Users\\User\\Desktop\\IT Talents\\Jape\\Jape\\src\\main\\webapp\\WEB-INF\\views\\pics\\";
 	private static final int DEFAULT_GAG_ID = -1;
 	private String gag;
 	private String title;
@@ -24,7 +23,6 @@ public class Gag implements Comparable<Gag> {
 	private boolean isPublic;
 	private TreeSet<Comment> comments;
 	private String type;
-	private String encoded;
 	
 	
 	//constructor for when a gag is added
@@ -47,7 +45,6 @@ public class Gag implements Comparable<Gag> {
 		this.category = new ArrayList<>();
 		this.gagID = DEFAULT_GAG_ID;
 		
-		this.encode();
 	}
 	
 
@@ -69,7 +66,11 @@ public class Gag implements Comparable<Gag> {
 			this.type = type;
 		}
 		this.category = new ArrayList<>();
-		this.encode();
+	}
+	
+	public Gag(String gag, String title, long userId, boolean nsfw, boolean isPublic) {
+		this(gag, title, userId, nsfw, isPublic, "gabi"); 
+	
 	}
 	
 	public long getUserId() {
@@ -178,19 +179,6 @@ public class Gag implements Comparable<Gag> {
 	
 	public String getFullName() {
 		return this.gag + "." + this.type;
-	}
-	
-	private void encode() {
-		File file = new File(PATH + this.getFullName());
-		try {
-			this.encoded = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(file));
-		} catch (IOException e) {
-			System.out.println("Couldn't encode!" + e);
-		}
-	}
-	
-	public String getEncode() {
-		return this.encoded;
 	}
 	
 	public List<Comment> getComments() {

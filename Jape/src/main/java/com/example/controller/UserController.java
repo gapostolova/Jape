@@ -23,11 +23,11 @@ import com.example.model.dao.RegisterDAO;
 public class UserController {
 	
 
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String sayHi(Model viewModel, HttpServletRequest request) {
-		
-		return "index";  
-	}
+//	@RequestMapping(value="/index", method=RequestMethod.GET)
+//	public String sayHi(Model viewModel, HttpServletRequest request) {
+//		
+//		return "index";  
+//	}
 	
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
@@ -82,6 +82,8 @@ public class UserController {
 				session.setAttribute("logged", true);
 				session.setAttribute("user", user );
 				session.setAttribute("userGags", user.myGags());
+				session.setAttribute("userId", UserDAO.getInstance().getAllUsers().get(email).getUserId());
+
 				System.out.println("kk, " + email + " has logged in");
 				//when profile is done, return index with everything
 				//url = "index";
