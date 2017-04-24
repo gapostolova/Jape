@@ -65,7 +65,6 @@ public class UserController {
 			if(!UserDAO.getInstance().getAllUsers().containsKey(email)) {
 				System.out.println(UserDAO.getInstance().getAllUsers().containsKey(email));
 				session.setAttribute("notAMember", "Wrong username or password!");
-				System.out.println("session : " + session.getAttribute("notAMember"));
 				System.out.println("wrong email + " + email);
 				return "login";
 			}
@@ -79,7 +78,6 @@ public class UserController {
 			if(UserManager.getInstance().validateLogin(email, password)) {
 				if(!UserDAO.getInstance().isVerified(email)){
 					session.setAttribute("notAMember", "Account not verified!");
-					System.out.println("session : " + session.getAttribute("notAMember"));
 					System.out.println("Account not verified");
 					return "login";
 				}
@@ -92,9 +90,6 @@ public class UserController {
 			}
 			else {
 				System.out.println("wrong password");
-				session.setAttribute("notAMember", "Wrong username or password!");
-				System.out.println(session.getAttribute("notAMember") + " + session");
-				
 				url = "login";
 			}
 			return url;

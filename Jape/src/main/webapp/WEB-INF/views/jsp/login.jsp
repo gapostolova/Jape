@@ -18,8 +18,6 @@
 </head>
 
 <body>
-<jsp:include page="navigationBar.jsp" />
-	
   <div class="form">
       
       <ul class="tab-group">
