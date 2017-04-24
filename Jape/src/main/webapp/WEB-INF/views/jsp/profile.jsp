@@ -84,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<c:forEach var="gag" items="${sessionScope.userGags }">
 							<div class="container">
 							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
-								<img src="profilePic/${gag.getGag()}"/><br><br>
+								<img src="profileJapes/${gag.getGagID()}" height="450" width="650"/><br><br>
 								
 								<hr>
 								<br>

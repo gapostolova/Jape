@@ -33,7 +33,7 @@ public class ProfilePicController {
 	
 	private String vzemiToqImage;
 
-	private static final String FILE_LOCATION = "C:\\Users\\Gabriela\\Desktop\\upload\\";
+	private static final String FILE_LOCATION = "D:\\pics\\";
 	
 	
 	@RequestMapping(value="/profilePic/{fileName}", method=RequestMethod.GET)
@@ -52,5 +52,18 @@ public class ProfilePicController {
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 	
+	
+	@RequestMapping(value="/profileJapes/{fileName}", method=RequestMethod.GET)
+	@ResponseBody
+	public void profileJapes(@PathVariable("fileName") String Id,HttpServletRequest request, HttpServletResponse resp, Model model) throws IOException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		Long gagId =Long.valueOf(Id);
+		
+		String fileName = user.getGags().get(gagId).getGag();
+		System.out.println("Gag id in profile japes: " + fileName);
+		File file = new File(FILE_LOCATION + fileName);
+		Files.copy(file.toPath(), resp.getOutputStream());
+	}
 	
 }
