@@ -191,4 +191,8 @@ public class Gag implements Comparable<Gag> {
 	public String getGagIDString() {
 		return Long.toString(this.gagID);
 	}
+	
+	public String getTitleLower() {
+		return this.title.toLowerCase();
+	}
 }

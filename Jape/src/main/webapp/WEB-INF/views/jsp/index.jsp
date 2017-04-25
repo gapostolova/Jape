@@ -44,7 +44,6 @@
 
     <!-- Page Content -->
     <div id="gags" class="container">
-
 				<c:forEach var="gag" items="${sessionScope.gags }">
 				<c:out value="${gag.getTitle() }"></c:out><br> <br>
 				<img src="image/${gag.getGagID()}" width="300"/> <hr> <br> <br> <br>
@@ -56,14 +55,18 @@
                 <!-- Blog Search Well -->
                 <div class="well" >
                     <h4>Search Jape</h4>
+                    <form action="search" method="GET">
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
+
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
+                            <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
-                        </button>
+                                </form>
+                                </div>
+                   </button>
                         </span>
-                    </div>
+                    </div></form>
                     <!-- /.input-group -->
                 </div>
 
@@ -78,17 +81,10 @@
                 <!-- Side Widget Well -->
                 <div class="well">
                 </div>
-
             </div>
-
         </div>
         <!-- /.row -->
-
         <hr>
-
-       
-
-  
     <!-- /.container -->
 
     <!-- jQuery -->

@@ -32,32 +32,55 @@ public class GagController {
 //		return gag;
 //	}
 
-	//throws for testing reasons!!!!!
-	//remove!!!
-
-	@RequestMapping (value="/index", method=RequestMethod.GET)
-	public String getGags(Model viewModel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
+	private void gagLoader(String category,  HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		GagDAO gd = GagDAO.getInstance();
+		switch (category) {
+		case "hot":			
+			
+			try {
+				UserDAO.getInstance().getAllUsers();
+				gd.getAllGags();
+			} catch (SQLException e) {
+				// TODO error page
+				System.out.println(e);
+			}
+			session.setAttribute("gags", gd.hotGags());
+			break;
+
+		case "trending":
+			session.setAttribute("gags", gd.trendingGags());
+			break;
+			
+		case "fresh":
+			session.setAttribute("gags", gd.freshGags());
+			break;
+		}
+	}
+	
+	@RequestMapping (value="/index", method=RequestMethod.GET)
+	public String getHotGags(Model viewModel, HttpServletRequest request) throws SQLException {
 		
-		UserDAO.getInstance().getAllUsers();
-		GagDAO.getInstance().getAllGags();
-		session.setAttribute("gags", GagDAO.getInstance().hotGags());
+		gagLoader("hot", request);
+		
 		return "index";
 	}
 	
-//	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
-//	public void viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) throws SQLException {
-//
-//		HttpSession session = request.getSession();
-//		
-//		
-//		
-//		int page = Integer.parseInt(request.getParameter("page")!=null?request.getParameter("page"):"0");
-//		for (int i = 0; i < 3; i++) {
-//			session.setAttribute("gag"+i, getGag(page, i));
-//		}
-
-//	}
+	@RequestMapping (value="/trending", method=RequestMethod.GET)
+	public String getTrendingGags(HttpServletRequest request) {
+		
+		gagLoader("trending", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/fresh", method=RequestMethod.GET)
+	public String getFreshGags(HttpServletRequest request) {
+		
+		gagLoader("fresh", request);
+		
+		return "index";
+	}
 	
 	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
 	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {
@@ -73,9 +96,32 @@ public class GagController {
 		return "viewGag";
 	}
 	
-	
-	@RequestMapping (value="/getgags", method=RequestMethod.GET)
-	public String getgags() {
-		return "getGags";
+	@RequestMapping (value="/search", method=RequestMethod.GET)
+	public String searchGags(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		String keyword = request.getParameter("keyword").toLowerCase().trim();
+		String[] keywords = keyword.split(" ");
+		
+		ArrayList<Gag> searchResult = new ArrayList<>();
+		
+		try {
+			for(Gag gag : GagDAO.getInstance().getAllGags().values()) {
+				for (int i = 0; i < keywords.length; i++) {
+					if(gag.getTitleLower().contains(keywords[i]))
+						searchResult.add(gag);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			//error page
+		}
+		
+		session.setAttribute("gags", searchResult.size() > 0?searchResult:null);
+		
+		return "index";
 	}
+	
+	
+	
 }
