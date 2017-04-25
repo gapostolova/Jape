@@ -59,13 +59,13 @@
             e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Hot</a>
+                        <a href="index">Hot</a>
                     </li>
                     <li>
-                        <a href="#">Trending</a>
+                        <a href="trending">Trending</a>
                     </li>
                     <li>
-                        <a href="#">Fresh</a>
+                        <a href="fresh">Fresh</a>
                     </li>
                     <li>
                     </li>
@@ -80,14 +80,6 @@
 									    <a href="#">Settings</a><br><br>
 									    <a href="logout">LogOut</a>
  									 </div>
-						</div>
-
-					
-							
-						</li>
-						
-						
-						
 						</c:if>
 						
 						<c:if test ="${sessionScope.logged == 'false' }">
