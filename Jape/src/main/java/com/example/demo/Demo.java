@@ -107,6 +107,8 @@ System.out.println("======================	FUNNY 	=======================\n");
 //		}
 //		GagDAO.getInstance().deleteGag(gag);
 	
+	System.out.println(UserDAO.getInstance().getCategories().toString());
+	
 	}
 
 }

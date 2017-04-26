@@ -34,7 +34,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	}
 
 
-    private static final String LOCATION = "D:\\pics\\"; // Temporary location where files will be stored
+    private static final String LOCATION = "/Users/user-05/Desktop/pics/"; // Temporary location where files will be stored
 
  
     private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.

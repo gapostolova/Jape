@@ -132,16 +132,17 @@ public class GagDAO {
 		return Collections.unmodifiableList(fresh);
 	}
 	
-	public List<Gag> categoryGags(String category){
-		//TreeMap<Long, Gag> categories = new TreeMap<>();
-		ArrayList<Gag> categories = new ArrayList<>();
-		for(Gag gag : allGags.values()){
-			if(gag.hasCategory(category)){
-				categories.add(gag);
+	public List<Gag> categoryGags(String category) {
+		ArrayList<Gag> gags = new ArrayList<>();
+		
+		for(Gag gag : allGags.values()) {
+			if(gag.containsCategory(category)) {
+				gags.add(gag);
 			}
 		}
-		//return Collections.unmodifiableMap(categories);
-		return  Collections.unmodifiableList(categories);
+		
+		return Collections.unmodifiableList(gags);
+		
 	} 
 	
 	public void deleteComment(Comment c) {

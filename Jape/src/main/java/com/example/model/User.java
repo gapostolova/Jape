@@ -157,11 +157,6 @@ public class User {
 	}
 
 
-
-
-
-	
-
 	public void setGags(TreeMap<Long, Gag> gags) {
 		this.gags = gags;
 	}

@@ -24,8 +24,5 @@ public class Category {
 	public String toString() {
 		return "Category [categoryID=" + categoryID + ", categoryName=" + categoryName + "]";
 	}
-	
-	
-	
 
 }

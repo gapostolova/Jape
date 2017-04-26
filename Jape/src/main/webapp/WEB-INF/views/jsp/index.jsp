@@ -44,52 +44,21 @@
 
     <!-- Page Content -->
     <div id="gags" class="container">
-
+    
+    			<c:if test="${sessionScope.gags == null}">
+    			<c:out value="No japes to show!"></c:out>
+    			</c:if>
 				<c:forEach var="gag" items="${sessionScope.gags }">
 				<c:out value="${gag.getTitle() }"></c:out><br> <br>
-				<img src="image/${gag.getGagID()}" width="300"/> <hr> <br> <br> <br>
+				<img src="image/${gag.getGagID()}" width="500"/> <hr> <br> <br> <br>
 				</c:forEach>
 
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
 
-                <!-- Blog Search Well -->
-                <div class="well" >
-                    <h4>Search Jape</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    
-                       
-                    </div>
+               
                     <!-- /.row -->
                 </div>
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                </div>
-
-            </div>
-
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-       
-
-  
-    <!-- /.container -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
