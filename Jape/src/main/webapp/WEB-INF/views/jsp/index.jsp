@@ -52,40 +52,9 @@
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
 
-                <!-- Blog Search Well -->
-                <div class="well" >
-                    <h4>Search Jape</h4>
-                    <form action="search" method="GET">
-                    <div class="input-group">
-                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
-
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                                </form>
-                                </div>
-                   </button>
-                        </span>
-                    </div></form>
-                    <!-- /.input-group -->
-                </div>
-
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    
-                       
-                    </div>
+               
                     <!-- /.row -->
                 </div>
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                </div>
-            </div>
-        </div>
-        <!-- /.row -->
-        <hr>
-    <!-- /.container -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

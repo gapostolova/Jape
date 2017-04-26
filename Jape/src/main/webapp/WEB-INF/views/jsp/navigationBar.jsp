@@ -68,6 +68,25 @@
                         <a href="fresh">Fresh</a>
                     </li>
                     <li>
+                        <a href="cosplay">Cosplay</a>
+                    </li>
+                    <li>
+                        <a href="funny">Funny</a>
+                    </li>
+                    <li>
+                        <a href="gif">Gif</a>
+                    </li>
+                    <li>
+                        <a href="savage">Savage</a>
+                    </li>
+                    <li>
+                        <a href="sport">Sport</a>
+                    </li>
+                    <li>
+                        <a href="wtf">WTF?!</a>
+                    </li>
+                    <li>
+                        <a href="yummy">Yummy</a>
                     </li>
                  
                     <c:if test ="${sessionScope.logged!=null }">
@@ -98,9 +117,22 @@
                     </li>
                      <li >
                      
-                        <a href="register" class="btn btn-primary" >Sign up</a>
+                        <a href="register" class="nav navbar-nav" >Sign up</a>
                     </li>
                     </c:if>
+                    <li>
+                    <form action="search" method="GET">
+                    <div class="input-group">
+                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
+                   </li>
+                   <li>
+                        <span class="nav navbar-nav"></span>
+                            <button class="btn btn-default" type="submit"></button>
+                                <span class="glyphicon glyphicon-search"></span>
+                                </li>
+
+                                </div>
+                                </form>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

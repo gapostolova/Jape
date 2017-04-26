@@ -195,4 +195,12 @@ public class Gag implements Comparable<Gag> {
 	public String getTitleLower() {
 		return this.title.toLowerCase();
 	}
+	
+	public boolean containsCategory(String catName) {
+		for(Category cat : category) {
+			if(cat.getCategoryName().equalsIgnoreCase(catName))
+				return true;
+		}
+		return false;
+	}
 }

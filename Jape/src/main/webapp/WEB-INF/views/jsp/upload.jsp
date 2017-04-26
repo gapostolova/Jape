@@ -10,6 +10,8 @@
 </head>
 <body>
 
+
+
 <h1>Upload jape:</h1><br>
 <form method="POST" enctype="multipart/form-data">
 	<input type="file" id="file" name="failche" accept="image/*" required> <br><br>

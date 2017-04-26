@@ -55,6 +55,29 @@ public class GagController {
 		case "fresh":
 			session.setAttribute("gags", gd.freshGags());
 			break;
+			
+		case "cosplay":
+			session.setAttribute("gags", gd.categoryGags("cosplay"));
+			break;
+		case "funny":
+			session.setAttribute("gags", gd.categoryGags("cosplay"));
+			break;
+		case "gif":
+			session.setAttribute("gags", gd.categoryGags("gif"));
+			break;
+		case "savage":
+			session.setAttribute("gags", gd.categoryGags("savage"));
+			break;
+		case "sport":
+			session.setAttribute("gags", gd.categoryGags("sport"));
+			break;
+		case "wtf":
+			session.setAttribute("gags", gd.categoryGags("wtf"));
+			break;
+		case "yummy":
+			session.setAttribute("gags", gd.categoryGags("yummy"));
+			break;
+		
 		}
 	}
 	
@@ -81,6 +104,55 @@ public class GagController {
 		
 		return "index";
 	}
+
+	@RequestMapping (value="/cosplay", method=RequestMethod.GET)
+	public String getCosplay(HttpServletRequest request) {
+		
+		gagLoader("cosplay", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/funny", method=RequestMethod.GET)
+	public String getFunny(HttpServletRequest request) {
+		
+		gagLoader("funny", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/gif", method=RequestMethod.GET)
+	public String getGif(HttpServletRequest request) {
+		
+		gagLoader("gif", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/savage", method=RequestMethod.GET)
+	public String getSavage(HttpServletRequest request) {
+		
+		gagLoader("savage", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/sport", method=RequestMethod.GET)
+	public String getSport(HttpServletRequest request) {
+		
+		gagLoader("sport", request);
+		
+		return "index";
+	}
+	
+	@RequestMapping (value="/yummy", method=RequestMethod.GET)
+	public String getYummy(HttpServletRequest request) {
+		
+		gagLoader("yummy", request);
+		
+		return "index";
+	}
+	
 	
 	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
 	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {
