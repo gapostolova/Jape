@@ -224,50 +224,36 @@ public class UserDAO {
 	
 		//delete user
 	
-	public synchronized void deleteUser(User u) {
+	public synchronized void deleteUser(User u) throws SQLException {
 		PreparedStatement pst = null;
 		
-		try {
+		
 			pst = conn.prepareStatement(
 					"DELETE FROM TABLE users WHERE user_id = ?");
 			pst.setLong(1, u.getUserId());
 			pst.executeUpdate();
 			System.out.println("User successfuly deleted.");
-		} catch (SQLException e) {
-			System.out.println("Couldn't delete user.");
-		} finally {
-			try {
-				pst.close();
-			} catch (SQLException e) {
-				System.out.println("Couldn't close prepared statement.");
-			}
-		}
+		
+		
 	}
 	
 	//all of the methods above should be validated in the UserManager
 	
 		//change password
 	
-	public synchronized void changePass(String pass, User u) {
+	public synchronized void changePass(String pass, User u) throws SQLException {
 		
 		PreparedStatement pst = null;
 		
-		try {
+		
 			pst =conn.prepareStatement(
 					"UPDATE users SET password = ? WHERE user_id = ?;");
 			pst.setString(1, pass);
 			pst.setLong(2, u.getUserId());
 			pst.executeUpdate();
 			System.out.println("Updated user password.");	
-		} catch (SQLException e) {
-			System.out.println("Couldn't update password.");
-		} finally {
-			try {
-				pst.close();
-			} catch (SQLException e) {
-				System.out.println("Couldn't close prepared statement.");
-			}
-		}
+		
+		
 		
 	}
 	
@@ -296,25 +282,31 @@ public class UserDAO {
 	
 		//change nsfw status
 	
-	public synchronized void changeNSFW(boolean nsfw, User u) {
+	public synchronized void changeNSFW(boolean nsfw, User u) throws SQLException {
 		PreparedStatement pst = null;
 		
-		try {
+		
 			pst = conn.prepareStatement(
 					"UPDATE users SET nsfw = ? WHERE user_id = ?;");
 			pst.setBoolean(1, nsfw);
 			pst.setLong(2, u.getUserId());
 			pst.executeUpdate();
 			System.out.println("Updated user nsfw status.");	
-		} catch (SQLException e) {
-			System.out.println("Couldn't update nsfw status.");
-		} finally {
-			try {
-				pst.close();
-			} catch (SQLException e) {
-				System.out.println("Couldn't close prepared statement.");
-			}
-		}
+		
+	}
+	
+	
+	public synchronized void changeUsername(String username, User u) throws SQLException {
+		PreparedStatement pst = null;
+		
+		
+			pst = conn.prepareStatement(
+					"UPDATE users SET username = ? WHERE user_id = ?;");
+			pst.setString(1, username);
+			pst.setLong(2, u.getUserId());
+			pst.executeUpdate();
+			System.out.println("Updated user's username status.");	
+		
 	}
 	
 		//change description

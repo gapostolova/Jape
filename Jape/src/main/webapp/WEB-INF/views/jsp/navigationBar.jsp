@@ -59,7 +59,7 @@
             e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Hot</a>
+                        <a href="index">Hot</a>
                     </li>
                     <li>
                         <a href="#">Trending</a>
@@ -74,10 +74,10 @@
 						<c:if test ="${sessionScope.logged == 'true' }">
 						<li>
 						<div class="dropdownP">
-							<a href = "profile"><img src="profilePic/${sessionScope.user.getProfilePic() }" height="48" width="48"></a>
+							<a href = "profile"><img class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="40" ></a>
 									<div class="dropdownP-content">	
 										<a href="profile">Profile</a><br><br>	
-									    <a href="#">Settings</a><br><br>
+									    <a href="account">Settings</a><br><br>
 									    <a href="logout">LogOut</a>
  									 </div>
 						</div>

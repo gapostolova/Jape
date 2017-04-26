@@ -39,7 +39,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'gg','123','gabii2@abv.bg',1,'wwww','female','1994-12-01','dsfsdf',0,1,'123'),(2,'jess','123','jevgenieva@gmail.com',0,'ddsf','female','1991-12-02','jkhjkh',0,1,'2589'),(3,'gabi','123','gabriella.apostolova@gmail.com',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'6c3cdc4f-41e7-4f08-a09d-db33718eb1b7'),(4,'sfdsfs','123','zixin_@abv.bg',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'21ce2c65-191b-4a4e-8d40-15de31033a24'),(5,'gabrislava','123','ittalents.gj@gmail.com',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'63b59d6c-4a88-4584-953c-e6fdf05139fa');
+INSERT INTO `users` VALUES (1,'gg','123','gabii2@abv.bg',1,'Capture.PNG','female','1994-12-01','My funny collection',0,1,'123'),(2,'jess','123','jevgenieva@gmail.com',0,'ddsf','female','1991-12-02','jkhjkh',0,1,'2589'),(4,'sfdsfs','123','zixin_@abv.bg',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'21ce2c65-191b-4a4e-8d40-15de31033a24'),(5,'gabrislava','123','ittalents.gj@gmail.com',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'63b59d6c-4a88-4584-953c-e6fdf05139fa'),(18,'hgagag','123','gabriella.apostolova@gmail.com',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,1,'2755b7cf-caed-43e6-afcc-5cc826c18bd9'),(19,'gagaga','123','gab@abv.bg',0,'..\\WebContent\\siteImages\\defaultProfilePic.jpg','Unspecified','1916-01-01','My funny collection',0,0,'b8ecccaf-8cd3-45b2-977a-d8e0ea20c9f0');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-21 15:13:33
+-- Dump completed on 2017-04-25 11:53:36

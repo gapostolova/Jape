@@ -9,7 +9,9 @@
 <title>Jape</title>
 </head>
 <body>
-<img  src="data:image/jpeg;base64,${sessionScope.gag.getEncode()}" alt="" width="900"><br>
+<img  src="image/${sessionScope.gag.getGagID()}" ><br>
+<h2> gagid : </h2> <c:out value="${sessionScope.gag.getGagID() }"></c:out>
+
 <h2> Uploaded by: </h2> <c:out value="${sessionScope.gag.getUserId() }"></c:out>
 <h2>Points: </h2> <c:out value="${sessionScope.gag.getUpvotes() }"></c:out>
 <h2>Comments:</h2>
@@ -18,3 +20,6 @@
 </c:forEach>
 </body>
 </html>
+
+
+

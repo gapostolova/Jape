@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,23 @@ public class UserController {
 		}
 		return  "profile";
 	}
+	
+	@RequestMapping(value="/settings", method=RequestMethod.GET)
+	public String settings(Model viewModel, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+			return "redirect:/index";
+		}
+		return  "profileSettings";
+	}
+	
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String loginGeft(Model viewModel, HttpServletRequest request) {
+		// talk with model viewModel.addAttribute("Text","Hello");
+		
+		return  "testFile";
+	}
+	
 	
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
@@ -91,6 +109,8 @@ public class UserController {
 				url = "redirect:/profile";
 			}
 			else {
+				session.setAttribute("notAMember", "Wrong username or password!");
+				
 				System.out.println("wrong password");
 				url = "login";
 			}
@@ -220,4 +240,116 @@ public class UserController {
 		return "notverified";
 	 }
 	
+	 //;lkslsdfkl;sdfk
+//	 @RequestMapping (value="/accountSettings", method=RequestMethod.POST)
+		public String accountSettingsChaned( HttpServletRequest request) {
+		 String oldPassword = request.getParameter("oldPassword");
+		 String password = request.getParameter("password");
+		 String passConfirm = request.getParameter("passConfirm");
+
+		 
+			
+		return "gagPage";
+		}
+	 
+	 @RequestMapping (value="/password", method=RequestMethod.GET)
+		public String passwordChangeGet( HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		 if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+				return "redirect:/index";
+			}
+		 return "passwordSettings";
+		}
+	 
+	 
+	 @RequestMapping (value="/password", method=RequestMethod.POST)
+		public String passwordChange( HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		 String oldPassword = request.getParameter("oldPassword");
+		 String password = request.getParameter("password");
+		 String passConfirm = request.getParameter("passConfirm");
+		 User user =(User) session.getAttribute("user");
+		 
+		 if(user.getPassword().equals(oldPassword.trim())){
+			 if(password.equals(passConfirm)){
+				 try {
+					UserDAO.getInstance().changePass(password, user);
+					user.setPassword(password);
+					session.setAttribute("passwordChangeMessage", "Password changed!");
+				} catch (SQLException e) {
+					System.out.println("could not change passWord "+ e.getMessage());
+					session.setAttribute("passwordChangeMessage", "Sorry, something went wrong, could not update password...");
+					return "passwordSettings";
+				}
+			 }
+			 else{
+				 session.setAttribute("passwordChangeMessage", "New passwords did not match.");
+			 }
+		 }
+		 else{
+			 session.setAttribute("passwordChangeMessage", "Wrong password!");
+		 }
+		return "passwordSettings";
+		}
+	 
+	 
+	 
+	 @RequestMapping (value="/account", method=RequestMethod.GET)
+		public String accountChangeGet( HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		 if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+				return "redirect:/index";
+			}
+		 return "accountSettings";
+		}
+	 
+	 
+	 @RequestMapping (value="/account", method=RequestMethod.POST)
+		public String accountChange(HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		 String username = request.getParameter("username");
+		 //TODO set isValidated to false; send validation email; ask for validation on log in
+		// String email = request.getParameter("email");
+		 String isNsfw = request.getParameter("nsfw");
+		 String password = request.getParameter("password");
+		 User user =(User) session.getAttribute("user");
+		 boolean nsfw = user.isViewNsfwContent();
+		 
+		 if(user.getPassword().equals(password.trim())){
+			 if(isNsfw.equals("true") || isNsfw.equals("false")){
+				  nsfw = Boolean.valueOf(isNsfw);
+			 }
+			 else{
+				 session.setAttribute("accountChangedMessage", "Oopss.. something went wrong, account not updated.");
+			 }
+				 try {
+					UserDAO.getInstance().changeNSFW(nsfw, user);
+					user.setViewNsfwContent(nsfw);
+					session.setAttribute("accountChangedMessage", "Changed nsfw... could not change username, sorry.");
+					UserDAO.getInstance().changeUsername(username, user);
+					user.setUsername(username);
+					session.setAttribute("accountChangedMessage", "Changes saved!");
+				} catch (SQLException e) {
+					System.out.println("could not change passWord "+ e.getMessage());
+					session.setAttribute("accountChangedMessage", "Sorry, something went wrong, could not update account...");
+					return "accountSettings";
+				}
+			 }
+
+		 else{
+			 session.setAttribute("accountChangedMessage", "Wrong password!");
+		 }
+		return "accountSettings";
+		}
+	 
+	 
+	 
+	 
+	 
+	 @RequestMapping (value="/gagPage/{gagId}", method=RequestMethod.GET)
+		public String gagPage(@PathVariable("gagId") String id, HttpServletRequest request) {
+		 
+		return "gagPage";
+		}
+	 
 }

@@ -3,6 +3,7 @@ package com.example.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,16 +61,24 @@ public class GagController {
 //	}
 	
 	@RequestMapping (value="/view/{gagId}", method=RequestMethod.GET)
-	public String viewGag(@PathVariable("gagId") String gagId, HttpServletRequest request) {
+	public String viewGag(@PathVariable("gagId") String id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
+		Long gagId = Long.valueOf(id);
+		System.out.println(" GAG ID in GAG PAGE: " + gagId);
+		Map<Long, Gag> allGags;
 		try {
-			session.setAttribute("gag", GagDAO.getInstance().getAllGags().get(Long.parseLong(gagId)));
+			allGags =  GagDAO.getInstance().getAllGags();
+			if(allGags.containsKey(gagId)){
+				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
+				
+				session.setAttribute("gag", allGags.get(gagId));
+				//if here return viewGag
+			}
+			
 		} catch (SQLException e) {
-			//error page
-			System.out.println(e);
+			
 		}
-		
+		//when here return error page
 		return "viewGag";
 	}
 	
@@ -79,3 +88,5 @@ public class GagController {
 		return "getGags";
 	}
 }
+
+

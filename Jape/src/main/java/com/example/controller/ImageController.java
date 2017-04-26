@@ -22,7 +22,7 @@ import com.example.model.dao.UserDAO;
 @Controller
 public class ImageController {
 	
-	private static final String FILE_PATH = ("C:\\Users\\User\\Desktop\\IT Talents\\Jape\\Jape\\src\\main\\webapp\\WEB-INF\\views\\pics\\");
+	private static final String FILE_PATH = ("D:\\pics\\");
 
 	@RequestMapping (value="/image/{gagID}", method=RequestMethod.GET)
 	@ResponseBody
@@ -33,7 +33,7 @@ public class ImageController {
 		System.out.println(gagID);
 		System.out.println("=========================================/n=========");
 		Long id = Long.parseLong(gagID);
-		File file = new File(FILE_PATH + GagDAO.getInstance().getAllGags().get(id).getFullName());
+		File file = new File(FILE_PATH + GagDAO.getInstance().getAllGags().get(id).getGag());
 		Files.copy(file.toPath(), response.getOutputStream());
 	}
 }

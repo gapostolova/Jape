@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!--start-header-section-->
 			<div class="header-section">
 				<div class="continer">
-					<img src="profilePic/${sessionScope.user.getProfilePic() }" >
+					<img class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="150" >
 						<h1> <c:out value="${sessionScope.user.getUsername()}"></c:out></p></h1>
 							<p> <c:out value="${sessionScope.user.getDescription()}"></c:out></p>
 							<a href="#contact" class="scroll top"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
@@ -84,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<c:forEach var="gag" items="${sessionScope.userGags }">
 							<div class="container">
 							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
-								<img src="profileJapes/${gag.getGagID()}" height="450" width="650"/><br><br>
+								<img src="profileJapes/${gag.getGagID()}"  width="650"/><br><br>
 								
 								<hr>
 								<br>

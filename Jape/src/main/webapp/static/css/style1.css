@@ -96,11 +96,7 @@ span.glyphicon.glyphicon-triangle-bottom {
   color: #393b3a;
   padding: 1.1em 0 0 0;
   }
-.study-grid label {
-  font-size: 0.8em;
-  color: #9CA69D;
-  margin: 0 0 0 7px;
-}
+
 .progress {
 	margin: 10px 0;
 	 box-shadow: none;
@@ -124,7 +120,7 @@ span.glyphicon.glyphicon-triangle-bottom {
 .study-grid h4 {
   font-size: 1.3em;
   text-transform: capitalize;
-  color: rgb(29, 26, 26);
+  color: rgba(255,255,255,1);
   }
 .study1 {
   padding: 1em 0 0;
