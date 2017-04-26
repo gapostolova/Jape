@@ -44,9 +44,13 @@
 
     <!-- Page Content -->
     <div id="gags" class="container">
+    
+    			<c:if test="${sessionScope.gags == null}">
+    			<c:out value="No japes to show!"></c:out>
+    			</c:if>
 				<c:forEach var="gag" items="${sessionScope.gags }">
 				<c:out value="${gag.getTitle() }"></c:out><br> <br>
-				<img src="image/${gag.getGagID()}" width="300"/> <hr> <br> <br> <br>
+				<img src="image/${gag.getGagID()}" width="500"/> <hr> <br> <br> <br>
 				</c:forEach>
 
             <!-- Blog Sidebar Widgets Column -->

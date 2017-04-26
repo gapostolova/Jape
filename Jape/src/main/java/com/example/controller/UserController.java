@@ -120,7 +120,7 @@ public class UserController {
 			//<<display in console result..
 		 User user = (User) session.getAttribute("user");
 		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		 System.out.println("User  " + user.getUsername() + " logged out");
+		// System.out.println("User  " + user.getUsername() + " logged out");
 		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		 //>>
 		 	session.setAttribute("logged", false);

@@ -132,8 +132,6 @@ public class GagDAO {
 		return Collections.unmodifiableList(fresh);
 	}
 	
-	//categoryName=COSPLAY], categoryName=FUNNY], categoryName=GIF], categoryName=SAVAGE], categoryName=SPORT], ategoryName=WTF], categoryName=YUMMY]
-	
 	public List<Gag> categoryGags(String category) {
 		ArrayList<Gag> gags = new ArrayList<>();
 		

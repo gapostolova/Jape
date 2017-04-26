@@ -145,6 +145,14 @@ public class GagController {
 		return "index";
 	}
 	
+	@RequestMapping (value="/wtf", method=RequestMethod.GET)
+	public String getWTF(HttpServletRequest request) {
+		
+		gagLoader("wtf", request);
+		
+		return "index";
+	}
+	
 	@RequestMapping (value="/yummy", method=RequestMethod.GET)
 	public String getYummy(HttpServletRequest request) {
 		

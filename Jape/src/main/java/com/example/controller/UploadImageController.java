@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.model.Category;
 import com.example.model.Gag;
+import com.example.model.User;
 import com.example.model.dao.GagDAO;
 import com.example.model.dao.UserDAO;
 
@@ -40,13 +41,19 @@ public class UploadImageController {
 	
 	@RequestMapping(value="/upload", method=RequestMethod.GET)
 	public String prepareForUpload(HttpServletRequest request) {
-		try {
 		HttpSession session = request.getSession();
-		ArrayList<String> categories = new ArrayList<>();
-		for(Category cat : UserDAO.getInstance().getCategories()) {
-			categories.add(cat.getCategoryName());
+		
+		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+			return "redirect:/index";
 		}
- 		
+		
+		try {
+		
+			ArrayList<String> categories = new ArrayList<>();
+			for(Category cat : UserDAO.getInstance().getCategories()) {
+				categories.add(cat.getCategoryName());
+			}
+	 		
 			session.setAttribute("categories", categories);
 		} catch (SQLException e) {
 			//TODO error page
@@ -65,7 +72,7 @@ public class UploadImageController {
 			@RequestParam("userId") Long userId,
 			@RequestParam("nsfw") Boolean nsfw,
 			@RequestParam("isPublic") Boolean isPublic,
-			Model model, HttpServletRequest request) throws IOException{
+			Model model, HttpServletRequest request, HttpSession session) throws IOException{
 		try {
 			File fileOnDisk = new File(FILE_LOCATION + multiPartFile.getOriginalFilename());
 			Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -91,6 +98,10 @@ public class UploadImageController {
 			}
 			//insert into DB and collections
 			GagDAO.getInstance().addGag(newGag);
+			
+			//insert into users gags
+			User u = (User)session.getAttribute("user");
+			u.addGag(newGag);
 			
 			return "profile";
 		} catch (SQLException e) {

@@ -55,8 +55,7 @@
                 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collaps
-            e navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="index">Hot</a>
@@ -117,22 +116,27 @@
                     </li>
                      <li >
                      
-                        <a href="register" class="nav navbar-nav" >Sign up</a>
+                        <a href="register" class="btn btn-primary" >Sign up</a>
                     </li>
                     </c:if>
-                    <li>
+                    <li><div class="nav navbar-nav">
                     <form action="search" method="GET">
                     <div class="input-group">
-                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
+                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required></div>
                    </li>
                    <li>
-                        <span class="nav navbar-nav"></span>
+                        
                             <button class="btn btn-default" type="submit"></button>
                                 <span class="glyphicon glyphicon-search"></span>
                                 </li>
-
                                 </div>
-                                </form>
+                                </form>    
+                                <span class="nav navbar-nav"></span>  
+                   <c:if test ="${sessionScope.logged!=null }">
+						<c:if test ="${sessionScope.logged == 'true' }">                   
+                  <li><div class="nav navbar-nav">
+                        <a href="upload" class="btn btn-primary" >+ Upload</a></div>
+                    </li></c:if></c:if>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
