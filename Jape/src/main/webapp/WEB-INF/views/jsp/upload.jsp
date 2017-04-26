@@ -7,8 +7,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Upload</title>
+
+<script>
+$(document).ready(function(e) {
+    var $input = $('#refresh');
+
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
+</script>
+
+ 
 </head>
 <body>
+
+
+<input type="hidden" id="refresh" value="no">
+
 
 
 

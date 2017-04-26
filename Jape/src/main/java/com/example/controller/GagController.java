@@ -83,7 +83,11 @@ public class GagController {
 	}
 	
 	@RequestMapping (value="/index", method=RequestMethod.GET)
-	public String getHotGags(Model viewModel, HttpServletRequest request) throws SQLException {
+	public String getHotGags(Model viewModel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
 		
 		gagLoader("hot", request);
 		

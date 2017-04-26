@@ -33,9 +33,7 @@ public class ImageController {
 	//remove throws!!!!!!!!!
 	public void getImage(Model viewModel, @PathVariable("gagID") String gagID, HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, IOException {
 		UserDAO.getInstance().getAllUsers();
-		
-		System.out.println(gagID);
-		System.out.println("=========================================/n=========");
+
 		Long id = Long.parseLong(gagID);
 		File file = new File(FILE_PATH + GagDAO.getInstance().getAllGags().get(id).getGag());
 		Files.copy(file.toPath(), response.getOutputStream());

@@ -54,36 +54,44 @@ public class GagDAO {
 	}
 	
 	public void addGag(Gag gag) throws SQLException{
-		String sql = "INSERT INTO `9gag`.`gags` (`content`, `nsfw`, `title`, `points`, `user_id`, `public`, `type`) VALUES (?,?,?,?,?,?,?);";
-		
-		PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		pst.setString(1, gag.getGag());
-		pst.setBoolean(2, gag.isNsfw());
-		pst.setString(3, gag.getTitle());
-		pst.setInt(4, gag.getUpvotes());
-		pst.setLong(5, gag.getUserId());
-		pst.setBoolean(6, gag.isPublic());
-		pst.setString(7, gag.getType());
-		pst.executeUpdate();
-		
-		//add gagId
-	    ResultSet res = pst.getGeneratedKeys();
-		res.next();
-		long gagId = res.getLong(1);
-		gag.setGagID(gagId);
-		System.out.println("GAG V GAG DAO");
-		System.out.println(gag);
-		//add gags' categories ;(
-		for(Category cat : gag.getCategory()){
+		try {
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO `9gag`.`gags` (`content`, `nsfw`, `title`, `points`, `user_id`, `public`, `type`) VALUES (?,?,?,?,?,?,?);";
 			
-			sql = "INSERT INTO `9gag`.`gags_in_categories` (`gags_gag_id`, `categories_category_id`) VALUES (?, ?);";
-			pst = conn.prepareStatement(sql);
-			pst.setLong(1, gag.getGagID());
-			pst.setLong(2, cat.getCategoryID());
+			PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pst.setString(1, gag.getGag());
+			pst.setBoolean(2, gag.isNsfw());
+			pst.setString(3, gag.getTitle());
+			pst.setInt(4, gag.getUpvotes());
+			pst.setLong(5, gag.getUserId());
+			pst.setBoolean(6, gag.isPublic());
+			pst.setString(7, gag.getType());
 			pst.executeUpdate();
+			
+			//add gagId
+		    ResultSet res = pst.getGeneratedKeys();
+			res.next();
+			long gagId = res.getLong(1);
+			gag.setGagID(gagId);
+			System.out.println("GAG V GAG DAO");
+			System.out.println(gag);
+			//add gags' categories ;(
+			for(Category cat : gag.getCategory()){
+				
+				sql = "INSERT INTO `9gag`.`gags_in_categories` (`gags_gag_id`, `categories_category_id`) VALUES (?, ?);";
+				pst = conn.prepareStatement(sql);
+				pst.setLong(1, gag.getGagID());
+				pst.setLong(2, cat.getCategoryID());
+				pst.executeUpdate();
+			}
+			
+			UserDAO.getInstance().addGagToUser(gag);
+		} catch (SQLException e) {
+			System.out.println("GagDAO exception!");
+			conn.rollback();
+		} finally {
+			conn.setAutoCommit(true);
 		}
-		
-		UserDAO.getInstance().addGagToUser(gag);
 		
 	}
 	
