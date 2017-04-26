@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -23,6 +24,7 @@ public class UserDAO {
 	private	Connection conn = DBManager.getInstance().getConnection();
 	private boolean dataHasChanged = false;
 	private static UserDAO instance;
+	private static ArrayList<Category> categories;
 	
 	private UserDAO() {}
 	
@@ -360,6 +362,26 @@ public class UserDAO {
 				System.out.println("Couldn't close prepared statement.");
 			}
 		}
+	}
+	
+	public synchronized List<Category> getCategories() throws SQLException {
+		if(this.categories == null) { 
+			categories = new ArrayList<>();
+			PreparedStatement st = null;
+			
+			try {
+				String sql = "SELECT category_id, name FROM categories";
+				st = conn.prepareStatement(sql);
+				ResultSet res = st.executeQuery();
+				while(res.next()){
+					categories.add(new Category(res.getLong("category_id"), res.getString("name")));
+				}
+			} catch (final SQLException e) {
+				System.out.println("Error getting categories from DB");
+				throw e;
+			}
+		}
+		return Collections.unmodifiableList(this.categories);
 	}
 
 	

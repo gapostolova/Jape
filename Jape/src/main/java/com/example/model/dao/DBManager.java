@@ -8,9 +8,9 @@ public class DBManager {
 
     private static DBManager instance;
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/9gag";
-    private static final String USERNAME = "gabrislava";
-    private static final String PASSWORD = "jestiela";
+    private static final String DB_URL = "jdbc:mysql://192.168.8.22:3306/9gag";
+    private static final String USERNAME = "ittstudent";
+    private static final String PASSWORD = "ittstudent-123";
     private Connection conn;
 
     private DBManager() {
