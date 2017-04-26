@@ -55,49 +55,63 @@
                 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collaps
+            e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="index">Hot</a>
                     </li>
                     <li>
-                        <a href="trending">Trending</a>
+                        <a href="#">Trending</a>
                     </li>
                     <li>
-                        <a href="fresh">Fresh</a>
+                        <a href="#">Fresh</a>
                     </li>
-                    <li>
-                        <a href="cosplay">Cosplay</a>
-                    </li>
-                    <li>
-                        <a href="funny">Funny</a>
-                    </li>
-                    <li>
-                        <a href="gif">Gif</a>
-                    </li>
-                    <li>
-                        <a href="savage">Savage</a>
-                    </li>
-                    <li>
-                        <a href="sport">Sport</a>
-                    </li>
-                    <li>
-                        <a href="wtf">WTF?!</a>
-                    </li>
-                    <li>
-                        <a href="yummy">Yummy</a>
-                    </li>
+                     <li>
+                         <a href="cosplay">Cosplay</a>
+                     </li>
+                     <li>
+                         <a href="funny">Funny</a>
+                     </li>
+                     <li>
+                         <a href="gif">Gif</a>
+                     </li>
+                     <li>
+                         <a href="savage">Savage</a>
+                     </li>
+                     <li>
+                         <a href="sport">Sport</a>
+                     </li>
+                     <li>
+                         <a href="wtf">WTF?!</a>
+                     </li>
+                     <li>
+                         <a href="yummy">Yummy</a>
+                      </li>
                  
                     <c:if test ="${sessionScope.logged!=null }">
 						<c:if test ="${sessionScope.logged == 'true' }">
 						<li>
 						<div class="dropdownP">
-							<a href = "profile"><img class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="40" ></a>
+							<a href = "profile"><img class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="40" width="40" ></a>
 									<div class="dropdownP-content">	
 										<a href="profile">Profile</a><br><br>	
 									    <a href="account">Settings</a><br><br>
 									    <a href="logout">LogOut</a>
  									 </div>
+						</div>
+						
+							<li>
+						&nbsp&nbsp&nbsp
+						</li>
+						
+						</li>
+						<li><div class="nav navbar-nav">
+                        <a href="upload" class="btn btn-primary" >+ Upload</a></div>
+                    </li>
+						
+						
+						
 						</c:if>
 						
 						<c:if test ="${sessionScope.logged == 'false' }">
@@ -118,25 +132,24 @@
                      
                         <a href="register" class="btn btn-primary" >Sign up</a>
                     </li>
+                    
                     </c:if>
-                    <li><div class="nav navbar-nav">
-                    <form action="search" method="GET">
-                    <div class="input-group">
-                   <input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required></div>
-                   </li>
-                   <li>
-                        
-                            <button class="btn btn-default" type="submit"></button>
-                                <span class="glyphicon glyphicon-search"></span>
-                                </li>
-                                </div>
-                                </form>    
-                                <span class="nav navbar-nav"></span>  
-                   <c:if test ="${sessionScope.logged!=null }">
-						<c:if test ="${sessionScope.logged == 'true' }">                   
-                  <li><div class="nav navbar-nav">
-                        <a href="upload" class="btn btn-primary" >+ Upload</a></div>
-                    </li></c:if></c:if>
+                    
+ 						<li>
+						&nbsp&nbsp&nbsp
+						</li>
+						<li>
+                     		<form action="search" method="GET">
+                     			<div class="input-group">
+                   	 				<input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
+                   				</div>
+ 							</form>
+ 						 </li>
+						 <li>
+                         <span class="nav navbar-nav"></span>
+                             <button class="btn btn-default" type="submit"></button>
+                                 <span class="glyphicon glyphicon-search"></span>
+                                 </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
