@@ -21,10 +21,10 @@
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"> -->
     
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Jape/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="/Jape/css/blog-home.css" rel="stylesheet">
     
     
 
@@ -51,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index">Jape</a>
+                <a class="navbar-brand" href="/Jape/index">Jape</a>
                 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
             e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index">Hot</a>
+                        <a href="/Jape/index">Hot</a>
                     </li>
                     <li>
                         <a href="#">Trending</a>
@@ -68,36 +68,36 @@
                         <a href="#">Fresh</a>
                     </li>
                      <li>
-                         <a href="cosplay">Cosplay</a>
+                         <a href="/Jape/cosplay">Cosplay</a>
                      </li>
                      <li>
-                         <a href="funny">Funny</a>
+                         <a href="/Jape/funny">Funny</a>
                      </li>
                      <li>
-                         <a href="gif">Gif</a>
+                         <a href="/Jape/gif">Gif</a>
                      </li>
                      <li>
-                         <a href="savage">Savage</a>
+                         <a href="/Jape/savage">Savage</a>
                      </li>
                      <li>
-                         <a href="sport">Sport</a>
+                         <a href="/Jape/sport">Sport</a>
                      </li>
                      <li>
-                         <a href="wtf">WTF?!</a>
+                         <a href="/Jape/wtf">WTF?!</a>
                      </li>
                      <li>
-                         <a href="yummy">Yummy</a>
+                         <a href="/Jape/yummy">Yummy</a>
                       </li>
                  
                     <c:if test ="${sessionScope.logged!=null }">
 						<c:if test ="${sessionScope.logged == 'true' }">
 						<li>
 						<div class="dropdownP">
-							<a href = "profile"><img class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="40" width="40" ></a>
+							<a href = "/Jape/profile"><img class="img-rounded" src="/Jape/profilePic/${sessionScope.user.getProfilePic() }" height="40" width="40" ></a>
 									<div class="dropdownP-content">	
-										<a href="profile">Profile</a><br><br>	
-									    <a href="account">Settings</a><br><br>
-									    <a href="logout">LogOut</a>
+										<a href="/Jape/profile">Profile</a><br><br>	
+									    <a href="/Jape/account">Settings</a><br><br>
+									    <a href="/Jape/logout">LogOut</a>
  									 </div>
 						</div>
 						
@@ -116,21 +116,21 @@
 						
 						<c:if test ="${sessionScope.logged == 'false' }">
 							 <li >
-	                        	<a href="login" >Log in</a>
+	                        	<a href="/Jape/login" >Log in</a>
 	                   		 </li>
 	                    	 <li >
-	                        	<a   "href="register" class="btn btn-primary" >Sign up</a>
+	                        	<a   href="/Jape/register" class="btn btn-primary" >Sign up</a>
 	                   		 </li>
 						</c:if>
 					</c:if>
 					<c:if test ="${sessionScope.logged==null }">
 					
                       <li >
-                        <a href="login" >Log in</a>
+                        <a href="/Jape/login" >Log in</a>
                     </li>
                      <li >
                      
-                        <a href="register" class="btn btn-primary" >Sign up</a>
+                        <a href="/Jape/register" class="btn btn-primary" >Sign up</a>
                     </li>
                     
                     </c:if>

@@ -52,7 +52,7 @@ public class User {
 		setPassword(password);
 		setUserId(-1);
 		this.gender = "Unspecified";
-		this.profilePic = ".."+sep+"WebContent"+sep+"siteImages"+sep+"defaultProfilePic.jpg";
+		this.profilePic = "defaultProfilePic.jpg";
 		this.viewNsfwContent = false;
 		this.dateOfBirth = LocalDate.parse(defaultBirthday);
 		this.admin = false;

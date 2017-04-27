@@ -7,8 +7,8 @@
 <html>
 <head>
 <title><c:out value="${sessionScope.user.getUsername()}"></c:out> - Jape</title>
-<link href="css/bootstrap1.css" rel="stylesheet" type="text/css" media="all">
-<link href="css/style1.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/Jape/css/bootstrap1.css" rel="stylesheet" type="text/css" media="all">
+<link href="/Jape/css/style1.css" rel="stylesheet" type="text/css" media="all" />
 
 
 <!-- Settings css -->
@@ -17,24 +17,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
   
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="/Jape/css/style.css">
       <!-- end of settings css -->
 
   <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Jape/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="/Jape/css/blog-home.css" rel="stylesheet">
     
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="My Skills Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<script src="js/jquery-1.11.1.min.js"></script>
+<script src="/Jape/js/jquery-1.11.1.min.js"></script>
 <!---- start-smoth-scrolling---->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="/Jape/js/move-top.js"></script>
+<script type="text/javascript" src="/Jape/js/easing.js"></script>
  <script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$(".scroll").click(function(event){		
@@ -57,7 +57,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!--start-header-section-->
 			<div class="header-section">
 				<div class="continer">
-					<img  class="img-rounded" src="profilePic/${sessionScope.user.getProfilePic() }" height="150" >
+					<img  class="img-rounded" src="/Jape/profilePic/${sessionScope.user.getProfilePic() }" height="150" >
 						<h1> <c:out value="${sessionScope.user.getUsername()}"></c:out></p></h1>
 							<p> <c:out value="${sessionScope.user.getDescription()}"></c:out></p>
 							<a href="#contact" class="scroll top"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
@@ -202,7 +202,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <script src="js/index.js"></script>
+    <script src="/Jape/js/index.js"></script>
 
 <!--end of col-md-6 study-grid -->
 </div>

@@ -12,7 +12,7 @@
 
 <!--  not working with relative path -->
 
-<img src="C:\Users\Gabriela\Desktop\9gag\WebContent\siteImages\Error-Page.png" >
+<img src="/Jape/error/Error-Page.png" >
 
 
 </body>

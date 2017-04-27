@@ -33,12 +33,21 @@ public class ProfilePicController {
 	
 	private String vzemiToqImage;
 
-	//private static final String FILE_LOCATION = "D:\\pics\\";
-	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
+	private static final String FILE_LOCATION = "D:\\pics\\";
+	//private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
 	
+	@RequestMapping(value="error/{fileName}", method=RequestMethod.GET)
+	@ResponseBody
+	public void errorPag(@PathVariable("fileName") String fileName,HttpServletRequest request, HttpServletResponse resp, Model model) throws IOException {
+		
+			fileName = "Error-Page.png";
+		
+		
+		File file = new File(FILE_LOCATION + fileName);
+		Files.copy(file.toPath(), resp.getOutputStream());
+	}
 	
-	
-	@RequestMapping(value="/profilePic/{fileName}", method=RequestMethod.GET)
+	@RequestMapping(value="profilePic/{fileName}", method=RequestMethod.GET)
 	@ResponseBody
 	public void profilePic(@PathVariable("fileName") String fileName,HttpServletRequest request, HttpServletResponse resp, Model model) throws IOException {
 		HttpSession session = request.getSession();

@@ -152,6 +152,24 @@ select {
   transition: border-color .25s ease, box-shadow .25s ease;
 }
 
+.contact-details form textarea {
+    height: 244px;
+    resize: none;
+    width: 100%;
+}
+
+.contact-details form input[type="text"], .contact-details form textarea {
+    width: 100%;
+    padding: 1.5em 1em;
+    border: 1px solid #7ca17f;
+    font-size: 1.1em;
+    margin-bottom: 1.2em;
+    color: #Aac8ac;
+    outline: none;
+    background: transparent;
+    font-weight: 600;
+}
+
 input, textarea {
   font-size: 22px;
   display: block;

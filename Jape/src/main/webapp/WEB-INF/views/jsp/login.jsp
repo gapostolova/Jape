@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
   
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="/Jape/css/style.css">
 
   
 </head>
@@ -116,7 +116,7 @@
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <script src="js/index.js"></script>
+    <script src="/Jape/js/index.js"></script>
 
 </body>
 </html>

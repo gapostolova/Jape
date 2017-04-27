@@ -73,6 +73,26 @@ public class Gag implements Comparable<Gag> {
 	
 	}
 	
+	public List<Comment> motherShips(){
+		ArrayList<Comment> children = new ArrayList<>();
+		for(Comment c : comments){
+			 if(c.getMotherCommentId() == 0){
+				 children.add(c);
+			 }
+		}
+		return Collections.unmodifiableList(children);
+	}
+	
+	public List<Comment> commentsOfMother(long mothershipId){
+		ArrayList<Comment> children = new ArrayList<>();
+		for(Comment c : comments){
+			 if(c.getMotherCommentId() == mothershipId){
+				 children.add(c);
+			 }
+		}
+		return Collections.unmodifiableList(children);
+	}
+	
 	public long getUserId() {
 		return userId;
 	}

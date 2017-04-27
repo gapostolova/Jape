@@ -21,10 +21,10 @@
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"> -->
     
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Jape/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="/Jape/css/blog-home.css" rel="stylesheet">
     
     
 
@@ -50,7 +50,7 @@
     			</c:if>
 				<c:forEach var="gag" items="${sessionScope.gags }">
 				<c:out value="${gag.getTitle() }"></c:out><br> <br>
-				<img src="image/${gag.getGagID()}" width="500"/> <hr> <br> <br> <br>
+				<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}" width="500"/></a> <hr> <br> <br> <br>
 				</c:forEach>
 
             <!-- Blog Sidebar Widgets Column -->
@@ -61,10 +61,10 @@
                 </div>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="/Jape/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/Jape/js/bootstrap.min.js"></script>
    
     <!-- PopUp login 
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

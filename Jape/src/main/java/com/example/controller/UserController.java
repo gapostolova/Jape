@@ -100,6 +100,7 @@ public class UserController {
 				session.setAttribute("logged", true);
 				session.setAttribute("user", user );
 				session.setAttribute("userGags", user.myGags());
+				session.setAttribute("repliedTo", 0);
 				session.setAttribute("userId", UserDAO.getInstance().getAllUsers().get(email).getUserId());
 
 				System.out.println("kk, " + email + " has logged in");
@@ -143,6 +144,7 @@ public class UserController {
 		// System.out.println("User  " + user.getUsername() + " logged out");
 		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		 //>>
+		 session.removeAttribute("repliedTo");
 		 	session.setAttribute("logged", false);
 	        session.invalidate();
 	        return "redirect:/index";
@@ -224,6 +226,7 @@ public class UserController {
 						return "verified";
 					}
 					else { 
+						System.out.println(UserDAO.getInstance().verify(email,verificationKey));
 						session.setAttribute("verificationResult", "Sorry, could not verify :(");
 						return "notverified";
 					}

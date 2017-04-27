@@ -27,8 +27,20 @@ public class CommentDAO {
 		return instance;
 	}
 	
+	
+	
 	public synchronized void addComments(TreeSet<Comment> comments){
 		allComments.addAll(comments);
+	}
+	
+	
+	public boolean commentidExists(long id){
+		for(Comment c : allComments){
+			if(c.getCommentId() == id){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	//this should be boolean
@@ -59,7 +71,7 @@ public class CommentDAO {
 		System.out.println(comment);
 		Gag gag = GagDAO.getInstance().getGagById(comment.getGagId());
 		gag.addComment(comment);
-		
+		allComments.add(comment);
 		} catch (SQLException e) {
 			System.out.println("couldn't add comment in CommentDAO: " + e.getMessage());
 			conn.rollback();

@@ -15,9 +15,13 @@ class GlobalDefaultExceptionHandler {
   @ExceptionHandler(value = Exception.class)
   public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
 
-    if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
-      throw e;
-
+	
+    if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
+    	 System.out.println("There was a problem.... ");
+    	 System.out.println(e);
+    	throw e;
+    }
+   
     ModelAndView mav = new ModelAndView();
     mav.addObject("exception", e);
     mav.addObject("url", req.getRequestURL());

@@ -7,10 +7,10 @@
 <head>
 <title>Settings</title>
 
-<link href="css/bootstrap1.css" rel="stylesheet" type="text/css"
+<link href="/Jape/css/bootstrap1.css" rel="stylesheet" type="text/css"
 	media="all">
-<link href="css/style1.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/bootstrapProfileSettings.min.css" rel="stylesheet"
+<link href="/Jape/css/style1.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/Jape/css/bootstrapProfileSettings.min.css" rel="stylesheet"
 	type="text/css" media="all" />
 
 
@@ -19,10 +19,10 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="css/normalize.min.css">
+<link rel="stylesheet" href="/Jape/css/normalize.min.css">
 
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/Jape/css/style.css">
 <!-- end of settings css -->
 
 
@@ -36,12 +36,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
-<script src="js/jquery-1.11.1.min.js"></script>
+<script src="/Jape/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" charset="utf-8"
 	src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!---- start-smoth-scrolling---->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="/Jape/js/move-top.js"></script>
+<script type="text/javascript" src="/Jape/js/easing.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$(".scroll").click(function(event) {
@@ -292,7 +292,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script
 		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-	<script src="js/index.js"></script>
+	<script src="/Jape/js/index.js"></script>
 
 </body>
 </html>
