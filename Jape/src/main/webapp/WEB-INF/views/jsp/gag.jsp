@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!-- <%@ page errorPage="errorPage.jsp"%>-->
+<%@ page errorPage="errorPage.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -98,12 +98,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="social-icons">
 		<h3>Comments</h3>
 		<c:forEach var="comment" items="${sessionScope.gag.motherShips() }">
+		<c:out value="${ comment.getUserId()}"></c:out><br>
 			<c:out value="${ comment.getContent() }"></c:out><br>
-			<c:out value="${ comment.getCommentId()}"></c:out><br>
+			
 				
                           <button class="btn btn-default"style="font-size : 11px;height:30px;width:50px" type="submit" onClick ="<c:set var="repliedTo" value="${comment.getCommentId()}" scope="session"  />"><a href="#contact" class="scroll top">Reply</a></button><br><br>
 				<c:set var="i" value="${comment.getCommentId()}" scope="session"  />
 					<c:forEach var="child" items="${sessionScope.gag.commentsOfMother(sessionScope.i) }">
+					<c:out value="${ child.getUserId()}"></c:out><br>
 					&nbsp&nbsp&nbsp<c:out value="${child.getContent()}"></c:out><br>
 						 
 				<!--  <form action="/Jape/comment" method="post" >-->
