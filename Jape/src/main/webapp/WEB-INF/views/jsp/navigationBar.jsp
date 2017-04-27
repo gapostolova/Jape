@@ -62,10 +62,10 @@
                         <a href="/Jape/index">Hot</a>
                     </li>
                     <li>
-                        <a href="#">Trending</a>
+                        <a href="trending">Trending</a>
                     </li>
                     <li>
-                        <a href="#">Fresh</a>
+                        <a href="fresh">Fresh</a>
                     </li>
                      <li>
                          <a href="/Jape/cosplay">Cosplay</a>
@@ -109,9 +109,7 @@
 						<li><div class="nav navbar-nav">
                         <a href="upload" class="btn btn-primary" >+ Upload</a></div>
                     </li>
-						
-						
-						
+
 						</c:if>
 						
 						<c:if test ="${sessionScope.logged == 'false' }">

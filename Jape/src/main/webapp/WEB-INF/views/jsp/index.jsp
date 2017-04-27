@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+    <meta http-equiv="Cache-control" content="no-cache">
 
     <title>Jape</title>
 
@@ -35,10 +35,20 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+<script>
+$(document).ready(function(e) {
+    var $input = $('#refresh');
+
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
+</script>
+
+ 
 </head>
-
-
 <body>
+
+
+<input type="hidden" id="refresh" value="no">
 
 <jsp:include page="navigationBar.jsp" />
 

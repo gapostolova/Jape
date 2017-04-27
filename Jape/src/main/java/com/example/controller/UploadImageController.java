@@ -100,9 +100,9 @@ public class UploadImageController {
 			//insert into DB and collections
 			GagDAO.getInstance().addGag(newGag);
 			
-			//insert into users gags
-			User u = (User)session.getAttribute("user");
-			u.addGag(newGag);
+//			//insert into users gags
+//			User u = (User)session.getAttribute("user");
+//			u.addGag(newGag);
 			
 			return "profile";
 		} catch (SQLException e) {
@@ -110,7 +110,7 @@ public class UploadImageController {
 			//error page
 		}
 		
-		return "";
+		return "index";
 
 	}
 }

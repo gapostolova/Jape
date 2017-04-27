@@ -15,9 +15,20 @@
       <link rel="stylesheet" href="/Jape/css/style.css">
 
   
-</head>
+<script>
+$(document).ready(function(e) {
+    var $input = $('#refresh');
 
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
+</script>
+
+ 
+</head>
 <body>
+
+
+<input type="hidden" id="refresh" value="no">
 
 <jsp:include page="navigationBar.jsp" />
 
