@@ -1,9 +1,11 @@
 package com.example.model;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -11,9 +13,11 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.example.model.dao.GagDAO;
+import com.example.model.dao.UserDAO;
 
 public class User {
 	
+	private static final String DEFAULT_PROFILE_PIC_JPG = "defaultProfilePic.jpg";
 	private String username;
 	private String email;
 	private String password;
@@ -52,7 +56,7 @@ public class User {
 		setPassword(password);
 		setUserId(-1);
 		this.gender = "Unspecified";
-		this.profilePic = "defaultProfilePic.jpg";
+		this.profilePic = DEFAULT_PROFILE_PIC_JPG;
 		this.viewNsfwContent = false;
 		this.dateOfBirth = LocalDate.parse(defaultBirthday);
 		this.admin = false;
@@ -150,6 +154,7 @@ public class User {
 		}
 	}
 
+	
 
 	
 	public void setUserId(long userId) {
@@ -227,6 +232,17 @@ public class User {
 
 	public String getProfilePic() {
 		return profilePic;
+	}
+	
+	public String getProfilePicName(){	
+			String[] name = profilePic.split("\\.");
+			return name[0];
+	}
+	
+	public String getProfilePicType(){
+		String[] name = profilePic.split("\\.");
+			System.out.println(name[1]);
+			return name[1];
 	}
 
 	public String getGender() {

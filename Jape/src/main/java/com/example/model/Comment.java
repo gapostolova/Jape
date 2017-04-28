@@ -2,7 +2,11 @@ package com.example.model;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.TreeSet;
+
+import com.example.model.dao.UserDAO;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 
 
@@ -16,6 +20,7 @@ public class Comment implements Comparable<Comment> {
 	private String content;
 	private long motherCommentId;
 	private int upvotes;
+	private User user;
 	
 	//?? private TreeSet<Comment> replies;
 	//				komentirasht, gag, commentara
@@ -30,6 +35,49 @@ public class Comment implements Comparable<Comment> {
 		}
 		this.motherCommentId = motherCommentId;
 		this.upvotes = DEFAULT_UPVOTES;
+		
+	}
+	
+	public String userName(){
+		
+		try {
+			return UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(userId)).getUsername();
+		} catch (SQLException e) {
+			System.out.println(" could not get userName: "+ e.getMessage());
+		}
+		return "no name";
+		
+	}
+	
+	public String getProfilePicName(){
+	
+		try {
+			String pic= UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(userId)).getProfilePic();
+			String[] name = pic.split("\\.");
+//			System.out.println("=========================================="+pic);
+//			System.out.println(Arrays.toString(name));
+			return name[0];
+		} catch (SQLException e) {
+			System.out.println(" could not get userName: "+ e.getMessage());
+		}
+		
+		return "defaultProfilePic";
+	}
+	public String getProfilePicType(){
+		
+		try {
+			String pic =  UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(userId)).getProfilePic();
+			String[] name = pic.split("\\.");
+			System.out.println("=========================================="+pic);
+			System.out.println(Arrays.toString(name));
+			System.out.println(name[1]);
+			return name[1];
+		} catch (SQLException e) {
+			System.out.println(" could not get userName: "+ e.getMessage());
+		}
+		
+		
+		return "jpg";
 	}
 	
 	public void setUpvotes(int upvotes) {

@@ -194,6 +194,9 @@ public class UserDAO {
 	}
 	
 	
+	
+	
+	
 	public String getUserEmail(long userId) {
 		String email = null;
 		try {
@@ -374,6 +377,29 @@ public class UserDAO {
 			}
 		}
 		return Collections.unmodifiableList(this.categories);
+	}
+	
+	
+	//по userid da vryshta profile pic name
+	//username
+	
+	public String getUserProfilePic(long userId){
+		return allUsers.get(getUserEmail(userId)).getProfilePic();
+	}
+	
+	public String getUserUsername(long userId){
+		return allUsers.get(getUserEmail(userId)).getUsername();
+	}
+	
+	
+public User getUserById(long userId) throws SQLException{
+		
+		System.out.println("USer EXISTS?:" + UserDAO.getInstance().getAllUsers().containsKey(UserDAO.getInstance().getUserEmail(userId)));
+			if(UserDAO.getInstance().getAllUsers().containsKey(UserDAO.getInstance().getUserEmail(userId))){
+				return UserDAO.getInstance().getAllUsers().get(UserDAO.getInstance().getUserEmail(userId));
+			}
+			return null;
+	
 	}
 
 	

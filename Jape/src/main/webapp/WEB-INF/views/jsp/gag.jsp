@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page errorPage="errorPage.jsp" %>
+  <%@ page errorPage="errorPage.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -57,32 +57,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	});
 </script>
-
-
-
-
 <!---End-smoth-scrolling---->
+<script>
+$(document).ready(function(e) {
+    var $input = $('#refresh');
 
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
+
+
+</script>
+
+ 
 </head>
 <body>
+
+
+<input type="hidden" id="refresh" value="no">
 
 	<jsp:include page="navigationBar.jsp" />
 	<!--start-header-section-->
 	<div class="header-section">
 		<div class="continer">
 			<h1>
-				<c:out value="${sessionScope.gag.getTitle()}"></c:out>
+				<c:out value="${currentOpenGag.getTitle()}"></c:out>
 				</p>
 			</h1>
-			<img src="/Jape/image/${sessionScope.gag.getGagID()}" height="500">
+			<img src="/Jape/image/${currentOpenGag.getGagID()}" height="500">
 			<h6>Uploaded by:</h6>
-			<c:out value="${sessionScope.gag.getUserId() }"></c:out>
+			<a href="/Jape/profile/${currentOpenGag.getUserId()}"> <h6><c:out value="${currentOpenGag.userName() }"></c:out></h6></a>
 			<h2>Points:</h2>
-			<c:out value="${sessionScope.gag.getUpvotes() }"></c:out>
-			<h2>Comments:</h2>
-			<c:forEach var="comment" items="${sessionScope.gag.getComments() }">
-				<c:out value="${ comment.getContent() }"></c:out>
-			</c:forEach>
+			<c:out value="${currentOpenGag.getUpvotes() }"></c:out>
+			
 		</div>
 	</div>
 	<!--end header-section-->
@@ -95,34 +101,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 	<!--start-social-section-->
-	<div class="social-icons">
+	
+	<div  class="social-icons">
 		<h3>Comments</h3>
-		<c:forEach var="comment" items="${sessionScope.gag.motherShips() }">
-		<c:out value="${ comment.getUserId()}"></c:out><br>
-			<c:out value="${ comment.getContent() }"></c:out><br>
+		<c:forEach var="comment" items="${currentOpenGag.motherShips() }">
+		<a href="/Jape/profile/${comment.getUserId()}"><b><c:out value="${comment.userName()}"></c:out></a></b><br>
+		
+		<img class="img-rounded" src="/Jape/commentPic/${comment.getProfilePicName()}/${comment.getProfilePicType()}" height="40" >
+						
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp	<c:out value="${ comment.getContent() }"></c:out><br><br>
 			
-				
+				<!-- when comment a comment starts working 
                           <button class="btn btn-default"style="font-size : 11px;height:30px;width:50px" type="submit" onClick ="<c:set var="repliedTo" value="${comment.getCommentId()}" scope="session"  />"><a href="#contact" class="scroll top">Reply</a></button><br><br>
 				<c:set var="i" value="${comment.getCommentId()}" scope="session"  />
-					<c:forEach var="child" items="${sessionScope.gag.commentsOfMother(sessionScope.i) }">
+				<!-- child = child comment 
+				
+					<c:forEach var="child" items="${currentOpenGag.commentsOfMother(sessionScope.i) }">
 					<c:out value="${ child.getUserId()}"></c:out><br>
 					&nbsp&nbsp&nbsp<c:out value="${child.getContent()}"></c:out><br>
 						 
-				<!--  <form action="/Jape/comment" method="post" >-->
+				<!--  <form action="/Jape/comment" method="post" >
 						
-                            &nbsp&nbsp&nbsp<button class="btn btn-default"style="font-size : 11px;height:30px;width:50px" type="submit" onClick ="<c:set var="repliedTo" value="${comment.getCommentId()}" scope="session"  />"><a href="#contact" class="scroll top">Reply</a></button><br><br>
+					
+					  &nbsp&nbsp&nbsp<button class="btn btn-default"style="font-size : 11px;height:30px;width:50px" type="submit" id="submitButton" onClick ="<c:set var="repliedTo" value="${child.getCommentId()}" scope="session" />"><a href="#contact" class="scroll top">Reply</a></button><br><br>
+					
+				
          
-         <!--  </FORM> -->
-					</c:forEach>
+         <!--  </FORM> 
+					</c:forEach> -->
 		</c:forEach>
 	</div>
 	<!--end-social-section-->
+	
 	<!--start-contact-section-->
 	<div class="contact-section" id="contact">
 	
 		<div class="container">
 			<div class="contact-details">
-				 <form action="/Jape/comment" method="Post" >
+				 <form action="/Jape/comment/${currentOpenGag.getGagID()}" method="Post" >
 					<div class="col-md-6 contact-left">
 				<h4>Comment</h4>	     
              <div class="field-wrap">

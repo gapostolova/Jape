@@ -40,6 +40,27 @@ public class UserController {
 		return  "profile";
 	}
 	
+	
+	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET)
+	public String profiles(@PathVariable("userId") String id, Model model, HttpServletRequest request) throws SQLException {
+		if(!id.matches("[0-9]+")){
+			
+			return "redirect:/Jape/index";
+		}
+		Long userId = Long.valueOf(id);
+		System.out.println(UserDAO.getInstance().getAllUsers().get(UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(5))));
+		try {
+				model.addAttribute("profil",  UserDAO.getInstance().getUserById(userId) );
+				
+				return  "userProfile";
+			
+		} catch (SQLException e) {
+			System.out.println("profile/userId: " + e.getMessage());
+		}
+		
+		return  "errorPage";
+	}
+	
 	@RequestMapping(value="/settings", method=RequestMethod.GET)
 	public String settings(Model viewModel, HttpServletRequest request) {
 		HttpSession session = request.getSession();

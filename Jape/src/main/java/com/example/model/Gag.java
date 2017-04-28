@@ -2,6 +2,7 @@ package com.example.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -9,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
+
+import com.example.model.dao.UserDAO;
 
 public class Gag implements Comparable<Gag> {
 	
@@ -191,6 +194,17 @@ public class Gag implements Comparable<Gag> {
 				it.remove();
 		}
 		this.comments.remove(comment);
+	}
+	
+public String userName(){
+		
+		try {
+			return UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(userId)).getUsername();
+		} catch (SQLException e) {
+			System.out.println(" could not get userName: "+ e.getMessage());
+		}
+		return "no name";
+		
 	}
 	
 	public void deleteAllComments() {

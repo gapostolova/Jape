@@ -38,4 +38,20 @@ public class ImageController {
 		File file = new File(FILE_PATH + GagDAO.getInstance().getAllGags().get(id).getGag());
 		Files.copy(file.toPath(), response.getOutputStream());
 	}
+	
+	
+	@RequestMapping (value="/commentPic/{picName}/{type}", method=RequestMethod.GET)
+	@ResponseBody
+	//remove throws!!!!!!!!!
+	public void getPic(Model viewModel, @PathVariable("picName") String picName, @PathVariable("type") String picType, HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, IOException {
+		UserDAO.getInstance().getAllUsers();
+
+		String name = picName.toString();
+		String type = picType.toString();
+		String picture = name+ "." + type;
+		System.out.println(type);
+		System.out.println("************* picname: "+picture+"*************************");
+		File file = new File(FILE_PATH + picture);
+		Files.copy(file.toPath(), response.getOutputStream());
+	}
 }
