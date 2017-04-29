@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.sql.SQLException;
+import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.User;
-import com.example.model.UserManager;
 import com.example.model.dao.UserDAO;
 
 import com.example.model.dao.RegisterDAO;
@@ -72,6 +72,7 @@ public class UserController {
 	public String login(Model viewModel, HttpServletRequest request) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("pass");
+		
 		HttpSession session = request.getSession();
 		
 		try {
@@ -89,7 +90,7 @@ public class UserController {
 		
 		try {
 			String url = "";
-			if(UserManager.getInstance().validateLogin(email, password)) {
+			if(UserDAO.getInstance().validateLogin(email, password)) {
 				if(!UserDAO.getInstance().isVerified(email)){
 					session.setAttribute("notAMember", "Account not verified!");
 					System.out.println("Account not verified");
@@ -177,6 +178,7 @@ public class UserController {
 			return "register";
 		}
 		//if user is inserted into db
+		
 		try {
 			if(RegisterDAO.getInstance().register(username, email, password)){	
 				//should send email to verify account
@@ -354,5 +356,28 @@ public class UserController {
 		 
 		return "gagPage";
 		}
+	 
+	 @RequestMapping (value="/upvote", method=RequestMethod.GET)
+	 public String upvote(HttpServletRequest request, HttpSession session) {
+		 //check if gag id is not in likedGags
+		String gagIdS = (request.getParameter("gagId"));
+		Long gagId = Long.parseLong(gagIdS);
+		//if it's not there or it's there with -1 points - insert with 1 point
+		 User u = (User)session.getAttribute("user");
+		 System.out.println(u);
+		 System.out.println(gagId);
+		if(!u.getLikedGags().containsKey(gagId) ) {
+			u.getLikedGags().put(gagId, 1);
+			UserDAO.getInstance().vote(u.getUserId(), gagId, 1);
+			
+			System.out.println("voted");
+		} else if(u.getLikedGags().get(gagId) == -1) {
+			UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
+			System.out.println("switch-voted");
+		}
+
+		//return previous page 
+		return "index";
+	 }
 	 
 }

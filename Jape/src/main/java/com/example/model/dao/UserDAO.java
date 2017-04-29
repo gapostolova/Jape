@@ -376,6 +376,46 @@ public class UserDAO {
 		return Collections.unmodifiableList(this.categories);
 	}
 
+	public boolean validateLogin(String username, String password) throws SQLException {
+		System.out.println(username + " pass: "+ password);
+		return UserDAO.getInstance().getAllUsers().get(username).getPassword().equals(password);	
+	}
 	
+	public synchronized void vote(Long userId,Long gagId,int point) {
+		
+		String sql = "INSERT INTO 9gag.liked_gags (user_id, gag_id, points) VALUES(?,?,?);";
+		
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setLong(1, userId);
+			pst.setLong(2, gagId);
+			pst.setInt(3, point);
+			pst.executeUpdate();
+			System.out.println("vote successfull dao");
+			
+		} catch (SQLException e) {
+			System.out.println("vote unsuccessful dao");
+			e.printStackTrace();
+		}	
+	}
+	
+	public synchronized void switchVote(Long userId, Long gagId, int point) {
+		PreparedStatement pst;
+		try {
+			pst = conn.prepareStatement(
+					"UPDATE 9gag.liked_gags SET points = ? WHERE user_id = ? AND gag_id = ?;");
+			
+			pst.setLong(1, userId);
+			pst.setLong(2, gagId);
+			pst.setInt(2, point);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("error switch voting in dao");
+			e.printStackTrace();
+		}
+		
+	}
 		
 }

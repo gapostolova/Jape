@@ -33,8 +33,8 @@ public class ProfilePicController {
 	
 	private String vzemiToqImage;
 
-	private static final String FILE_LOCATION = "D:\\pics\\";
-	//private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
+//	private static final String FILE_LOCATION = "D:\\pics\\";
+	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
 	
 	@RequestMapping(value="error/{fileName}", method=RequestMethod.GET)
 	@ResponseBody

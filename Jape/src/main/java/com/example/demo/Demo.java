@@ -106,8 +106,11 @@ System.out.println("======================	FUNNY 	=======================\n");
 //				gag = g;
 //		}
 //		GagDAO.getInstance().deleteGag(gag);
+	User u = UserDAO.getInstance().getAllUsers().get(0);
 	
-	System.out.println(UserDAO.getInstance().getCategories().toString());
+	System.out.println(u);
+	
+
 	
 	}
 
