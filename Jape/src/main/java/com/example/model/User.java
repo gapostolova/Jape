@@ -303,15 +303,9 @@ public class User {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", email=" + email + ", password=" + password + ", userId=" + userId
-				+ ", viewNsfwContent=" + viewNsfwContent + ", profilePic=" + profilePic + ", gender=" + gender
-				+ ", dateOfBirth=" + dateOfBirth + ", description=" + description + ", admin=" + admin + ", isVerified="
-				+ isVerified + ", verificationKey=" + verificationKey + ", gags=" + gags + ",\n likedGags=" + likedGags
-				+ ", likedComments=" + likedComments + ", videos=" + videos + "]";
+		return "User [username=" + username + ", email=" + email + ", password=" + password + "\n";
 	}
 
 
@@ -320,5 +314,9 @@ public class User {
 			isVerified = true;
 		}
 		return isVerified;	
+	}
+	
+	public TreeMap<Long, Integer> getLikedGags() {
+		return this.likedGags;
 	}
 }

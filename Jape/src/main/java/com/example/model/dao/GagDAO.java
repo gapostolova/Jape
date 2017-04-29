@@ -199,9 +199,15 @@ public class GagDAO {
 			
 			pst.executeUpdate();
 			
+			PreparedStatement pstLikes = conn.prepareStatement("DELETE FROM 9gag.liked_gags WHERE gag_id = ?;");
+			pstLikes.setLong(1, gag.getGagID());
+			
+			pstLikes.executeUpdate();
+			
 			conn.commit();
 			
 			} catch (SQLException e) {
+				conn.rollback();
 				System.out.println("Could not delete gag in GagDAO: " + e.getMessage());
 				throw e;
 			} finally {

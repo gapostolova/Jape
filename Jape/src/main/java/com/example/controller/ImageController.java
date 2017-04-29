@@ -23,9 +23,9 @@ import com.example.model.dao.UserDAO;
 public class ImageController {
 	
 
-	private static final String FILE_PATH = ("D:\\pics\\");
+//	private static final String FILE_PATH = ("D:\\pics\\");
 
-//	private static final String FILE_PATH = ("/Users/user-05/Desktop/pics/");
+	private static final String FILE_PATH = ("/Users/user-05/Desktop/pics/");
 
 
 	@RequestMapping (value="/image/{gagID}", method=RequestMethod.GET)

@@ -402,6 +402,110 @@ public User getUserById(long userId) throws SQLException{
 	
 	}
 
+	public boolean validateLogin(String username, String password) throws SQLException {
+		System.out.println(username + " pass: "+ password);
+		return UserDAO.getInstance().getAllUsers().get(username).getPassword().equals(password);	
+	}
 	
+	public synchronized void vote(Long userId,Long gagId,int point) {
+		
+		String sql = "INSERT INTO 9gag.liked_gags (user_id, gag_id, points) VALUES(?,?,?);";
+		
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setLong(1, userId);
+			pst.setLong(2, gagId);
+			pst.setInt(3, point);
+			pst.executeUpdate();
+			System.out.println("vote successfull dao");
+			
+			if(point == 1) {
+				GagDAO.getInstance().getGagById(gagId).Upvote();
+				System.out.println("gag upvoted in itself");
+				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, 1);
+				System.out.println("put in user liked collections");
+			} else {
+				GagDAO.getInstance().getGagById(gagId).Downvote();;
+				System.out.println("gag downvoted in itself");
+				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, -1);
+				System.out.println("put in user liked collections");
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("vote unsuccessful dao");
+			e.printStackTrace();
+		}	
+	}
+	
+	public synchronized void switchVote(Long userId, Long gagId, int point) {
+		PreparedStatement pst;
+		try {
+			pst = conn.prepareStatement(
+					"UPDATE 9gag.liked_gags SET points = ? WHERE user_id = ? AND gag_id = ?;");
+			
+			pst.setLong(1, userId);
+			pst.setLong(2, gagId);
+			pst.setInt(3, point);
+			
+			pst.executeUpdate();
+			
+			System.out.println("success switch voting in dao");
+			
+			if(point == -1) {
+				
+				GagDAO.getInstance().getGagById(gagId).Downvote();
+				GagDAO.getInstance().getGagById(gagId).Downvote();
+				System.out.println("success switch voting in gag itself DOWN (decremented by two so 1 is -1 now");
+			} else {
+				
+				GagDAO.getInstance().getGagById(gagId).Upvote();
+				GagDAO.getInstance().getGagById(gagId).Upvote();
+				System.out.println("success switch voting in gag itself UP (incremented by two so -1 is 1 now");
+			}
+			
+			
+			
+			UserDAO.getInstance().getUserById(userId).addLikedGag(gagId, point);
+			System.out.println("switch voting collection done");
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("error switch voting in dao");
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void unvote(Long userId, Long gagId, int point) {
+		
+		PreparedStatement pst = null;
+		
+		
+		try {
+			pst = conn.prepareStatement(
+					"DELETE FROM 9gag.liked_gags WHERE user_id = ? AND gag_id = ?");
+			pst.setLong(1, userId);
+			pst.setLong(2, gagId);
+			
+			pst.executeUpdate();
+			System.out.println("disliked in userdao");
+			getUserById(userId).getLikedGags().remove(gagId);
+			System.out.println("removed from collection");
+			if(point == 1) {
+				GagDAO.getInstance().getGagById(gagId).Downvote();
+				System.out.println("decremented likes");
+			} else {
+				GagDAO.getInstance().getGagById(gagId).Upvote();
+				System.out.println("incremented likes");
+			}
+		} catch (SQLException e) {
+			System.out.println("error disliking");
+			e.printStackTrace();
+		}
+		
+	}
 		
 }
