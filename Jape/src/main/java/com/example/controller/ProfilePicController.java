@@ -59,7 +59,7 @@ public class ProfilePicController {
 			 fileName = user.getProfilePic();
 		}
 		
-		File file = new File(FILE_LOCATION + fileName);
+		File file = new File(FILE_LOCATION + fileName + ".jpeg");
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 	

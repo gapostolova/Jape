@@ -40,6 +40,27 @@ public class UserController {
 		return  "profile";
 	}
 	
+	
+	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET)
+	public String profiles(@PathVariable("userId") String id, Model model, HttpServletRequest request) throws SQLException {
+		if(!id.matches("[0-9]+")){
+			
+			return "redirect:/Jape/index";
+		}
+		Long userId = Long.valueOf(id);
+		System.out.println(UserDAO.getInstance().getAllUsers().get(UserDAO.getInstance().getUser(UserDAO.getInstance().getUserEmail(5))));
+		try {
+				model.addAttribute("profil",  UserDAO.getInstance().getUserById(userId) );
+				
+				return  "userProfile";
+			
+		} catch (SQLException e) {
+			System.out.println("profile/userId: " + e.getMessage());
+		}
+		
+		return  "errorPage";
+	}
+	
 	@RequestMapping(value="/settings", method=RequestMethod.GET)
 	public String settings(Model viewModel, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -346,10 +367,7 @@ public class UserController {
 		 }
 		return "accountSettings";
 		}
-	 
-	 
-	 
-	 
+
 	 
 	 @RequestMapping (value="/gagPage/{gagId}", method=RequestMethod.GET)
 		public String gagPage(@PathVariable("gagId") String id, HttpServletRequest request) {
@@ -366,18 +384,50 @@ public class UserController {
 		 User u = (User)session.getAttribute("user");
 		 System.out.println(u);
 		 System.out.println(gagId);
+		 
 		if(!u.getLikedGags().containsKey(gagId) ) {
-			u.getLikedGags().put(gagId, 1);
 			UserDAO.getInstance().vote(u.getUserId(), gagId, 1);
 			
-			System.out.println("voted");
+			System.out.println("voted in controller");
+			
 		} else if(u.getLikedGags().get(gagId) == -1) {
 			UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
 			System.out.println("switch-voted");
+			
+		} else {
+			UserDAO.getInstance().unvote(u.getUserId(), gagId, 1);
+			System.out.println("removed vote in controller");
 		}
 
 		//return previous page 
 		return "index";
 	 }
 	 
+	 @RequestMapping (value="/downvote", method=RequestMethod.GET)
+	 public String downvote(HttpServletRequest request, HttpSession session) {
+		 //check if gag id is not in likedGags
+			String gagIdS = (request.getParameter("gagId"));
+			Long gagId = Long.parseLong(gagIdS);
+			//if it's not there or it's there with -1 points - insert with 1 point
+			 User u = (User)session.getAttribute("user");
+			 System.out.println(u);
+			 System.out.println(gagId);
+			 
+			 if(!u.getLikedGags().containsKey(gagId) ) {
+					UserDAO.getInstance().vote(u.getUserId(), gagId, -1);
+					
+					System.out.println("voted in controller");
+					
+				} else if(u.getLikedGags().get(gagId) == 1) {
+					UserDAO.getInstance().switchVote(u.getUserId(), gagId, -1);
+					System.out.println("switch-voted");
+					
+				} else {
+					UserDAO.getInstance().unvote(u.getUserId(), gagId, -1);
+					System.out.println("removed vote in controller");
+				}
+
+				//return previous page 
+				return "index";
+			 }
 }

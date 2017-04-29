@@ -64,6 +64,8 @@ $(document).ready(function(e) {
 				<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}" width="500"/></a> 
 				<c:out value="${gag.getUpvotes() }"></c:out>
 				<a href="/Jape/upvote?gagId=${gag.getGagID()}">vote</a>
+				<a href="/Jape/downvote?gagId=${gag.getGagID()}">downvote</a>
+				
 				<hr> <br> <br> <br>
 				</c:forEach>
 

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import static org.mockito.Matchers.longThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 	
 	
 	@RequestMapping(value="/jape/{gagId}", method=RequestMethod.GET)
-	public String japeGet(@PathVariable ("gagId") String id, Model viewModel, HttpServletRequest request) {
+	public String japeGet(@PathVariable ("gagId") String id, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(!id.matches("[0-9]+")){
 			return "redirect:/Jape/index";
@@ -49,15 +50,16 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			allGags =  GagDAO.getInstance().getAllGags();
 			if(allGags.containsKey(gagId)){
 				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
-				session.setAttribute("gag", allGags.get(gagId));
-				//if here return viewGag
+				model.addAttribute("currentOpenGag", allGags.get(gagId));
+			//	session.setAttribute("gag", allGags.get(gagId));
+				
 				return "gag";
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Could not visualize individual gag: " + e.getMessage());
 		}
-	
+		
 		return  "index";
 	}
 	
@@ -80,34 +82,79 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		return  "gag";
 	}
 	
-	@RequestMapping(value="/comment", method=RequestMethod.POST)
-	public String postComment(Model viewModel, HttpServletRequest request) {
+	@RequestMapping(value="/comment/{gagId}", method=RequestMethod.POST)
+	public String postComment(@PathVariable ("gagId") String id, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		Gag gag=null;
+		
+		if( session.getAttribute("logged")==null||(boolean) session.getAttribute("logged")==false || session.getAttribute("user")==null || session.getAttribute("repliedTo")==null){
+			session.setAttribute("notAMember", "Log in to comment!");
+			return "redirect:/login";
+		}
+		
+		//if someone messed with the html
+		if(request.getParameter("message")==null || request.getParameter("message").trim().isEmpty()){
+			return "redirect:/index";
+		}
+	
+		
 		String content = request.getParameter("message");
 		User user =(User) session.getAttribute("user");
-		Gag gag = (Gag) session.getAttribute("gag");
+		
+		//if not correct url
+		if(!id.matches("[0-9]+")){
+			return "errorPage";
+		}
+		long gagId = Long.valueOf(id);
+		
+		Map<Long, Gag> allGags;
+		try {
+			allGags =  GagDAO.getInstance().getAllGags();
+			if(allGags.containsKey(gagId)){
+				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
+				gag =  allGags.get(gagId);
+				model.addAttribute("currentOpenGag",gag);
+				
+				
+			//	session.setAttribute("gag", allGags.get(gagId));	
+			}
+			else{
+				return "index";
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Could not visualize individual gag: " + e.getMessage());
+		}
+		
 		//TODO
 		//tuk mislq, che trqbva da se pazi v modela
 		//sega shte go napravq v sesiqta, za da raboti
 		//tova shte raboti samo ako nqma drugi otvoreni stranici...
 		//zashtoto togava gag shte se promeni, a ako sme natusnali na buton za otgovor, togava shte pishe comm na drugiq post
 		
-		if(session.getAttribute("repliedTo")==null || session.getAttribute("logged")==null ||(boolean) session.getAttribute("logged")==false){
-			session.setAttribute("notAMember", "Log in to comment!");
-			return "redirect:/login";
-		}
+		//TODO put repliedTo in model
+		
 		
 		if(content.trim().isEmpty()){
 			//set attribute to say that the comment was only spaces/empty
+			System.out.println("*** Empty content of comment... ****");
 			return "gag";
 		}
-		long mothershipId= (long) session.getAttribute("repliedTo");
-		session.setAttribute("repliedTo", 0);
-		System.out.println("**********"+mothershipId+"**********");
+		
+		if(session.getAttribute("repliedTo")==null){
+			session.setAttribute("repliedTo", 0l);
+		}
+		
+		//when comment a comment starts working
+		//long mothershipId = (long) session.getAttribute("repliedTo");
+		session.setAttribute("repliedTo", 0l);
+		long mothershipId = 0l;
+	//	System.out.println("**********"+mothershipId+"**********");
 		//pri log in setSessionAttr("repliedTo",0)
 		//pri log out removeSessionAttr("repliedTo)
 		
-		if(CommentDAO.getInstance().commentidExists(mothershipId)){
+		if(mothershipId== 0 || CommentDAO.getInstance().commentidExists(mothershipId)){
 			Comment com = new Comment(user.getUserId(), gag.getGagID(), DEFAULT_COMMENT_ID, LocalDateTime.now(), content, mothershipId);
 			try {
 				CommentDAO.getInstance().addComment(com);
@@ -121,8 +168,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		else{
 			return "errorPage";
 		}
-		
-		return  "gag";
+		return  ("redirect:/jape/"+gagId);
 	}
 	
 	 

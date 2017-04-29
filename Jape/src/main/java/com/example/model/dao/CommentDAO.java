@@ -34,6 +34,7 @@ public class CommentDAO {
 	}
 	
 	
+	
 	public boolean commentidExists(long id){
 		for(Comment c : allComments){
 			if(c.getCommentId() == id){
