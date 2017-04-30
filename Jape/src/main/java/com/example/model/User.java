@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -273,6 +274,16 @@ public class User {
 	
 	public Map<Long, Gag> getGags() {
 		return Collections.unmodifiableMap(gags);
+	}
+	
+	
+	
+	public List<Gag> commented(){
+		return GagDAO.getInstance().allCommentedGags(userId);
+	}
+	
+	public List<Gag> likedGags(){
+		return UserDAO.getInstance().likedGags(email,1);	
 	}
 	
 	@Override

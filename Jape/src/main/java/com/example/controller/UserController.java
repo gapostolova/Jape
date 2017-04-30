@@ -203,7 +203,7 @@ public class UserController {
 		try {
 			if(RegisterDAO.getInstance().register(username, email, password)){	
 				//should send email to verify account
-				session.setAttribute("registerResult", "verify");
+				session.setAttribute("registerResult", "Check your email. You should verify your acount!");
 				return "register";
 			}
 			else{
@@ -236,6 +236,7 @@ public class UserController {
 		try {
 			
 			if(!UserDAO.getInstance().exists(email)){
+				System.out.println("ne syshtestvuva toq email");
 				session.setAttribute("verificationResult", "acc not exist");
 				return "notverified";
 			}
@@ -250,12 +251,14 @@ public class UserController {
 					}
 					else { 
 						System.out.println(UserDAO.getInstance().verify(email,verificationKey));
+						System.out.println("ne yspq da go verificira");
 						session.setAttribute("verificationResult", "Sorry, could not verify :(");
 						return "notverified";
 					}
 				}	
 				else {
 					session.setAttribute("verificationResult", "Account already verified...");
+					System.out.println("already verified");
 					return "alreadyverified";
 					}
 			}

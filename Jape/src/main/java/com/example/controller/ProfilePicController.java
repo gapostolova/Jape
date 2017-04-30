@@ -33,8 +33,8 @@ public class ProfilePicController {
 	
 	private String vzemiToqImage;
 
-//	private static final String FILE_LOCATION = "D:\\pics\\";
-	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
+	private static final String FILE_LOCATION = "D:\\pics\\";
+//	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
 	
 	@RequestMapping(value="error/{fileName}", method=RequestMethod.GET)
 	@ResponseBody
@@ -59,7 +59,7 @@ public class ProfilePicController {
 			 fileName = user.getProfilePic();
 		}
 		
-		File file = new File(FILE_LOCATION + fileName + ".jpeg");
+		File file = new File(FILE_LOCATION + fileName );
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 	

@@ -507,5 +507,19 @@ public User getUserById(long userId) throws SQLException{
 		}
 		
 	}
+	
+	
+	// return list of liked/disliked gags depending on the parameter in ()
+		//1- liked/ -1 - disliked
+		public List<Gag> likedGags(String email, int like){
+			ArrayList<Gag> liked = new ArrayList<>();
+			User user = allUsers.get(email);
+			for(Long id : user.getLikedGags().keySet()){
+				if(user.getLikedGags().get(id) == like){
+					liked.add(GagDAO.getInstance().getGagById(id));
+				}
+			}
+			return Collections.unmodifiableList(liked);
+		}
 		
 }

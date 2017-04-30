@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-      <%@ page errorPage="errorPage.jsp" %>
+   <%@ page errorPage="errorPage.jsp" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,6 +42,14 @@ $(document).ready(function(e) {
 });
 </script>
 
+ <script type="text/javascript">
+function show(elementId) { 
+ document.getElementById("id1").style.display="none";
+ document.getElementById("id2").style.display="none";
+ document.getElementById("id3").style.display="none";
+ document.getElementById(elementId).style.display="block";
+}
+</script>
  
 </head>
 <body>
@@ -64,13 +72,13 @@ $(document).ready(function(e) {
             e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li style="font-size:20px">
-                        <a href="#">Japes</a>
+                        <a onclick="show('id1');">Japes</a>
                     </li>
                     <li style="font-size:20px">
-                        <a href="#">Liked</a>
+                        <a onclick="show('id2');">Liked</a>
                     </li>
                     <li style="font-size:20px">
-                        <a href="#">Commented</a>
+                        <a onclick="show('id3');">Commented</a>
                     </li>
                     </ul>
                     </div>
@@ -84,7 +92,16 @@ $(document).ready(function(e) {
 			
 					<!--start-social-section-->
 				<div class="social-icons">
-				<h3>My Japes</h3>
+				
+				<div  id="id1">
+				<c:if test="${profil.myGags().isEmpty() }">
+						<h3>I don't have any japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.myGags().isEmpty() }">
+						<h3>My Japes</h3>
+						</c:if>
+						
+				
 			<div class="container">
 						
 						<c:forEach var="gag" items="${profil.myGags()}">
@@ -101,6 +118,61 @@ $(document).ready(function(e) {
 						
 						
 							</div>
+					</div>
+							
+							
+					<div style="display:none"  id="id2">	
+						<c:if test="${profil.likedGags().isEmpty()}">
+						<h3>No liked japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.likedGags().isEmpty()}">
+						<h3>Liked Japes</h3>
+						</c:if>
+				<div class="container">
+						
+						<c:forEach var="gag" items="${profil.likedGags() }">
+							<div class="container">
+							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
+
+								<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}"  width="650"/></a><br><br>
+
+								
+								<hr>
+								<br>
+								</div>
+						</c:forEach>
+						
+						
+							</div>
+						</div>
+						 
+						
+						<div style="display:none" id="id3">	
+						<c:if test="${profil.commented().isEmpty()}">
+						<h3>No commented japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.commented().isEmpty()}">
+						<h3>Commented Japes</h3>
+						</c:if>
+				<div class="container">
+						
+						<c:forEach var="jape" items="${profil.commented()}">
+						
+							<div class="container">
+							<h2><c:out value="${jape.getTitle()}"></c:out></h2>
+
+								<a href="/Jape/jape/${jape.getGagID()}"><img src="/Jape/image/${jape.getGagID()}"  width="650"/></a><br><br>
+
+								
+								<hr>
+								<br>
+								</div>
+						</c:forEach>
+						
+						
+							</div>
+						</div>
+						</div>
 							<!--end-social-section-->
 							<!--start-contact-section-->
 						<div class="contact-section" id="contact">

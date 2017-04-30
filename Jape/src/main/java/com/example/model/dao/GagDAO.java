@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.example.model.User;
 import com.example.model.Gag;
@@ -96,6 +97,23 @@ public class GagDAO {
 	}
 	
 	
+	
+	public List<Gag> allCommentedGags(long userId){
+		TreeSet<Gag> commentedGags = new TreeSet<>();
+		for(long gagId: allGags.keySet()){
+			Gag gag = allGags.get(gagId);
+			List<Comment> comments = gag.getComments();
+			
+				for(Comment comment: comments){
+					if(comment.getUserId() == userId)
+						commentedGags.add(gag);
+				}
+			
+		}
+		ArrayList<Gag> comGagList= new ArrayList<>();
+		comGagList.addAll(commentedGags);
+		return Collections.unmodifiableList(comGagList);
+	}
 	
 	
 	public List<Gag> hotGags(){
