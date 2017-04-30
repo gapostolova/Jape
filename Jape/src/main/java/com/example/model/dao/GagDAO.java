@@ -119,12 +119,14 @@ public class GagDAO {
 	public List<Gag> hotGags(){
 		//TreeMap<Long, Gag> hot = new TreeMap<>();
 		ArrayList<Gag> hot = new ArrayList<>();
+		TreeSet<Gag> gags = new TreeSet<>();
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() >= MIN_HOT_GAG_UPVOTES){
 				//hot.put(gag.getGagID(), gag);
-				hot.add(gag);
+				gags.add(gag);
 			}
 		}
+		hot.addAll(gags);
 		//return Collections.unmodifiableMap(hot);
 		return Collections.unmodifiableList(hot);
 	}
@@ -132,13 +134,14 @@ public class GagDAO {
 	public List<Gag> trendingGags(){
 		//TreeMap<Long, Gag> trending = new TreeMap<>();
 		ArrayList<Gag> trending = new ArrayList<>();
-		
+		TreeSet<Gag> gags = new TreeSet<>();
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_HOT_GAG_UPVOTES && gag.getUpvotes() >= MIN_TRENDING_GAG_UPVOTES){
 				//trending.put(gag.getGagID(), gag);
-				trending.add(gag);
+				gags.add(gag);
 			}
 		}
+		trending.addAll(gags);
 		//return Collections.unmodifiableMap(trending);
 		return Collections.unmodifiableList(trending);
 	}
@@ -147,26 +150,29 @@ public class GagDAO {
 	public List<Gag> freshGags(){
 		//TreeMap<Long, Gag> fresh = new TreeMap<>();
 		ArrayList<Gag> fresh = new ArrayList<>();
-				
+				TreeSet<Gag> gags = new TreeSet<>();
 		for(Gag gag : allGags.values()){
 			if(gag.getUpvotes() < MIN_TRENDING_GAG_UPVOTES){
 				//fresh.put(gag.getGagID(), gag);
-				fresh.add(gag);
+				
+				gags.add(gag);
 			}
 		}
 		//return Collections.unmodifiableMap(fresh);
+		fresh.addAll(gags);
 		return Collections.unmodifiableList(fresh);
 	}
 	
 	public List<Gag> categoryGags(String category) {
 		ArrayList<Gag> gags = new ArrayList<>();
-		
+		TreeSet<Gag> japes = new TreeSet<>();
 		for(Gag gag : allGags.values()) {
 			if(gag.containsCategory(category)) {
-				gags.add(gag);
+				japes.add(gag);
 			}
 		}
 		
+		gags.addAll(japes);
 		return Collections.unmodifiableList(gags);
 		
 	} 

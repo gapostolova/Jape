@@ -61,14 +61,14 @@ public class Demo {
 //	
 //System.out.println("======================	TRENDING 	=======================\n");
 //	
-//	List TREN = GagDAO.getInstance().trendingGags();
+	List TREN = GagDAO.getInstance().trendingGags();
 //	System.out.println(TREN);
 //	
 //	
-//System.out.println("======================	FRESH 	=======================\n");
-//	
-//	List fresh = GagDAO.getInstance().freshGags();
-//	System.out.println(fresh);
+System.out.println("======================	FRESH 	=======================\n");
+	
+	List fresh = GagDAO.getInstance().freshGags();
+	System.out.println(fresh);
 //	
 //	System.out.println("======================	ALL 	=======================\n");
 //	

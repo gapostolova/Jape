@@ -266,9 +266,11 @@ public class User {
 	
 	public ArrayList<Gag> myGags(){
 		ArrayList<Gag> gags = new ArrayList<>();
+		TreeSet<Gag> myG = new TreeSet<>();
 		for(Gag gag :  this.gags.values()){
-			gags.add(gag);
+			myG.add(gag);
 		}
+		gags.addAll(myG);
 		return gags;
 	}
 	
