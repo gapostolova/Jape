@@ -88,7 +88,7 @@ public class GagDAO {
 			
 			UserDAO.getInstance().addGagToUser(gag);
 		} catch (SQLException e) {
-			System.out.println("GagDAO exception!");
+			System.out.println("GagDAO exception! + " + e.getMessage());
 			conn.rollback();
 		} finally {
 			conn.setAutoCommit(true);

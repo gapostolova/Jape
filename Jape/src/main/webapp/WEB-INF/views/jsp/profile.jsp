@@ -93,16 +93,16 @@ function show(elementId) {
 					<!--start-social-section-->
 				<div class="social-icons" >
 				<div  id="id1">
-				<c:if test="${sessionScope.userGags.isEmpty() }">
+				<c:if test="${sessionScope.user.myGags().isEmpty() }">
 						<h3>You don't have any japes yet..</h3>
 						</c:if>
-						<c:if test="${!sessionScope.userGags.isEmpty() }">
+						<c:if test="${!sessionScope.user.myGags().isEmpty() }">
 						<h3>My Japes</h3>
 						</c:if>
 				
 			<div class="container">
 						
-						<c:forEach var="gag" items="${sessionScope.userGags }">
+						<c:forEach var="gag" items="${sessionScope.user.myGags() }">
 							<div class="container">
 							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
 

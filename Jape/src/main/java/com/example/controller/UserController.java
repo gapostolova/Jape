@@ -243,14 +243,15 @@ public class UserController {
 			else { 
 				 
 				if(!UserDAO.getInstance().isVerified(email)){
-					if(UserDAO.getInstance().verify(email,verificationKey)) {
+					boolean verifying = UserDAO.getInstance().verify(email,verificationKey);
+					if(verifying) {
 						System.out.println("Account verified!");
 					
 						session.setAttribute("verificationResult", "Account verified!");
 						return "verified";
 					}
 					else { 
-						System.out.println(UserDAO.getInstance().verify(email,verificationKey));
+						System.out.println(verifying);
 						System.out.println("ne yspq da go verificira");
 						session.setAttribute("verificationResult", "Sorry, could not verify :(");
 						return "notverified";

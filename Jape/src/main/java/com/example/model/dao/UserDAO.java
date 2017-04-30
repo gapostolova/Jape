@@ -44,6 +44,10 @@ public class UserDAO {
 		
 	}
 	
+	public void addUser(User user){
+		allUsers.put(user.getEmail(), user);
+	}
+	
 	public synchronized Map<String , User> getAllUsers() throws SQLException {
 		
 		if(allUsers.isEmpty() || dataHasChanged == true){
@@ -178,13 +182,18 @@ public class UserDAO {
 
 	public synchronized boolean verify(String email, String verificationKey) throws SQLException {
 		if(exists(email)){
-			User user = getAllUsers().get(email);
+			if(allUsers.get(email).verify(verificationKey)){
+			System.out.println("email exists in verify in UserDAO");
+			User user = allUsers.get(email);
 			user.verify(verificationKey);
 			String sql = "UPDATE users SET is_verified='1' WHERE email=?";
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, email);
 			st.executeUpdate();
+			
+			System.out.println(getAllUsers().get(email).isVerified() + "dali e verificiran, promenlivata v user in UserDAO");
 			return getAllUsers().get(email).isVerified();
+			}
 		}
 		return false;
 	}
