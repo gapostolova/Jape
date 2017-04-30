@@ -139,16 +139,19 @@
 						</li>
 						<li>
                      		<form action="search" method="GET">
-                     			<div class="input-group">
+                     		<div class="round-text">
+                     		<!-- 	<div class="input-group">  -->
                    	 				<input type="text" class="form-control" name="keyword" placeholder="Search jape..." value="" required>
                    				</div>
- 							</form>
+ 							
  						 </li>
 						 <li>
-                         <span class="nav navbar-nav"></span>
-                             <button class="btn btn-default" type="submit"></button>
-                                 <span class="glyphicon glyphicon-search"></span>
+                        
+                             &nbsp<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                 
                                  </li>
+                             <!--    </div> -->  
+                                 </form>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

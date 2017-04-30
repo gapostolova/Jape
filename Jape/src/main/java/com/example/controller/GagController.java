@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -191,13 +192,14 @@ public class GagController {
 		String keyword = request.getParameter("keyword").toLowerCase().trim();
 		String[] keywords = keyword.split(" ");
 		
+		HashSet<Gag> tempGags = new HashSet<>();
 		ArrayList<Gag> searchResult = new ArrayList<>();
 		
 		try {
 			for(Gag gag : GagDAO.getInstance().getAllGags().values()) {
 				for (int i = 0; i < keywords.length; i++) {
 					if(gag.getTitleLower().contains(keywords[i]))
-						searchResult.add(gag);
+						tempGags.add(gag);
 				}
 			}
 		} catch (SQLException e) {
@@ -205,6 +207,7 @@ public class GagController {
 			//error page
 		}
 		
+		searchResult.addAll(tempGags);
 		session.setAttribute("gags", searchResult.size() > 0?searchResult:null);
 		
 		return "index";
