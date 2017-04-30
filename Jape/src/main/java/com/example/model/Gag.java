@@ -1,15 +1,14 @@
 package com.example.model;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Base64;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
-import org.apache.commons.io.FileUtils;
+
 
 import com.example.model.dao.UserDAO;
 
@@ -234,5 +233,31 @@ public String userName(){
 				return true;
 		}
 		return false;
+	}
+
+
+	//hashcode by gagId - used in search
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (gagID ^ (gagID >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Gag other = (Gag) obj;
+		if (gagID != other.gagID)
+			return false;
+		return true;
 	}
 }
