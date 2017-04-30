@@ -24,20 +24,14 @@ import com.example.model.dao.UserDAO;
 @Controller
 public class GagController {
 		
-//	private Gag getGag(int page, int position) throws SQLException {
-//		UserDAO.getInstance().getAllUsers();
-//		GagDAO.getInstance().getAllGags();
-//		
-//		Gag gag = GagDAO.getInstance().hotGags().get(page * 3 + position);
-//		
-//		return gag;
-//	}
+	static enum Categories {HOT, TRENDING, FRESH, COSPLAY, FUNNY, GIF, SAVAGE, SPORT, WTF, YUMMY};
 
-	private void gagLoader(String category,  HttpServletRequest request) {
+	private void gagLoader(Categories category,  HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		GagDAO gd = GagDAO.getInstance();
-		switch (category) {
-		case "hot":			
+		
+		switch(category) {
+		case HOT:			
 			
 			try {
 				UserDAO.getInstance().getAllUsers();
@@ -49,33 +43,33 @@ public class GagController {
 			session.setAttribute("gags", gd.hotGags());
 			break;
 
-		case "trending":
+		case TRENDING:
 			session.setAttribute("gags", gd.trendingGags());
 			break;
 			
-		case "fresh":
+		case FRESH:
 			session.setAttribute("gags", gd.freshGags());
 			break;
 			
-		case "cosplay":
+		case COSPLAY:
 			session.setAttribute("gags", gd.categoryGags("cosplay"));
 			break;
-		case "funny":
-			session.setAttribute("gags", gd.categoryGags("cosplay"));
+		case FUNNY:
+			session.setAttribute("gags", gd.categoryGags("funny"));
 			break;
-		case "gif":
+		case GIF:
 			session.setAttribute("gags", gd.categoryGags("gif"));
 			break;
-		case "savage":
+		case SAVAGE:
 			session.setAttribute("gags", gd.categoryGags("savage"));
 			break;
-		case "sport":
+		case SPORT:
 			session.setAttribute("gags", gd.categoryGags("sport"));
 			break;
-		case "wtf":
+		case WTF:
 			session.setAttribute("gags", gd.categoryGags("wtf"));
 			break;
-		case "yummy":
+		case YUMMY:
 			session.setAttribute("gags", gd.categoryGags("yummy"));
 			break;
 		
@@ -90,7 +84,7 @@ public class GagController {
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
 		
-		gagLoader("hot", request);
+		gagLoader(Categories.HOT, request);
 		
 		return "index";
 	}
@@ -98,7 +92,7 @@ public class GagController {
 	@RequestMapping (value="/trending", method=RequestMethod.GET)
 	public String getTrendingGags(HttpServletRequest request) {
 		
-		gagLoader("trending", request);
+		gagLoader(Categories.TRENDING, request);
 		
 		return "index";
 	}
@@ -106,7 +100,7 @@ public class GagController {
 	@RequestMapping (value="/fresh", method=RequestMethod.GET)
 	public String getFreshGags(HttpServletRequest request) {
 		
-		gagLoader("fresh", request);
+		gagLoader(Categories.FRESH, request);
 		
 		return "index";
 	}
@@ -114,7 +108,7 @@ public class GagController {
 	@RequestMapping (value="/cosplay", method=RequestMethod.GET)
 	public String getCosplay(HttpServletRequest request) {
 		
-		gagLoader("cosplay", request);
+		gagLoader(Categories.COSPLAY, request);
 		
 		return "index";
 	}
@@ -122,7 +116,7 @@ public class GagController {
 	@RequestMapping (value="/funny", method=RequestMethod.GET)
 	public String getFunny(HttpServletRequest request) {
 		
-		gagLoader("funny", request);
+		gagLoader(Categories.FUNNY, request);
 		
 		return "index";
 	}
@@ -130,7 +124,7 @@ public class GagController {
 	@RequestMapping (value="/gif", method=RequestMethod.GET)
 	public String getGif(HttpServletRequest request) {
 		
-		gagLoader("gif", request);
+		gagLoader(Categories.GIF, request);
 		
 		return "index";
 	}
@@ -138,7 +132,7 @@ public class GagController {
 	@RequestMapping (value="/savage", method=RequestMethod.GET)
 	public String getSavage(HttpServletRequest request) {
 		
-		gagLoader("savage", request);
+		gagLoader(Categories.SAVAGE, request);
 		
 		return "index";
 	}
@@ -146,7 +140,7 @@ public class GagController {
 	@RequestMapping (value="/sport", method=RequestMethod.GET)
 	public String getSport(HttpServletRequest request) {
 		
-		gagLoader("sport", request);
+		gagLoader(Categories.SPORT, request);
 		
 		return "index";
 	}
@@ -154,7 +148,7 @@ public class GagController {
 	@RequestMapping (value="/wtf", method=RequestMethod.GET)
 	public String getWTF(HttpServletRequest request) {
 		
-		gagLoader("wtf", request);
+		gagLoader(Categories.WTF, request);
 		
 		return "index";
 	}
@@ -162,7 +156,7 @@ public class GagController {
 	@RequestMapping (value="/yummy", method=RequestMethod.GET)
 	public String getYummy(HttpServletRequest request) {
 		
-		gagLoader("yummy", request);
+		gagLoader(Categories.YUMMY, request);
 		
 		return "index";
 	}
