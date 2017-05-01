@@ -49,6 +49,7 @@ $(document).ready(function(e) {
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -68,28 +69,28 @@ $(document).ready(function(e) {
 	</div><br><br><br><br><br><br>
 	
 	
-	<h3><c:out value="Is it safe for work?"></c:out></h3>
+	<h3>&nbsp&nbsp<c:out value="Is it safe for work?"></c:out></h3>
 	<div class="radio">
-	<input type="radio" id="nsfw" name="nsfw" value="false" checked><h4>It's safe</h4></div>
+	<input type="radio" id="nsfw" name="nsfw" value="false" checked><h4>&nbsp&nbspIt's safe</h4></div>
 	<div class="radio">
-  	<input type="radio" id="nsfw" name="nsfw" value="true"><h4>It's raunchy</h4></div><br>
+  	<input type="radio" id="nsfw" name="nsfw" value="true"><h4>&nbsp&nbspIt's raunchy</h4></div><br>
   
-  <h3><c:out value="Is this a private jape?"></c:out></h3>
+  <h3>&nbsp&nbsp<c:out value="Is this a private jape?"></c:out></h3>
   <div class="radio">
-  <input type="radio" id="isPublic" name="isPublic" value="true" checked> <h4>Show it to the world</h4></div>
+  <input type="radio" id="isPublic" name="isPublic" value="true" checked><h4>&nbsp&nbspShow it to the world</h4></div>
   <div class="radio">
-  <input type="radio" id="isPublic" name="isPublic" value="false"><h4>It's private</h4></div><br>
-  <h3><c:out value="Select categories: "></c:out></h3>
+  <input type="radio" id="isPublic" name="isPublic" value="false"><h4>&nbsp&nbspIt's private</h4></div><br>
+  <h3>&nbsp&nbsp<c:out value="Select categories: "></c:out></h3>
   
   <c:forEach var="category" items="${ sessionScope.categories }">
   <div class="checkbox">
-  <input  type="checkbox" id="checkbox" name="category" value="${ category}"><h5><c:out value="${category.toLowerCase() }"></c:out></h5>
+  <input  type="checkbox" id="checkbox" name="category" value="${ category}"><h5>&nbsp&nbsp<c:out value="${category.toLowerCase() }"></c:out></h5>
   </div>
   </c:forEach>
   
 
   <br>
-	<button class="btn btn-primary" type="submit">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspUpload now&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-upload"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+	&nbsp<button class="btn btn-primary" type="submit">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspUpload now&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-upload"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
 </form>
 
 
