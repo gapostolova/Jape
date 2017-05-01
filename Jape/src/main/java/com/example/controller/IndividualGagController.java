@@ -51,6 +51,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			if(allGags.containsKey(gagId)){
 				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
 				model.addAttribute("currentOpenGag", allGags.get(gagId));
+				model.addAttribute("gagId", gagId);
 			//	session.setAttribute("gag", allGags.get(gagId));
 				
 				return "gag";

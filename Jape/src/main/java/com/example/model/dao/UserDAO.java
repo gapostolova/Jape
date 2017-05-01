@@ -450,7 +450,7 @@ public User getUserById(long userId) throws SQLException{
 				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, 1);
 				System.out.println("put in user liked collections");
 			} else {
-				GagDAO.getInstance().getGagById(gagId).Downvote();;
+				GagDAO.getInstance().getGagById(gagId).Downvote();
 				System.out.println("gag downvoted in itself");
 				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, -1);
 				System.out.println("put in user liked collections");
@@ -464,9 +464,10 @@ public User getUserById(long userId) throws SQLException{
 		}	
 	}
 	
-	public synchronized void switchVote(Long userId, Long gagId, int point) {
+	public synchronized void switchVote(Long userId, Long gagId, int point) throws SQLException {
 		PreparedStatement pst;
 		try {
+			conn.setAutoCommit(false);
 			pst = conn.prepareStatement(
 					"UPDATE 9gag.liked_gags SET points = ? WHERE user_id = ? AND gag_id = ?;");
 			
@@ -495,16 +496,18 @@ public User getUserById(long userId) throws SQLException{
 			UserDAO.getInstance().getUserById(userId).addLikedGag(gagId, point);
 			System.out.println("switch voting collection done");
 			
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
 			System.out.println("error switch voting in dao");
 			e.printStackTrace();
+		} finally {
+			conn.setAutoCommit(true);
 		}
 		
 	}
 
-	public void unvote(Long userId, Long gagId, int point) {
+	public synchronized void unvote(Long userId, Long gagId, int point) {
 		
 		PreparedStatement pst = null;
 		
