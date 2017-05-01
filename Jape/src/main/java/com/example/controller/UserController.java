@@ -1,6 +1,11 @@
 package com.example.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.model.Category;
+import com.example.model.Gag;
 import com.example.model.User;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.GagDAO;
@@ -54,13 +62,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/settings", method=RequestMethod.GET)
-	public String settings(Model viewModel, HttpServletRequest request) {
+	public String settingsGet(Model viewModel, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
 			return "redirect:/index";
 		}
 		return  "profileSettings";
 	}
+	
+	
+	
 	
 	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public String loginGeft(Model viewModel, HttpServletRequest request) {

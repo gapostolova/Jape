@@ -2527,6 +2527,9 @@ input[type="checkbox"] {
   line-height: normal;
 }
 input[type="file"] {
+	    align-items: baseline;
+    color: inherit;
+    text-align: start;
   display: block;
 }
 input[type="range"] {

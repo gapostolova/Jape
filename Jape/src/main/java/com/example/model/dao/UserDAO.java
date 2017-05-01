@@ -319,7 +319,22 @@ public class UserDAO {
 			pst.setString(1, username);
 			pst.setLong(2, u.getUserId());
 			pst.executeUpdate();
-			System.out.println("Updated user's username status.");	
+			System.out.println("Updated user's username status.");
+			u.setUsername(username);
+		
+	}
+	
+	public synchronized void changeProfilePic(String profilePic, User u) throws SQLException {
+		PreparedStatement pst = null;
+		
+		
+			pst = conn.prepareStatement(
+					"UPDATE users SET profile_pic = ? WHERE user_id = ?;");
+			pst.setString(1, profilePic);
+			pst.setLong(2, u.getUserId());
+			pst.executeUpdate();
+			System.out.println("Updated user's username status.");
+			u.setProfilePic(profilePic);
 		
 	}
 	
@@ -334,7 +349,8 @@ public class UserDAO {
 			pst.setString(1, description);
 			pst.setLong(2, u.getUserId());
 			pst.executeUpdate();
-			System.out.println("Updated user description.");	
+			System.out.println("Updated user description.");
+			u.setDescription(description);
 		} catch (SQLException e) {
 			System.out.println("Couldn't update user description.");
 		} finally {
