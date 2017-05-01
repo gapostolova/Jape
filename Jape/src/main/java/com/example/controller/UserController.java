@@ -17,19 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.User;
 import com.example.model.dao.UserDAO;
-
+import com.example.model.dao.GagDAO;
 import com.example.model.dao.RegisterDAO;
 
 @Controller
-public class UserController {
-	
-
-//	@RequestMapping(value="/index", method=RequestMethod.GET)
-//	public String sayHi(Model viewModel, HttpServletRequest request) {
-//		
-//		return "index";  
-//	}
-	
+public class UserController {	
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String profile(Model viewModel, HttpServletRequest request) {
@@ -380,7 +372,7 @@ public class UserController {
 		}
 	 
 	 @RequestMapping (value="/upvote", method=RequestMethod.GET)
-	 public String upvote(HttpServletRequest request, HttpSession session) {
+	 public String upvote(HttpServletRequest request, HttpSession session, Model model) {
 		 if(session.getAttribute("user") == null)
 			 return "login";
 		 
@@ -388,10 +380,11 @@ public class UserController {
 		String gagIdS = (request.getParameter("gagId"));
 		Long gagId = Long.parseLong(gagIdS);
 		
+		
 		//if it's not there or it's there with -1 points - insert with 1 point
 		 User u = (User)session.getAttribute("user");
-		 System.out.println(u);
-		 System.out.println(gagId);
+		 System.out.println(u + "individual gag user");
+		 System.out.println(gagId + "user controller");
 		 
 		if(!u.getLikedGags().containsKey(gagId) ) {
 			UserDAO.getInstance().vote(u.getUserId(), gagId, 1);
@@ -400,7 +393,12 @@ public class UserController {
 			
 		} else {
 			if(u.getLikedGags().get(gagId) == -1) {
-				UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
+				try {
+					UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
+				} catch (SQLException e) {
+					System.out.println("error switch-voting");
+					e.printStackTrace();
+				}
 				System.out.println("switch-voted");
 				
 			} 
@@ -409,14 +407,18 @@ public class UserController {
 				System.out.println("removed vote in controller");
 			}
 		}
-
-		//return previous page 
-		
+ 
+		try {
+			model.addAttribute("currentOpenGag", GagDAO.getInstance().getAllGags().get(gagId));
+		} catch (SQLException e) {
+			System.out.println("error upvoting");
+			System.out.println(e.getStackTrace() + "exception");
+		}
 		return "gag";
 	 }
 	 
 	 @RequestMapping (value="/downvote", method=RequestMethod.GET)
-	 public String downvote(HttpServletRequest request, HttpSession session) {
+	 public String downvote(HttpServletRequest request, HttpSession session, Model model) {
 		 if(session.getAttribute("user") == null)
 			 return "login";
 		 //check if gag id is not in likedGags
@@ -433,15 +435,24 @@ public class UserController {
 					System.out.println("voted in controller");
 					
 				} else if(u.getLikedGags().get(gagId) == 1) {
-					UserDAO.getInstance().switchVote(u.getUserId(), gagId, -1);
+					try {
+						UserDAO.getInstance().switchVote(u.getUserId(), gagId, -1);
+					} catch (SQLException e) {
+						System.out.println("error switch-voting down");
+						e.printStackTrace();
+					}
 					System.out.println("switch-voted");
 					
 				} else {
 					UserDAO.getInstance().unvote(u.getUserId(), gagId, -1);
 					System.out.println("removed vote in controller");
 				}
-
-				//return previous page 
+			 try {
+					model.addAttribute("currentOpenGag", GagDAO.getInstance().getAllGags().get(gagId));
+				} catch (SQLException e) {
+					System.out.println("error upvoting");
+					System.out.println(e.getStackTrace());
+				}
 				return "gag";
-			 }
+	 }
 }

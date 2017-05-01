@@ -208,10 +208,6 @@ public String userName(){
 		this.comments = null;
 	}
 	
-	public String getFullName() {
-		return this.gag + "." + this.type;
-	}
-	
 	public List<Comment> getComments() {
 		ArrayList<Comment> cmnt = new ArrayList<>();
 		cmnt.addAll(this.comments);

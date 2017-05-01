@@ -354,6 +354,7 @@ public class User {
 	}
 	
 	public boolean isVoted(Long gagId) {
+		System.out.println(gagId);
 		System.out.println(this.likedGags.get(gagId));
 		return this.likedGags.containsKey(gagId);
 	}

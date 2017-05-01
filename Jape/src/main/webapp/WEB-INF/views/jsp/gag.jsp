@@ -51,7 +51,6 @@ $(document).ready(function(e) {
 
 
 <input type="hidden" id="refresh" value="no">
-<c:set var="gagId" scope="page" value="${currentOpenGag.getGagID() }"/>
 
 <jsp:include page="navigationBar.jsp" />
 
@@ -64,28 +63,28 @@ $(document).ready(function(e) {
 				<h6 style="color:grey;">
 			&nbsp&nbsp&nbsp<c:out value="${currentOpenGag.getUpvotes() }"></c:out> points</h6>
 			
-					<c:if test="${ sessionScope.logged }">
+					<c:if test="${sessionScope.logged }">
 				
 				<c:choose>
-				    <c:when test="${!sessionScope.user.isVoted(gagId) }">
-				    	<a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/29" width="20"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/30" width="20"></a>
+				    <c:when test="${!sessionScope.user.isVoted(currentOpenGag.getGagID()) }">
+				    	<a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/29" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/30" width="50"></a>
 				    </c:when>
-				    <c:when test="${sessionScope.user.isVoted(gagId)}">
-				    	<c:if test="${sessionScope.user.isLiked(gagId)}">
-				        <a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/31" width="20"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/30" width="20"></a>
+				    <c:when test="${sessionScope.user.isVoted(currentOpenGag.getGagID())}">
+				    	<c:if test="${sessionScope.user.isLiked(currentOpenGag.getGagID())}">
+				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/31" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/30" width="50"></a>
 						</c:if>
 						
-						<c:if test="${!sessionScope.user.isLiked(gagId)}">
-				        <a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/29" width="20"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/32" width="20"></a>
+						<c:if test="${!sessionScope.user.isLiked(currentOpenGag.getGagID())}">
+				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/29" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/32" width="50"></a>
 						</c:if>
 						
 				    </c:when>
 				    
 				</c:choose>
-				</c:if>
+				</c:if> <br> <br>
 				
 				
 			</h2>
