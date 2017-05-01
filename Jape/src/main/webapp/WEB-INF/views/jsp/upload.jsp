@@ -49,9 +49,6 @@ $(document).ready(function(e) {
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-
-
-
 </head>
 <body>
 
@@ -64,24 +61,38 @@ $(document).ready(function(e) {
 
 <h1>Upload jape:</h1><br>
 <form method="POST" enctype="multipart/form-data">
-	<input class="form-control" type="file" id="file" name="failche" accept="image/*" required> <br><br>
-	<input class="form-control" type="text" id="title" name="title" placeholder="Enter title" size="30" required> <br><br>
+<div class="col-md-5">
+	<input class="form-control" type="file" id="file" name="failche" accept="image/*" required> <br>
+	<input class="form-control" type="text" id="title" name="title" placeholder="Enter title" size="30" required> <br>
 	<input class="form-control" type="hidden" id="userId" name="userId" value="${sessionScope.userId }">
-	<c:out value="Is it safe for work?"></c:out> <br>
+	</div><br><br><br><br><br><br>
 	
-	<input type="radio" id="nsfw" name="nsfw" value="false" checked> It's safe<br>
-  	<input type="radio" id="nsfw" name="nsfw" value="true"> It's raunchy<br><br>
+	
+	<h3><c:out value="Is it safe for work?"></c:out></h3>
+	<div class="radio">
+	<input type="radio" id="nsfw" name="nsfw" value="false" checked><h4>It's safe</h4></div>
+	<div class="radio">
+  	<input type="radio" id="nsfw" name="nsfw" value="true"><h4>It's raunchy</h4></div><br>
   
-  <c:out value="Is this a private jape?"></c:out> <br>
-  <input type="radio" id="isPublic" name="isPublic" value="true" checked> Show it to the world<br>
-  <input type="radio" id="isPublic" name="isPublic" value="false"> It's private<br> <br>
-  <c:out value="Select categories: "></c:out> <br>
+  <h3><c:out value="Is this a private jape?"></c:out></h3>
+  <div class="radio">
+  <input type="radio" id="isPublic" name="isPublic" value="true" checked> <h4>Show it to the world</h4></div>
+  <div class="radio">
+  <input type="radio" id="isPublic" name="isPublic" value="false"><h4>It's private</h4></div><br>
+  <h3><c:out value="Select categories: "></c:out></h3>
+  
   <c:forEach var="category" items="${ sessionScope.categories }">
-  <input  type="checkbox" id="checkbox" name="category" value="${ category}"> <c:out value="${category.toLowerCase() }"></c:out> <br>
+  <div class="checkbox">
+  <input  type="checkbox" id="checkbox" name="category" value="${ category}"><h5><c:out value="${category.toLowerCase() }"></c:out></h5>
+  </div>
   </c:forEach>
+  
+
   <br>
-	<input type="submit" value="Upload now">
+	<button class="btn btn-primary" type="submit">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspUpload now&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-upload"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
 </form>
+
+
 
 </div>
 </div>
