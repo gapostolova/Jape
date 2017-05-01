@@ -37,8 +37,8 @@ import io.undertow.attribute.RequestMethodAttribute;
 public class UploadImageController {
 	
 
-//	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
-	private static final String FILE_LOCATION = "D:\\pics\\";
+	private static final String FILE_LOCATION = "/Users/user-05/Desktop/pics/";
+//	private static final String FILE_LOCATION = "D:\\pics\\";
 
 
 	

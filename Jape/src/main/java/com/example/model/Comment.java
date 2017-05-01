@@ -70,8 +70,8 @@ public class Comment implements Comparable<Comment> {
 			String[] name = pic.split("\\.");
 			System.out.println("=========================================="+pic);
 			System.out.println(Arrays.toString(name));
-			System.out.println(name[1]);
-			return name[1];
+//			System.out.println(name[1]);
+			return name[0];
 		} catch (SQLException e) {
 			System.out.println(" could not get userName: "+ e.getMessage());
 		}
