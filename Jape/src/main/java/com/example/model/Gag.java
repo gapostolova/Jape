@@ -136,6 +136,10 @@ public class Gag implements Comparable<Gag> {
 		return false;
 	}
 	
+	public boolean isVideo(){
+		return hasCategory("YOUTUBE");
+	}
+	
 	public ArrayList<Category> getCategory() {
 		return category;
 	}

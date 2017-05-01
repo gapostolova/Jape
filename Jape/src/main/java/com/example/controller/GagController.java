@@ -26,6 +26,7 @@ import com.example.model.dao.UserDAO;
 
 import io.undertow.server.session.Session;
 
+
 @Controller
 public class GagController {
 		
@@ -218,45 +219,63 @@ public class GagController {
 	}
 	
 	@RequestMapping (value="/video", method=RequestMethod.GET)
-	public String video(HttpServletRequest request) {
+	public String video(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		model.addAttribute("onVideoPage",1);
+		session.setAttribute("videos", GagDAO.getInstance().categoryGags("YOUTUBE"));
 		
 		return "video";
 	}
 	@RequestMapping (value="/uploadVideo", method=RequestMethod.GET)
 	public String uploadVideo(HttpServletRequest request) {
 		
-		return "uploadVideo";
+		return "redirect:/video";
 	}
 	
 	
 	@RequestMapping (value="/uploadVideo", method=RequestMethod.POST)
-	public String uploadYouTubeVideo(@RequestParam("title") String title,
-			@RequestParam("url") String url, HttpServletRequest request, Model model) {
+	public String uploadYouTubeVideo( HttpServletRequest request, Model model) {
+		
+		String title = request.getParameter("title");
+		String url = request.getParameter("url");
 		
 		HttpSession session = request.getSession();
 		
 		if(title.trim().isEmpty() || url.trim().isEmpty() ){
 			model.addAttribute("problem", "Title/url can't be empty!");
-			return "uploadVideo";
+			System.out.println("empty title/url");
+			//when with ajax return the same form
+			return "redirect:/video";
 		}
 		
 		if(url.contains("=")){
 			String[] link = url.split("=");
-			if(link.length != 2 ){
-				model.addAttribute("problem", "Incorrect url");
+			if(link.length == 2 ){
+				
 				//make a new gag, add category Video
 				//https://www.youtube.com/embed/JntTS-7uMXg
 				
 				String embedLink = "https://www.youtube.com/embed/"	+ link[1];
 				Gag gag = new Gag(embedLink, title, ((User) session.getAttribute("user")).getUserId(), false, true);
 				gag.addCategory(new Category(9, "YOUTUBE"));
-				//add to data base,
-				
+				//add to data base,	
+				try {
+					GagDAO.getInstance().addGag(gag);
+					System.out.println(" gag added!");
+					return "redirect:/video";
+				} catch (SQLException e) {
+					System.out.println(" could not upload new video gag (GagController, upload video)"+ e.getMessage());
+				}
+				}
+			else{
+				System.out.println("length of array is not 2");
+				model.addAttribute("problem", "Incorrect url");
+				return "video";
 				
 			}
 		}
 		
-		
+		System.out.println("Url did not contain =");
 		
 		return "video";
 	}

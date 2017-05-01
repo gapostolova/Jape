@@ -35,6 +35,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <script type="text/javascript">
+    function openNewWindow()
+    {
+    window.open("/Jape/video")
+    }
+    </script>
 
 </head>
 
@@ -81,7 +89,7 @@
                          <a href="/Jape/savage">Savage</a>
                      </li>
                      <li>
-                         <a href="/Jape/sport">Sport</a>
+                         <a href="javaScript:{openNewWindow();}" >Video</a>
                      </li>
                      <li>
                          <a href="/Jape/wtf">WTF?!</a>
@@ -107,8 +115,15 @@
 						</li>
 						
 						</li>
-						<li><div class="nav navbar-nav">
-                        <a href="upload" class="btn btn-primary" >+ Upload</a></div>
+						<li>
+						<c:if test="${onVideoPage==null}">
+						<div class="nav navbar-nav">
+                        <a href="/Jape/upload" class="btn btn-primary" >+ Upload</a></div>
+                        </c:if>
+                        <c:if test="${onVideoPage==1}">
+						<div class="nav navbar-nav">
+                        <a  id="myBtn" class="btn btn-primary" >+ Upload</a></div>
+                        </c:if>
                     </li>
 
 						</c:if>

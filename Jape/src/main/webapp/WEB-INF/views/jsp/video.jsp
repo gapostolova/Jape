@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Jape</title>
 
 <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -14,10 +15,13 @@
 
 
 </head>
-<body>
+<body style="background-color:#1F1E1E">
 
 <!--  <iframe width="560" height="315" src="https://www.youtube.com/embed/JntTS-7uMXg" frameborder="0" allowfullscreen></iframe>
 -->
+
+
+<jsp:include page="navigationBar.jsp" />
 <style>
 /* The Modal (background) */
 .modal {
@@ -93,110 +97,77 @@
  
 
 
+ <div id="gags" class="container">
+<c:if test ="${problem!=null}">
+			<h1 style="color:black"> <c:out value="${problem}"></c:out></h1>
+			
+	</c:if>
+<c:if test="${sessionScope.videos == null}">
+    			<c:out value="No videos to show!"></c:out>
+    			</c:if>
+				<c:forEach var="gag" items="${sessionScope.videos }">
+				<h3><a style="color:white;" href="/Jape/jape/${gag.getGagID()}"><c:out value="${gag.getTitle() }"></c:out></a></h3> 
+				<iframe width="560" height="315" src="${gag.getGag()}" frameborder="0" allowfullscreen></iframe>
+				 
+				<c:out value="${gag.getUpvotes() }"></c:out>
+				<a href="/Jape/upvote?gagId=${gag.getGagID()}">vote</a>
+				<a href="/Jape/downvote?gagId=${gag.getGagID()}">downvote</a>
+				
+				<hr style="color:black;border-top:2px solid #000;"> <br> <br> <br>
+				</c:forEach>
 
-<h2>Modal Example</h2>
+</div>
 
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal" class="modal"  >
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content" style="background-color:transparent;box-shadow:none; border:none;">
     <span class="close">&times;</span>
     
    <div class="form">
       
-      <ul class="tab-group">
-        <li class="tab active"><a href="#login">Log In</a></li>
-        <li class="tab"><a href="#signup">Sign Up</a></li>
-      </ul>
       
-      <div class="tab-content">
+      
         
         
         <div id="login">
-        <c:if test ="${sessionScope.notAMember!=null}">
-			<h1> <c:out value="${sessionScope.notAMember}"></c:out></h1>
+        <c:if test ="${problem!=null}">
+			<h1> <c:out value="${problem}"></c:out></h1>
 			
 	</c:if>
-	      <c:if test = "${(sessionScope.notAMember==null)||(sessionScope.notAMember == ' ')}">
-					<h1>Welcome Back!</h1>
-				</c:if>
-		<c:set var="notAMember" value=" " scope="session"></c:set>   
-	
-          <form action="login" method="post">
+	     
+
+          <form action="uploadVideo" method="post">
+          
+           <div class="field-wrap">
+            <label>
+             Title<span class="req">*</span>
+            </label>
+            <input type="text" required autocomplete="off"  name="title"/>
+          </div>
           
             <div class="field-wrap">
             <label>
-              Email Address<span class="req">*</span>
+             URL<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off"  name="email"/>
+            <input type="text" required autocomplete="off"  name="url"/>
           </div>
           
-          <div class="field-wrap">
-            <label>
-              Password<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="pass"/>
-          </div>
-          
-          
-          
-         
           
           
         <!--    <p class="forgot"><a href="#">Forgot Password?</a></p> -->
           
-          <button class="button button-block"/>Log In</button>
+          <button type="submit" class="btn btn-default">Upload</button>
           
           </form>
 
         </div>
         
-        <div id="signup">   
-          <h1>Sign up for free!</h1>
-          
-          <form action="register" method="post" >
-          
-          
-            <div class="field-wrap">
-              <label>
-                Username<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off"  name="username"/>
-           </div>
         
         
-          <div class="field-wrap">
-            <label>
-              Email Address<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off" name="email"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Set A Password<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="password"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Confirm password<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="passConfirm"/>
-          </div>
-          
-          <button type="submit" class="button button-block"/>Get Started</button>
-          
-          </form>
-
-        </div>
-        
-      </div><!-- tab-content -->
+      <!-- tab-content -->
       
 </div> <!-- /form -->
     

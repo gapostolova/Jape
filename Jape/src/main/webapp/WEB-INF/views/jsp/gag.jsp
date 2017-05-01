@@ -57,13 +57,19 @@ $(document).ready(function(e) {
     <div id="gags" class="container">
     
     			<div class="continer">
+    			
 			<h2>
 				<b><c:out value="${currentOpenGag.getTitle()}"></c:out></b>
 				<h6 style="color:grey;">
 			&nbsp&nbsp&nbsp<c:out value="${currentOpenGag.getUpvotes() }"></c:out> points</h6>
 				
 			</h2>
+			<c:if test="${currentOpenGag.isVideo()== false }">
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp	<img src="/Jape/image/${currentOpenGag.getGagID()}" height="450">
+		</c:if>
+		<c:if test="${currentOpenGag.isVideo()== true }">
+		<iframe width="560" height="315" src="${currentOpenGag.getGag()}" frameborder="0" allowfullscreen></iframe>
+		</c:if>
 		<h6 style="color:grey;">Uploaded by:<a href="/Jape/profile/${currentOpenGag.getUserId()}">  <c:out value="${currentOpenGag.userName() }"></c:out></a></h6>
 			<hr>
 			

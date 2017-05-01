@@ -87,6 +87,7 @@ public class GagDAO {
 			}
 			
 			UserDAO.getInstance().addGagToUser(gag);
+			allGags.put(gag.getGagID(), gag);
 		} catch (SQLException e) {
 			System.out.println("GagDAO exception! + " + e.getMessage());
 			conn.rollback();
@@ -95,6 +96,7 @@ public class GagDAO {
 		}
 		
 	}
+	
 	
 	
 	

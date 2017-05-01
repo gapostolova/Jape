@@ -268,12 +268,27 @@ public class User {
 	public boolean isAdmin() {
 		return admin;
 	}
+	//TODO da ogranicha kolko znaka moje da se pishat v input
 	
 	public ArrayList<Gag> myGags(){
 		ArrayList<Gag> gags = new ArrayList<>();
 		TreeSet<Gag> myG = new TreeSet<>();
 		for(Gag gag :  this.gags.values()){
-			myG.add(gag);
+			if(!gag.hasCategory("YOUTUBE")){
+				myG.add(gag);
+			}
+		}
+		gags.addAll(myG);
+		return gags;
+	}
+	
+	public ArrayList<Gag> myVideos(){
+		ArrayList<Gag> gags = new ArrayList<>();
+		TreeSet<Gag> myG = new TreeSet<>();
+		for(Gag gag :  this.gags.values()){
+			if(gag.hasCategory("YOUTUBE")){
+				myG.add(gag);
+			}
 		}
 		gags.addAll(myG);
 		return gags;

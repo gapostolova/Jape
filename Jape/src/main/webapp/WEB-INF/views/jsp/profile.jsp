@@ -47,6 +47,7 @@ function show(elementId) {
  document.getElementById("id1").style.display="none";
  document.getElementById("id2").style.display="none";
  document.getElementById("id3").style.display="none";
+ document.getElementById("id4").style.display="none";
  document.getElementById(elementId).style.display="block";
 }
 </script>
@@ -79,6 +80,9 @@ function show(elementId) {
                     </li>
                     <li style="font-size:20px">
                         <a onclick="show('id3');">Commented</a>
+                    </li>
+                    <li style="font-size:20px">
+                        <a onclick="show('id4');">Videos</a>
                     </li>
                     </ul>
                     </div>
@@ -117,6 +121,33 @@ function show(elementId) {
 						
 							</div>
 							
+				</div>	
+				
+				<div  style="display:none"  id="id4">
+				<c:if test="${sessionScope.user.myVideos().isEmpty() }">
+						<h3>You don't have any videos yet..</h3>
+						</c:if>
+						<c:if test="${!sessionScope.user.myVideos().isEmpty() }">
+						<h3>My Videos</h3>
+						</c:if>
+				
+			<div class="container">
+						
+						<c:forEach var="gag" items="${sessionScope.user.myVideos() }">
+							<div class="container">
+							<a href="/Jape/jape/${gag.getGagID()}"> <h2><c:out value="${gag.getTitle()}"></c:out></h2></a>
+								<iframe width="560" height="315" src="${gag.getGag()}" frameborder="0" allowfullscreen></iframe>
+								<br><br>
+
+								
+								<hr>
+								<br>
+								</div>
+						</c:forEach>
+						
+						
+							</div>
+							
 				</div>		 	
 						
 						<div style="display:none"  id="id2">	
@@ -130,10 +161,15 @@ function show(elementId) {
 						
 						<c:forEach var="gag" items="${sessionScope.user.likedGags() }">
 							<div class="container">
+							<c:if test="${gag.isVideo()== true }">
+								<a href="/Jape/jape/${gag.getGagID()}"> <h2><c:out value="${gag.getTitle()}"></c:out></h2></a>
+								<iframe width="560" height="315" src="${gag.getGag()}" frameborder="0" allowfullscreen></iframe>
+							</c:if>
+							<c:if test="${gag.isVideo() == false }">
 							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
 
 								<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}"  width="650"/></a><br><br>
-
+							</c:if>
 								
 								<hr>
 								<br>
@@ -154,13 +190,18 @@ function show(elementId) {
 						</c:if>
 				<div class="container">
 						
-						<c:forEach var="jape" items="${sessionScope.user.commented()}">
+						<c:forEach var="gag" items="${sessionScope.user.commented()}">
 						
 							<div class="container">
-							<h2><c:out value="${jape.getTitle()}"></c:out></h2>
+							<c:if test="${gag.isVideo()== true }">
+								<a href="/Jape/jape/${gag.getGagID()}"> <h2><c:out value="${gag.getTitle()}"></c:out></h2></a>
+								<iframe width="560" height="315" src="${gag.getGag()}" frameborder="0" allowfullscreen></iframe>
+							</c:if>
+							<c:if test="${gag.isVideo() == false }">
+							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
 
-								<a href="/Jape/jape/${jape.getGagID()}"><img src="/Jape/image/${jape.getGagID()}"  width="650"/></a><br><br>
-
+								<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}"  width="650"/></a><br><br>
+							</c:if>
 								
 								<hr>
 								<br>
