@@ -239,6 +239,13 @@ input[type="radio"]{
     -webkit-appearance: radio;
 }
 
+input[type=file] {
+    display: block
+      
+    color: inherit;
+    
+}
+
 .button-block {
   display: block;
   width: 100%;

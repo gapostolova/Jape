@@ -89,9 +89,7 @@ $(document).ready(function(e) {
 		<div class="container">
 			<div class="study-grids">
 				<div class="col-md-4 study-grid">
-					<h3>
-						study..<span>!</span>
-					</h3>
+					
 					<div class="collaps
             e navbar-collapse"
 						id="bs-example-navbar-collapse-1">
@@ -118,10 +116,10 @@ $(document).ready(function(e) {
 
 
 					
-						<div class="form">
+						<div class="form" style=" background-color:transparent; box-shadow:none ;color:black">
 							<div id="profilesettings">
 								<h1></h1>
-
+								<h2><b>Password</b></h2><br>
 								<!-- imeto na servlet-a -->
 
 								<form action="password" method="post">
@@ -130,27 +128,27 @@ $(document).ready(function(e) {
 								<c:set var="passwordChangeMessage" value="" scope="session"></c:set>   
 								</c:if>
 									<div class="field-wrap">
-										<label><h5>Old Password *</h5>
-										</label> <input type="password" required autocomplete="off"
+										<label style="color:black"><h5>Old Password *</h5>
+										</label> <input style="color:black" type="password" required autocomplete="off"
 											name="oldPassword" />
 									</div>
 
 									<div class="field-wrap">
-										<label> <h5>New password *</h5>
-										</label> <input type="password" required autocomplete="off"
+										<label style="color:black"> <h5>New password *</h5>
+										</label> <input style="color:black" type="password" required autocomplete="off"
 											name="password" />
 									</div>
 
 									<div class="field-wrap">
-										<label> <h5>Confirm password *</h5></span>
-										</label> <input type="password" required autocomplete="off"
+										<label style="color:black"> <h5>Confirm password *</h5></span>
+										</label> <input style="color:black" type="password" required autocomplete="off"
 											name="passConfirm" />
 									</div>
 
 									<!--    <p class="forgot"><a href="#">Forgot Password?</a></p> -->
 
 
-									<button type="submit"  class="button button-block">
+									<button type="submit"  class="btn btn-defaultk">
 									Save Changes
 									</button>
 

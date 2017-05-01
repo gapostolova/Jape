@@ -68,7 +68,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>
 $(document).ready(function(e) {
     var $input = $('#refresh');
-
     $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
 });
 </script>
@@ -87,9 +86,7 @@ $(document).ready(function(e) {
 		<div class="container">
 			<div class="study-grids">
 				<div class="col-md-4 study-grid">
-					<h3>
-						study..<span>!</span>
-					</h3>
+					
 					<div class="collaps
             e navbar-collapse"
 						id="bs-example-navbar-collapse-1">
@@ -108,10 +105,11 @@ $(document).ready(function(e) {
 
 				</div>
 				<div class="col-md-6 study-grid">
-
+					
 
 					<!--  *********************************************** FORM ************************************* -->
-						<div class="form">
+						<div class="form" style=" background-color:transparent; box-shadow:none ;color:black">
+						<h2><b>Account</b></h2><br>
 							<div class="tab-content">
 								<div id="profilesettings">
 									<h1></h1>
@@ -120,14 +118,16 @@ $(document).ready(function(e) {
 									<form action="account" method="post">
 									
 									<c:if test ="${sessionScope.accountChangedMessage!=null}">
-								<h1><c:out value="${sessionScope.accountChangedMessage}"></c:out></h1>
-								<c:set var="passwordChangeMessage" value="" scope="session"></c:set>   
+								<h1 style="color:black"><c:out value="${sessionScope.accountChangedMessage}"></c:out></h1>
+								<c:set var="accountChangedMessage" value="" scope="session"></c:set>   
 								</c:if>
-										<h4>Username</h4>
+										<h5 style="color:black">Username</h5>
 										<div class="field-wrap">
 											
-											 <input type="text" required autocomplete="off"
+											 <input style="color:black" type="text" required autocomplete="off"
 												name="username" value="${sessionScope.user.getUsername() }" />
+												<h6 style="color:grey">This is the name that will be visible to other users on Jape.</h6>
+												
 										</div>
 
 									<!--  	<h4>Email</h4>
@@ -137,28 +137,28 @@ $(document).ready(function(e) {
 												name="email" value="${sessionScope.user.getEmail() }" />
 										</div>
 										-->
-										<h4>Show nsfw</h4>
-										<select name="nsfw" style="background:none ">
-												<option value="${sessionScope.user.isViewNsfwContent()}" style="background-color:#2A3843" selected="selected">${sessionScope.user.isViewNsfwContent()}</option>
+										<h5 style="color:black">Show nsfw</h5>
+										<select style="color:black" name="nsfw" style="background:none ">
+												<option value="${sessionScope.user.isViewNsfwContent()}" style="background-color:none; color:black" selected="selected">${sessionScope.user.isViewNsfwContent()}</option>
 												<c:if test="${sessionScope.user.isViewNsfwContent()==true}">
-													<option value="false" style="background-color:#2A3843">false</option>
+													<option value="false" style="background-color:none; color:black">false</option>
 												</c:if>
 												<c:if test="${sessionScope.user.isViewNsfwContent()==false}">
-													<option value="true" style="background-color:#2A3843">true</option>
+													<option value="true" style="background-color:none; color:black">true</option>
 												</c:if>
 													
 											</select>
 										</div><br>
 										
-										<h4>Password</h4>
+										<h5 style="color:black">Password</h5>
 										<div class="field-wrap">
 											<label>    &nbsp   <span
 												class="req">*</span>
-											</label> <input type="password" required autocomplete="off"
+											</label> <input style="color:black" type="password" required autocomplete="off"
 												name="password" />
 										</div>
-
-										<button type="submit" class="button button-block" />
+									
+										<button type="submit" class="btn btn-defaultk" />
 										Save Changes
 										</button>
 
@@ -417,11 +417,9 @@ $(document).ready(function(e) {
 						easingType: 'linear' 
 					};
 					 */
-
 					$().UItoTop({
 						easingType : 'easeOutQuart'
 					});
-
 				});
 			</script>
 			<a href="#" id="toTop" style="display: block;"> <span

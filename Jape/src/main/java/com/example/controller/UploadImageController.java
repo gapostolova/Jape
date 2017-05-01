@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -115,4 +116,72 @@ public class UploadImageController {
 		return "index";
 
 	}
+	
+	
+	
+	@RequestMapping(value="/settings", method=RequestMethod.POST)
+	public String settings(@RequestParam("failche") MultipartFile multiPartFile,
+			@RequestParam("username") String username,
+			@RequestParam("description") String description,
+			@RequestParam("password") String password,
+			Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
+			return "redirect:/index";
+		}
+		
+		User user = (User) session.getAttribute("user");
+		
+		if(description.trim().isEmpty() || password.trim().isEmpty() || username.trim().isEmpty()){
+			model.addAttribute("settingsChangedMessage", "Invalid data!");
+			return "redirect:/settings";
+		}
+		
+		
+		if(!user.getPassword().equals(password)){
+			model.addAttribute("settingsChangedMessage", "Wrong password!");
+			return "redirect:/settings";
+		}
+		
+		String[] nameAndType = multiPartFile.getOriginalFilename().split("\\.");
+		
+		String nameOfPic = user.getUserId()+"."+nameAndType[nameAndType.length-1];
+		
+				try {
+					File fileOnDisk = new File(FILE_LOCATION + nameOfPic);
+					try {
+						Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						System.out.println("could not save picture (uploadImageController; settings "+ e.getMessage());
+					}
+					
+					System.out.println(multiPartFile.getOriginalFilename() + " " + multiPartFile.getSize() + " " + username + " " + description + " " + password + " \n"  );
+					
+					
+					//insert into DB and collections
+					
+					if(!username.equals(user.getUsername())){
+						UserDAO.getInstance().changeUsername(username, user);
+					}
+					if(!description.equals(user.getDescription())){
+						UserDAO.getInstance().changeDescription(description, user);
+					}
+					if(!multiPartFile.isEmpty()){
+						UserDAO.getInstance().changeProfilePic(nameOfPic, user);
+					}
+					
+					model.addAttribute("settingsChangedMessage", "Changes saved!");
+					return "redirect:/settings";
+				} catch (SQLException e) {
+					System.out.println("Error uploading image in db in uploadImageController/settings!!!!" + e);
+					//error page
+				}
+				
+				return "index";
+
+			}
+
+		
+		
+	
 }
