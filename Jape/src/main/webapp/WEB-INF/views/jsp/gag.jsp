@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<%@ page errorPage="errorPage.jsp" %>
+	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,7 @@
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <page errorPage="errorPage.jsp" %>
     <![endif]-->
 
 <script>
@@ -50,6 +51,7 @@ $(document).ready(function(e) {
 
 
 <input type="hidden" id="refresh" value="no">
+<c:set var="gagId" scope="page" value="${currentOpenGag.getGagID() }"/>
 
 <jsp:include page="navigationBar.jsp" />
 
@@ -61,6 +63,30 @@ $(document).ready(function(e) {
 				<b><c:out value="${currentOpenGag.getTitle()}"></c:out></b>
 				<h6 style="color:grey;">
 			&nbsp&nbsp&nbsp<c:out value="${currentOpenGag.getUpvotes() }"></c:out> points</h6>
+			
+					<c:if test="${ sessionScope.logged }">
+				
+				<c:choose>
+				    <c:when test="${!sessionScope.user.isVoted(gagId) }">
+				    	<a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/29" width="20"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/30" width="20"></a>
+				    </c:when>
+				    <c:when test="${sessionScope.user.isVoted(gagId)}">
+				    	<c:if test="${sessionScope.user.isLiked(gagId)}">
+				        <a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/31" width="20"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/30" width="20"></a>
+						</c:if>
+						
+						<c:if test="${!sessionScope.user.isLiked(gagId)}">
+				        <a id="upvote" href="/Jape/upvote?gagId=${gagId}"><img src="image/29" width="20"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${gagId}"><img src="image/32" width="20"></a>
+						</c:if>
+						
+				    </c:when>
+				    
+				</c:choose>
+				</c:if>
+				
 				
 			</h2>
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp	<img src="/Jape/image/${currentOpenGag.getGagID()}" height="450">

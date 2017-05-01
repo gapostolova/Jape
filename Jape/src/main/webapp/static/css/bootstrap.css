@@ -4,6 +4,10 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+.round-text {
+    border-radius: 25px!important;
+    
+}
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -3828,6 +3832,7 @@ tbody.collapse.in {
   z-index: 2;
   float: left;
   width: 100%;
+  
   margin-bottom: 0;
 }
 .input-group .form-control:focus {

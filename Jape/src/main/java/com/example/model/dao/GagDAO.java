@@ -213,7 +213,6 @@ public class GagDAO {
 			} finally {
 				conn.setAutoCommit(true);
 			}
-		
 	}
 	
 }

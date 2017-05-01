@@ -11,7 +11,7 @@ public class DBManager {
     private static final String DB_URL = "jdbc:mysql://192.168.8.22:3306/9gag";
 //    private static final String USERNAME = "root";
 //    private static final String PASSWORD = "root321";
-//    
+    
     private static final String USERNAME = "ittstudent";
     private static final String PASSWORD = "ittstudent-123";
     private Connection conn;

@@ -319,4 +319,14 @@ public class User {
 	public TreeMap<Long, Integer> getLikedGags() {
 		return this.likedGags;
 	}
+	
+	public boolean isVoted(Long gagId) {
+		System.out.println(this.likedGags.get(gagId));
+		return this.likedGags.containsKey(gagId);
+	}
+	
+	public boolean isLiked(Long gagId) {
+		
+		return (this.likedGags.get(gagId) == 1);
+	}
 }

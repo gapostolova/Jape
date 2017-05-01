@@ -377,9 +377,13 @@ public class UserController {
 	 
 	 @RequestMapping (value="/upvote", method=RequestMethod.GET)
 	 public String upvote(HttpServletRequest request, HttpSession session) {
+		 if(session.getAttribute("user") == null)
+			 return "login";
+		 
 		 //check if gag id is not in likedGags
 		String gagIdS = (request.getParameter("gagId"));
 		Long gagId = Long.parseLong(gagIdS);
+		
 		//if it's not there or it's there with -1 points - insert with 1 point
 		 User u = (User)session.getAttribute("user");
 		 System.out.println(u);
@@ -390,21 +394,27 @@ public class UserController {
 			
 			System.out.println("voted in controller");
 			
-		} else if(u.getLikedGags().get(gagId) == -1) {
-			UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
-			System.out.println("switch-voted");
-			
 		} else {
-			UserDAO.getInstance().unvote(u.getUserId(), gagId, 1);
-			System.out.println("removed vote in controller");
+			if(u.getLikedGags().get(gagId) == -1) {
+				UserDAO.getInstance().switchVote(u.getUserId(), gagId, 1);
+				System.out.println("switch-voted");
+				
+			} 
+			else {
+				UserDAO.getInstance().unvote(u.getUserId(), gagId, 1);
+				System.out.println("removed vote in controller");
+			}
 		}
 
 		//return previous page 
-		return "index";
+		
+		return "gag";
 	 }
 	 
 	 @RequestMapping (value="/downvote", method=RequestMethod.GET)
 	 public String downvote(HttpServletRequest request, HttpSession session) {
+		 if(session.getAttribute("user") == null)
+			 return "login";
 		 //check if gag id is not in likedGags
 			String gagIdS = (request.getParameter("gagId"));
 			Long gagId = Long.parseLong(gagIdS);
@@ -428,6 +438,6 @@ public class UserController {
 				}
 
 				//return previous page 
-				return "index";
+				return "gag";
 			 }
 }
