@@ -38,7 +38,6 @@ public class Demo {
 		
 	Map<Long, Gag> gags = GagDAO.getInstance().getAllGags();
 	System.out.println(gags);
-	System.out.println("======================================================\n");
 	
 //	Gag gag = new Gag("smeshnichko", "Dano da stane", 22, true, true, "jpg");
 //	gag.setUpvotes(600);
@@ -53,38 +52,38 @@ public class Demo {
 //	Set<Gag> gags2 = GagDAO.getInstance().getAllGags();
 //	System.out.println(gags2);
 //	
-	System.out.println("======================================================\n");
-	System.out.println("====================  	HOT		===============\n");
-	
-	
-	List hot = GagDAO.getInstance().hotGags();
-	System.out.println(hot);
-	
-System.out.println("======================	TRENDING 	=======================\n");
-	
+//	System.out.println("======================================================\n");
+//	System.out.println("====================  	HOT		===============\n");
+//	
+//	
+//	List hot = GagDAO.getInstance().hotGags();
+//	System.out.println(hot);
+//	
+//System.out.println("======================	TRENDING 	=======================\n");
+//	
 	List TREN = GagDAO.getInstance().trendingGags();
-	System.out.println(TREN);
-	
-	
+//	System.out.println(TREN);
+//	
+//	
 System.out.println("======================	FRESH 	=======================\n");
 	
 	List fresh = GagDAO.getInstance().freshGags();
 	System.out.println(fresh);
-	
-	System.out.println("======================	ALL 	=======================\n");
-	
+//	
+//	System.out.println("======================	ALL 	=======================\n");
+//	
 	Map gags3 = GagDAO.getInstance().getAllGags();
-	System.out.println(gags3);
+//	System.out.println(gags3);
 	
-System.out.println("======================	savage 	=======================\n");
-	
-	List gags4 =  GagDAO.getInstance().categoryGags("savage");
-	System.out.println(gags4);
-System.out.println("======================	FUNNY 	=======================\n");
-	
-	 gags4 = GagDAO.getInstance().categoryGags("funny");
-	System.out.println(gags4);
-	
+//System.out.println("======================	savage 	=======================\n");
+//	
+//	List gags4 =  GagDAO.getInstance().categoryGags("savage");
+//	System.out.println(gags4);
+//System.out.println("======================	FUNNY 	=======================\n");
+//	
+//	 gags4 = GagDAO.getInstance().categoryGags("funny");
+//	System.out.println(gags4);
+//	
 	
 	Map<String, User> useri = UserDAO.getInstance().getAllUsers();
 	
@@ -108,10 +107,12 @@ System.out.println("======================	FUNNY 	=======================\n");
 //		GagDAO.getInstance().deleteGag(gag);
 	User u = UserDAO.getInstance().getAllUsers().get(0);
 	
-	System.out.println(u);
+	//System.out.println(u);
 	
 
-	
+	System.out.println("============================Commented==========================\n");
+
+	System.out.println(GagDAO.getInstance().allCommentedGags(1).toString());
 	}
 
 }

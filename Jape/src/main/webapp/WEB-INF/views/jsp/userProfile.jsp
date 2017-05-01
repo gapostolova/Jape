@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-      <%@ page errorPage="errorPage.jsp" %>
+    <%@ page errorPage="errorPage.jsp" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,6 +42,14 @@ $(document).ready(function(e) {
 });
 </script>
 
+ <script type="text/javascript">
+function show(elementId) { 
+ document.getElementById("id1").style.display="none";
+ document.getElementById("id2").style.display="none";
+ document.getElementById("id3").style.display="none";
+ document.getElementById(elementId).style.display="block";
+}
+</script>
  
 </head>
 <body>
@@ -64,13 +72,13 @@ $(document).ready(function(e) {
             e navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li style="font-size:20px">
-                        <a href="#">Japes</a>
+                        <a onclick="show('id1');">Japes</a>
                     </li>
                     <li style="font-size:20px">
-                        <a href="#">Liked</a>
+                        <a onclick="show('id2');">Liked</a>
                     </li>
                     <li style="font-size:20px">
-                        <a href="#">Commented</a>
+                        <a onclick="show('id3');">Commented</a>
                     </li>
                     </ul>
                     </div>
@@ -84,7 +92,16 @@ $(document).ready(function(e) {
 			
 					<!--start-social-section-->
 				<div class="social-icons">
-				<h3>My Japes</h3>
+				
+				<div  id="id1">
+				<c:if test="${profil.myGags().isEmpty() }">
+						<h3>I don't have any japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.myGags().isEmpty() }">
+						<h3>My Japes</h3>
+						</c:if>
+						
+				
 			<div class="container">
 						
 						<c:forEach var="gag" items="${profil.myGags()}">
@@ -101,38 +118,75 @@ $(document).ready(function(e) {
 						
 						
 							</div>
+					</div>
+							
+							
+					<div style="display:none"  id="id2">	
+						<c:if test="${profil.likedGags().isEmpty()}">
+						<h3>No liked japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.likedGags().isEmpty()}">
+						<h3>Liked Japes</h3>
+						</c:if>
+				<div class="container">
+						
+						<c:forEach var="gag" items="${profil.likedGags() }">
+							<div class="container">
+							<h2><c:out value="${gag.getTitle()}"></c:out></h2>
+
+								<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}"  width="650"/></a><br><br>
+
+								
+								<hr>
+								<br>
+								</div>
+						</c:forEach>
+						
+						
+							</div>
+						</div>
+						 
+						
+						<div style="display:none" id="id3">	
+						<c:if test="${profil.commented().isEmpty()}">
+						<h3>No commented japes yet..</h3>
+						</c:if>
+						<c:if test="${!profil.commented().isEmpty()}">
+						<h3>Commented Japes</h3>
+						</c:if>
+				<div class="container">
+						
+						<c:forEach var="jape" items="${profil.commented()}">
+						
+							<div class="container">
+							<h2><c:out value="${jape.getTitle()}"></c:out></h2>
+
+								<a href="/Jape/jape/${jape.getGagID()}"><img src="/Jape/image/${jape.getGagID()}"  width="650"/></a><br><br>
+
+								
+								<hr>
+								<br>
+								</div>
+						</c:forEach>
+						
+						
+							</div>
+						</div>
+						</div>
 							<!--end-social-section-->
 							<!--start-contact-section-->
 						<div class="contact-section" id="contact">
-				<div class="container">
-					<h3>contact us</h3>
-					 <div class="contact-details">
-			 <form>
-				 <div class="col-md-6 contact-left">
-					 <input type="text" class="text" value="Name *" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name *';}">
-					 <input type="text" class="text" value="Email *" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email *';}">
-					 <input type="text" class="text" value="phone *" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone *';}">
-				 </div>
-				 <div class="col-md-6 contact-right">
-					 <textarea  value="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">Message *</textarea>
-					 <input type="submit" value="Send Message"/>
-				 </div>
-				 <div class="clearfix"> </div>
-			 </form>
-			</div>		 
-		</div>
+				
 	</div>
 	<!--end-contact-section-->
 				<!--start-map-section-->
-				<div class="google-map">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114829.39166857985!2d-80.19154352520549!3d25.92148032545394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b2eec0a4b145%3A0x6fb7ea318103f481!2sCollins+Ave%2C+Sunny+Isles+Beach%2C+FL+33160%2C+USA!5e0!3m2!1sen!2sin!4v1436081255308"></iframe>
-			</div>
+				
 			<!--end-map-section-->
 			<!--start-footer-section-->
 			<div class="footer-section">
 						<div class="container">
 							<div class="footer-top">
-						<p>&copy; 2015 <span>Hello.</span> All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+						<p>&copy; 2017 <span>Hello.</span> All rights reserved </p>
 									</div>
 							<script type="text/javascript">
 						$(document).ready(function() {

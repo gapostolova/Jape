@@ -44,7 +44,7 @@ public boolean register(String username, String email, String password) throws S
 					//resp.getWriter().write("account made");
 					 sql = "INSERT INTO `9gag`.`users` ( `username`, `password`, `email`, `nsfw`, `profile_pic`, `gender`, `birthday`, `description`, `admin`, `is_verified`, `verification_key`) "
 							+ "VALUES ( ?,?,?,?,?,?,?,?,?,?,?);";
-					User user = new User(username, email, password);
+					User user = new User(username, email, password, uuid);
 					s = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					s.setString(1, user.getUsername());
 					s.setString(2, user.getPassword());
@@ -64,12 +64,14 @@ public boolean register(String username, String email, String password) throws S
 					res.next();
 					long id = res.getLong(1);
 					user.setUserId(id);
-					
+					System.out.println("setvame verification key");
+					user.setVerificationKey(uuid);
+					System.out.println(user.getVerificationKey());
 				    System.out.println("User inserted successfuly into DB. RegisterDAO");
 				    
 
-				  // UserDAO.getInstance().addUser(user);
-
+				  UserDAO.getInstance().addUser(user);
+				  
 					SendEmail.sendVerificationMail(email, username, uuid);
 					
 					conn.commit();

@@ -181,9 +181,7 @@ public class Gag implements Comparable<Gag> {
 
 	@Override
 	public String toString() {
-		return "	Gag [gag=" + gag + ", title=" + title + ", userId=" + userId + ", gagID=" + gagID + ", nsfw=" + nsfw
-				+ ", category=" + category + ", upvotes=" + upvotes + ", isPublic=" + isPublic + ", comments="
-				+ comments + ", type=" + type + "]\n";
+		return "	Gag [gag=" + gag + ", title=" + title + ", userId=" + userId + ", gagID=" + gagID + "]\n";
 	}
 	
 	public void deleteComment(Comment comment) {

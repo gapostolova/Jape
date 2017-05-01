@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -14,6 +15,8 @@ import java.util.TreeSet;
 
 import com.example.model.dao.GagDAO;
 import com.example.model.dao.UserDAO;
+
+
 
 public class User {
 	
@@ -50,7 +53,7 @@ public class User {
 	private static final int MAX_YEAR_OF_BIRTH = 2003;
 	private static final int MIN_YEAR_OF_BIRTH = 1916;
 	
-	public User(String username, String email, String password){
+	public User(String username, String email, String password,String verificationKey){
 		setUsername(username);
 		setEmail(email);
 		setPassword(password);
@@ -62,7 +65,10 @@ public class User {
 		this.admin = false;
 		this.gags = new TreeMap<>();
 		this.isVerified = false;
-		this.verificationKey = " ";
+		this.verificationKey = verificationKey;
+		this.likedComments = new TreeMap<>();
+		this.likedGags = new TreeMap<>();
+		this.videos = new TreeSet<>();
 		
 		
 	}
@@ -265,14 +271,26 @@ public class User {
 	
 	public ArrayList<Gag> myGags(){
 		ArrayList<Gag> gags = new ArrayList<>();
+		TreeSet<Gag> myG = new TreeSet<>();
 		for(Gag gag :  this.gags.values()){
-			gags.add(gag);
+			myG.add(gag);
 		}
+		gags.addAll(myG);
 		return gags;
 	}
 	
 	public Map<Long, Gag> getGags() {
 		return Collections.unmodifiableMap(gags);
+	}
+	
+	
+	
+	public List<Gag> commented(){
+		return GagDAO.getInstance().allCommentedGags(userId);
+	}
+	
+	public List<Gag> likedGags(){
+		return UserDAO.getInstance().likedGags(email,1);	
 	}
 	
 	@Override
@@ -307,12 +325,27 @@ public class User {
 	public String toString() {
 		return "User [username=" + username + ", email=" + email + ", password=" + password + "\n";
 	}
+	
+	
+	public void setVerificationKey(String verificationKey) {
+			this.verificationKey = verificationKey;	
+	}
+	
+	public String getVerificationKey() {
+		return verificationKey;
+	}
 
 
 	public boolean verify(String verificationKey) {
-		if (this.verificationKey.compareTo(verificationKey) == 0){
+		if (this.verificationKey.equals(verificationKey)){
+			System.out.println("Kliuchovete syvpadat");
+			System.out.println(this.verificationKey);
+			System.out.println(" drugiq: " + verificationKey);
 			isVerified = true;
 		}
+		System.out.println("Kliuchovete ne syvpadat");
+		System.out.println(this.verificationKey);
+		System.out.println(" drugiq: " + verificationKey);
 		return isVerified;	
 	}
 	

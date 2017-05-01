@@ -108,7 +108,7 @@ $(document).ready(function(e) {
 
 
 <div class="well">
-					<h4>Leave a comment</h4>
+					<h4>Comment</h4>
 					<form action="/Jape/comment/${currentOpenGag.getGagID()}" method="Post" >
 
 						<div class="field-wrap">

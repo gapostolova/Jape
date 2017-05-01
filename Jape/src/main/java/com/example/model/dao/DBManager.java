@@ -14,6 +14,7 @@ public class DBManager {
     
     private static final String USERNAME = "ittstudent";
     private static final String PASSWORD = "ittstudent-123";
+
     private Connection conn;
 
     private DBManager() {
