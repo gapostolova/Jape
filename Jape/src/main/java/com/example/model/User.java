@@ -1,6 +1,8 @@
 package com.example.model;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import javax.xml.bind.DatatypeConverter;
 
 import com.example.model.dao.GagDAO;
 import com.example.model.dao.UserDAO;
@@ -377,5 +381,14 @@ public class User {
 	public boolean isLiked(Long gagId) {
 		
 		return (this.likedGags.get(gagId) == 1);
+	}
+	
+	
+	public static String hashPassword(String password) throws NoSuchAlgorithmException{
+		MessageDigest m = MessageDigest.getInstance("MD5");
+		m.update(password.getBytes());
+		byte[] digest = m.digest();
+		String hashtext = DatatypeConverter.printHexBinary(digest).toLowerCase();
+		return hashtext;
 	}
 }

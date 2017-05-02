@@ -93,11 +93,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			return "redirect:/login";
 		}
 		
-		//if someone messed with the html
-		if(request.getParameter("message")==null || request.getParameter("message").trim().isEmpty()){
-			return "redirect:/index";
-		}
-	
+		
 		
 		String content = request.getParameter("message");
 		User user =(User) session.getAttribute("user");
@@ -107,6 +103,15 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			return "errorPage";
 		}
 		long gagId = Long.valueOf(id);
+		
+		//if someone messed with the html
+				if(request.getParameter("message")==null || request.getParameter("message").trim().isEmpty()){
+					session.setAttribute("commentError" , "Comment can't be empty!");
+					
+					return  ("redirect:/jape/"+gagId);
+				}
+			
+		
 		
 		Map<Long, Gag> allGags;
 		try {
@@ -140,6 +145,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		if(content.trim().isEmpty()){
 			//set attribute to say that the comment was only spaces/empty
 			System.out.println("*** Empty content of comment... ****");
+			model.addAttribute("commentError" , "Comment can't be empty");
 			return "gag";
 		}
 		

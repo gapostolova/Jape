@@ -107,11 +107,13 @@
     			</c:if>
 				<c:forEach var="gag" items="${sessionScope.videos }">
 				<h3><a style="color:white;" href="/Jape/jape/${gag.getGagID()}"><c:out value="${gag.getTitle() }"></c:out></a></h3> 
+				<h6 style="color:grey;">
+			&nbsp&nbsp&nbsp<c:out value="${gag.getUpvotes() }"></c:out> points</h6>
 				<iframe width="560" height="315" src="${gag.getGag()}" frameborder="0" allowfullscreen></iframe>
 				 
-				<c:out value="${gag.getUpvotes() }"></c:out>
+				<!--<c:out value="${gag.getUpvotes() }"></c:out>
 				<a href="/Jape/upvote?gagId=${gag.getGagID()}">vote</a>
-				<a href="/Jape/downvote?gagId=${gag.getGagID()}">downvote</a>
+				<a href="/Jape/downvote?gagId=${gag.getGagID()}">downvote</a>-->
 				
 				<hr style="color:black;border-top:2px solid #000;"> <br> <br> <br>
 				</c:forEach>

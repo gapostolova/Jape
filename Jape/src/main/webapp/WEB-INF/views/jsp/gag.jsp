@@ -113,7 +113,12 @@ $(document).ready(function(e) {
 
 
 <div class="well">
-					<h4>Comment</h4>
+<h4>
+					<c:if test="${commentError!=null }">
+						<c:out value="${sessionScope.commentError }"></c:out><br>
+						<c:set var="commentError" scope="session" value=""/>
+					</c:if>
+					Comment</h4>
 					<form action="/Jape/comment/${currentOpenGag.getGagID()}" method="Post" >
 
 						<div class="field-wrap">

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -95,8 +96,13 @@ public class UserController {
 	@RequestMapping (value="/login", method=RequestMethod.POST)
 	public String login(Model viewModel, HttpServletRequest request) {
 		String email = request.getParameter("email");
-		String password = request.getParameter("pass");
-		
+		String pass = request.getParameter("pass");
+		String password = new String();
+		try {
+			password = User.hashPassword(pass);
+		} catch (NoSuchAlgorithmException e1) {
+			System.out.println("could not hash password in user controller " + e1.getMessage());
+		}
 		HttpSession session = request.getSession();
 		
 		try {
@@ -191,9 +197,27 @@ public class UserController {
 		String username = req.getParameter("username");
 		
 		String email = req.getParameter("email");
-		String password = req.getParameter("password");
+		String pass = req.getParameter("password");
+		
+		String password = new String();
+		try {
+			password = User.hashPassword(pass);
+			System.out.println("%%%%%%%%%%%%%%%%%%%%");
+			System.out.println(password);
+		} catch (NoSuchAlgorithmException e1) {
+			System.out.println("could not hash password in user controller " + e1.getMessage());
+		}
 	
-		String passConfirm = req.getParameter("passConfirm");
+		String passwordConfirm = req.getParameter("passConfirm");
+		
+		String passConfirm = new String();
+		try {
+			passConfirm = User.hashPassword(passwordConfirm);
+			System.out.println("%%%%%%%%%%%%%%%%%%%%");
+			System.out.println(passConfirm);
+		} catch (NoSuchAlgorithmException e1) {
+			System.out.println("could not hash password in user controller " + e1.getMessage());
+		}
 		
 		//if passwords in password and confirm password
 		//did not match
