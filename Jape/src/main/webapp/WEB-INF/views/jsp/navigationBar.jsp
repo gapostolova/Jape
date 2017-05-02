@@ -76,9 +76,11 @@
                     <li>
                         <a href="/Jape/fresh">Fresh</a>
                     </li>
+                    <c:if test ="${sessionScope.logged!=null }">
                      <li>
                          <a href="/Jape/cosplay">Cosplay</a>
                      </li>
+                     </c:if>
                      <li>
                          <a href="/Jape/funny">Funny</a>
                      </li>

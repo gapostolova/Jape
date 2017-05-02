@@ -15,9 +15,16 @@
       <link rel="stylesheet" href="/Jape/css/style.css">
 
 
+<script>
+$(document).ready(function(e) {
+    var $input = $('#refresh');
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
+</script>
+
 </head>
 <body style="background-color:#1F1E1E">
-
+<input type="hidden" id="refresh" value="no">
 <!--  <iframe width="560" height="315" src="https://www.youtube.com/embed/JntTS-7uMXg" frameborder="0" allowfullscreen></iframe>
 -->
 

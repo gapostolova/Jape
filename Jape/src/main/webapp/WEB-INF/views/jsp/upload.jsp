@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+     <%@ page errorPage="errorPage.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,9 +83,11 @@ $(document).ready(function(e) {
   <h3>&nbsp&nbsp<c:out value="Select categories: "></c:out></h3>
   
   <c:forEach var="category" items="${ sessionScope.categories }">
+  <c:if test="${!category.equalsIgnoreCase('youtube') }">
   <div class="checkbox">
   <input  type="checkbox" id="checkbox" name="category" value="${ category}"><h5>&nbsp&nbsp<c:out value="${category.toLowerCase() }"></c:out></h5>
   </div>
+   </c:if>
   </c:forEach>
   
 

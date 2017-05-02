@@ -1,17 +1,12 @@
 package com.example.model;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -41,7 +36,6 @@ public class User {
 	//			Gag id, 1/-1 (liked, disliked)
 	private TreeMap<Long, Integer> likedGags;
 	private TreeMap<Long, Integer> likedComments;
-	private TreeSet<Video> videos;
 	
 	// reported gags; reported comments
 	
@@ -51,7 +45,7 @@ public class User {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
 	
-	private String sep = File.separator;
+
 	private String defaultBirthday = "1916-01-01";
 
 	private static final int MAX_YEAR_OF_BIRTH = 2003;
@@ -72,7 +66,6 @@ public class User {
 		this.verificationKey = verificationKey;
 		this.likedComments = new TreeMap<>();
 		this.likedGags = new TreeMap<>();
-		this.videos = new TreeSet<>();
 		
 		
 	}
@@ -102,7 +95,6 @@ public class User {
 		this.verificationKey = verificationKey;
 		
 		this.gags = new TreeMap<Long, Gag>();
-		this.videos = new TreeSet<>();
 		
 	}
 	
@@ -272,7 +264,6 @@ public class User {
 	public boolean isAdmin() {
 		return admin;
 	}
-	//TODO da ogranicha kolko znaka moje da se pishat v input
 	
 	public ArrayList<Gag> myGags(){
 		ArrayList<Gag> gags = new ArrayList<>();

@@ -124,7 +124,7 @@ $(document).ready(function(e) {
 
 								<form action="password" method="post">
 								  <c:if test ="${sessionScope.passwordChangeMessage!=null}">
-								<h1><c:out value="${sessionScope.passwordChangeMessage}"></c:out></h1>
+								<h1 style="color:black"><c:out value="${sessionScope.passwordChangeMessage}"></c:out></h1>
 								<c:set var="passwordChangeMessage" value="" scope="session"></c:set>   
 								</c:if>
 									<div class="field-wrap">

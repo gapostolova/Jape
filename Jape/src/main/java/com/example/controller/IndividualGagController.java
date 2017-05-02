@@ -28,14 +28,6 @@ public class IndividualGagController {
 	
 
 private static final int DEFAULT_COMMENT_ID = -1;
-
-//	@RequestMapping(value="/index", method=RequestMethod.GET)
-//	public String sayHi(Model viewModel, HttpServletRequest request) {
-//		
-//		return "index";  
-//	}
-	
-	
 	
 	@RequestMapping(value="/jape/{gagId}", method=RequestMethod.GET)
 	public String japeGet(@PathVariable ("gagId") String id, Model model, HttpServletRequest request) {
@@ -54,7 +46,6 @@ private static final int DEFAULT_COMMENT_ID = -1;
 				model.addAttribute("gagId", gagId);
 			//	session.setAttribute("gag", allGags.get(gagId));
 				if(allGags.get(gagId).isVideo()){
-					System.out.println("%%%%%%%%%%% yes, it is video");
 					model.addAttribute("onVideoPage",1);
 				}
 				return "gag";
@@ -62,6 +53,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			
 		} catch (SQLException e) {
 			System.out.println("Could not visualize individual gag: " + e.getMessage());
+			return "errorPage";
 		}
 		
 		return  "index";
@@ -82,7 +74,6 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			return "errorPage";
 		}
 		
-		System.out.println("**********"+session.getAttribute("repliedTo")+"**********");
 		return  "gag";
 	}
 	
@@ -108,9 +99,7 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		long gagId = Long.valueOf(id);
 		
 		//if someone messed with the html
-				if(request.getParameter("message")==null || request.getParameter("message").trim().isEmpty()){
-					session.setAttribute("commentError" , "Comment can't be empty!");
-					
+				if(request.getParameter("message")==null ){
 					return  ("redirect:/jape/"+gagId);
 				}
 			
@@ -122,34 +111,21 @@ private static final int DEFAULT_COMMENT_ID = -1;
 			if(allGags.containsKey(gagId)){
 				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
 				gag =  allGags.get(gagId);
-				model.addAttribute("currentOpenGag",gag);
-				
-				
-			//	session.setAttribute("gag", allGags.get(gagId));	
+				model.addAttribute("currentOpenGag",gag);;	
 			}
 			else{
 				return "index";
-			}
-			
-			
+			}	
 		} catch (SQLException e) {
 			System.out.println("Could not visualize individual gag: " + e.getMessage());
+			return "errorPage";
 		}
-		
-		//TODO
-		//tuk mislq, che trqbva da se pazi v modela
-		//sega shte go napravq v sesiqta, za da raboti
-		//tova shte raboti samo ako nqma drugi otvoreni stranici...
-		//zashtoto togava gag shte se promeni, a ako sme natusnali na buton za otgovor, togava shte pishe comm na drugiq post
-		
-		//TODO put repliedTo in model
 		
 		
 		if(content.trim().isEmpty()){
 			//set attribute to say that the comment was only spaces/empty
-			System.out.println("*** Empty content of comment... ****");
-			model.addAttribute("commentError" , "Comment can't be empty");
-			return "gag";
+			session.setAttribute("commentError" , "Comment can't be empty");
+			return  ("redirect:/jape/"+gagId);
 		}
 		
 		if(session.getAttribute("repliedTo")==null){
@@ -160,9 +136,6 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		//long mothershipId = (long) session.getAttribute("repliedTo");
 		session.setAttribute("repliedTo", 0l);
 		long mothershipId = 0l;
-	//	System.out.println("**********"+mothershipId+"**********");
-		//pri log in setSessionAttr("repliedTo",0)
-		//pri log out removeSessionAttr("repliedTo)
 		
 		if(mothershipId== 0 || CommentDAO.getInstance().commentidExists(mothershipId)){
 			Comment com = new Comment(user.getUserId(), gag.getGagID(), DEFAULT_COMMENT_ID, LocalDateTime.now(), content, mothershipId);

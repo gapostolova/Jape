@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,23 +124,32 @@ public class UploadImageController {
 	public String settings(@RequestParam("failche") MultipartFile multiPartFile,
 			@RequestParam("username") String username,
 			@RequestParam("description") String description,
-			@RequestParam("password") String password,
+			@RequestParam("password") String pass,
 			Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("logged")== null || (boolean) session.getAttribute("logged")==false){
 			return "redirect:/index";
 		}
 		
+		
+		String password = new String();
+		try {
+			password = User.hashPassword(pass);
+			
+		} catch (NoSuchAlgorithmException e1) {
+			System.out.println("could not hash password in user controller " + e1.getMessage());
+		}
+		
 		User user = (User) session.getAttribute("user");
 		
 		if(description.trim().isEmpty() || password.trim().isEmpty() || username.trim().isEmpty()){
-			model.addAttribute("settingsChangedMessage", "Invalid data!");
+			session.setAttribute("settingsChangedMessage", "Invalid data!");
 			return "redirect:/settings";
 		}
 		
 		
 		if(!user.getPassword().equals(password)){
-			model.addAttribute("settingsChangedMessage", "Wrong password!");
+			session.setAttribute("settingsChangedMessage", "Wrong password!");
 			return "redirect:/settings";
 		}
 		
@@ -170,7 +180,7 @@ public class UploadImageController {
 						UserDAO.getInstance().changeProfilePic(nameOfPic, user);
 					}
 					
-					model.addAttribute("settingsChangedMessage", "Changes saved!");
+					session.setAttribute("settingsChangedMessage", "Changes saved!");
 					return "redirect:/settings";
 				} catch (SQLException e) {
 					System.out.println("Error uploading image in db in uploadImageController/settings!!!!" + e);

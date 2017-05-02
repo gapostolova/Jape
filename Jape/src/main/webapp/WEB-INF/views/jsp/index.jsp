@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+    <%@ page errorPage="errorPage.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +66,9 @@ $(document).ready(function(e) {
     			
     			
 				<c:forEach var="gag" items="${sessionScope.gags }">
+				<c:if test="${!gag.isVideo() }">
 				<div id="${gag.getGagID() }">
-
+				
 				<b><h3 style="color:grey;"><c:out value="${gag.getTitle() }"></c:out></h3></b><br> <br>
 				<a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/${gag.getGagID()}" width="555"/></a> 
 				
@@ -79,6 +80,7 @@ $(document).ready(function(e) {
 				</div>
 				
 				<hr> <br> <br> <br>
+				</c:if>
 				</c:forEach>
 
 
@@ -93,9 +95,9 @@ $(document).ready(function(e) {
                 <!-- Side Widget Well -->
                 <div class="well">
                 <h3 style="color:grey;"> Some random japes</h3>
-                    <a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/25" width="300"/></a> <br> <br>
-                     <a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/7" width="300"/></a> <br> <br>
-                     <a href="/Jape/jape/${gag.getGagID()}"><img src="/Jape/image/17" width="300"/></a> <br> <br>
+                    <a href="/Jape/jape/1"><img src="/Jape/image/1" width="300"/></a> <br> <br>
+                     <a href="/Jape/jape/2"><img src="/Jape/image/2" width="300"/></a> <br> <br>
+                     <a href="/Jape/jape/3"><img src="/Jape/image/3" width="300"/></a> <br> <br>
                     
                 </div>
 

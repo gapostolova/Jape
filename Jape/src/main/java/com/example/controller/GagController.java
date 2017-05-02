@@ -3,7 +3,6 @@ package com.example.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.Category;
 import com.example.model.Gag;
 import com.example.model.User;
 import com.example.model.dao.GagDAO;
 import com.example.model.dao.UserDAO;
-
-import io.undertow.server.session.Session;
-
 
 @Controller
 public class GagController {
@@ -172,12 +167,10 @@ public class GagController {
 	public String viewGag(@PathVariable("gagId") String id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Long gagId = Long.valueOf(id);
-		System.out.println(" GAG ID in GAG PAGE: " + gagId);
 		Map<Long, Gag> allGags;
 		try {
 			allGags =  GagDAO.getInstance().getAllGags();
 			if(allGags.containsKey(gagId)){
-				System.out.println(" GAG ID in GAG PAGE: " +allGags.get(gagId) );
 				
 				session.setAttribute("gag", allGags.get(gagId));
 				//if here return viewGag
@@ -209,7 +202,7 @@ public class GagController {
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
-			//error page
+			return "errorPage";
 		}
 		
 		searchResult.addAll(tempGags);
@@ -243,7 +236,6 @@ public class GagController {
 		
 		if(title.trim().isEmpty() || url.trim().isEmpty() ){
 			model.addAttribute("problem", "Title/url can't be empty!");
-			System.out.println("empty title/url");
 			//when with ajax return the same form
 			return "redirect:/video";
 		}
@@ -251,25 +243,27 @@ public class GagController {
 		if(url.contains("=")){
 			String[] link = url.split("=");
 			if(link.length == 2 ){
+				if(link[1].equals("https://www.youtube.com/watch?v")){
 				
-				//make a new gag, add category Video
-				//https://www.youtube.com/embed/JntTS-7uMXg
-				
-				String embedLink = "https://www.youtube.com/embed/"	+ link[1];
-				Gag gag = new Gag(embedLink, title, ((User) session.getAttribute("user")).getUserId(), false, true);
-				gag.addCategory(new Category(9, "YOUTUBE"));
-				//add to data base,	
-				try {
-					GagDAO.getInstance().addGag(gag);
-					System.out.println(" gag added!");
-					return "redirect:/video";
-				} catch (SQLException e) {
-					System.out.println(" could not upload new video gag (GagController, upload video)"+ e.getMessage());
+					//make a new gag, add category Video
+					//https://www.youtube.com/embed/JntTS-7uMXg
+					
+					String embedLink = "https://www.youtube.com/embed/"	+ link[1];
+					Gag gag = new Gag(embedLink, title, ((User) session.getAttribute("user")).getUserId(), false, true);
+					gag.addCategory(new Category(9, "YOUTUBE"));
+					//add to data base,	
+					try {
+						GagDAO.getInstance().addGag(gag);
+						return "redirect:/video";
+					} catch (SQLException e) {
+						System.out.println(" could not upload new video gag (GagController, upload video)"+ e.getMessage());
+						return "errorPage";
+					}
 				}
-				}
+			}
 			else{
 				System.out.println("length of array is not 2");
-				model.addAttribute("problem", "Incorrect url");
+				model.addAttribute("problem", "Incorrect url. You can only upload youtube videos.");
 				return "video";
 				
 			}
@@ -279,18 +273,5 @@ public class GagController {
 		
 		return "video";
 	}
-	
-	
-	
-	
-	
 
 }
-
-
-
-	
-	
-	
-
-

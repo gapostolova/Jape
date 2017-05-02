@@ -115,9 +115,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 					<form class="form" style=" background-color:transparent; box-shadow:none ;color:black" action="settings" method="post" enctype="multipart/form-data">
 									<h2><b>Profile</b></h2><br>
-									<c:if test ="${settingsChangedMessage!=null}">
-								<h1><c:out value="${settingsChangedMessage}"></c:out></h1>
-							<!-- 	<c:set var="settingsChangedMessage" value="" scope="session"></c:set>   --> 
+									<c:if test ="${sessionScope.settingsChangedMessage!=null}">
+								<h1 style="color:black"><c:out value="${sessionScope.settingsChangedMessage}"></c:out></h1>
+								<c:set var="settingsChangedMessage" value="" scope="session"></c:set>  
 								</c:if>
 								
 								<img class="img-rounded" src="/Jape/profilePic/${sessionScope.user.getProfilePic() }" height="100" width="100" /><br><br>

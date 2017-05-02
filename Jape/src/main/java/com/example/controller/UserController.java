@@ -1,13 +1,8 @@
 package com.example.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.example.model.Category;
-import com.example.model.Gag;
 import com.example.model.User;
 import com.example.model.dao.UserDAO;
 import com.example.model.dao.GagDAO;
@@ -41,6 +33,7 @@ public class UserController {
 		return  "profile";
 	}
 	
+	//TODO heshirane na vsichki paro
 	
 	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET)
 	public String profiles(@PathVariable("userId") String id, Model model, HttpServletRequest request) throws SQLException {
@@ -171,10 +164,7 @@ public class UserController {
 			}
 			//<<display in console result..
 		 User user = (User) session.getAttribute("user");
-		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		// System.out.println("User  " + user.getUsername() + " logged out");
-		 System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		 //>>
+		
 		 session.removeAttribute("repliedTo");
 		 	session.setAttribute("logged", false);
 	        session.invalidate();
@@ -295,7 +285,7 @@ public class UserController {
 		return "notverified";
 	 }
 	
-	 //;lkslsdfkl;sdfk
+	 
 //	 @RequestMapping (value="/accountSettings", method=RequestMethod.POST)
 		public String accountSettingsChaned( HttpServletRequest request) {
 		 String oldPassword = request.getParameter("oldPassword");
@@ -320,9 +310,20 @@ public class UserController {
 	 @RequestMapping (value="/password", method=RequestMethod.POST)
 		public String passwordChange( HttpServletRequest request) {
 		 HttpSession session = request.getSession();
-		 String oldPassword = request.getParameter("oldPassword");
-		 String password = request.getParameter("password");
-		 String passConfirm = request.getParameter("passConfirm");
+		 String oldPass = request.getParameter("oldPassword");
+		 String pass = request.getParameter("password");
+		 String passConf = request.getParameter("passConfirm");
+			String oldPassword = new String();
+			String password = new String();
+			String passConfirm = new String();
+			try {
+				oldPassword = User.hashPassword(oldPass);
+				password = User.hashPassword(pass);
+				passConfirm = User.hashPassword(passConf);
+			} catch (NoSuchAlgorithmException e1) {
+				System.out.println("could not hash password in user controller " + e1.getMessage());
+			}
+			
 		 User user =(User) session.getAttribute("user");
 		 
 		 if(user.getPassword().equals(oldPassword.trim())){
@@ -366,7 +367,15 @@ public class UserController {
 		 //TODO set isValidated to false; send validation email; ask for validation on log in
 		// String email = request.getParameter("email");
 		 String isNsfw = request.getParameter("nsfw");
-		 String password = request.getParameter("password");
+		 String pass = request.getParameter("password");
+		 String password = new String();
+			try {
+				password = User.hashPassword(pass);
+				
+			} catch (NoSuchAlgorithmException e1) {
+				System.out.println("could not hash password in user controller " + e1.getMessage());
+			}
+		 
 		 User user =(User) session.getAttribute("user");
 		 boolean nsfw = user.isViewNsfwContent();
 		 
