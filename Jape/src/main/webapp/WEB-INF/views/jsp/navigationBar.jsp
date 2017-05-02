@@ -120,7 +120,7 @@
 						<div class="nav navbar-nav">
                         <a href="/Jape/upload" class="btn btn-primary" >+ Upload</a></div>
                         </c:if>
-                        <c:if test="${onVideoPage==1}">
+                        <c:if test="${onVideoPage==1 }">
 						<div class="nav navbar-nav">
                         <a  id="myBtn" class="btn btn-primary" >+ Upload</a></div>
                         </c:if>

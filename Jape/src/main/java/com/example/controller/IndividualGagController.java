@@ -53,7 +53,10 @@ private static final int DEFAULT_COMMENT_ID = -1;
 				model.addAttribute("currentOpenGag", allGags.get(gagId));
 				model.addAttribute("gagId", gagId);
 			//	session.setAttribute("gag", allGags.get(gagId));
-				
+				if(allGags.get(gagId).isVideo()){
+					System.out.println("%%%%%%%%%%% yes, it is video");
+					model.addAttribute("onVideoPage",1);
+				}
 				return "gag";
 			}
 			
