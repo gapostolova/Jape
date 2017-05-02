@@ -185,6 +185,10 @@ public class UserController {
 	 public String register(Model viewModel, HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
 		String username = req.getParameter("username");
+		if(username.trim().isEmpty()){
+			session.setAttribute("registerResult", "Username must contain at least one character!");
+			return "register";
+		}
 		
 		String email = req.getParameter("email");
 		String pass = req.getParameter("password");
@@ -198,6 +202,10 @@ public class UserController {
 		}
 	
 		String passwordConfirm = req.getParameter("passConfirm");
+		if(pass.trim().isEmpty()){
+			session.setAttribute("registerResult", "Password must contain at least one character!");
+			return "register";
+		}
 		
 		String passConfirm = new String();
 		try {
@@ -429,7 +437,11 @@ public class UserController {
 		 System.out.println(gagId + "user controller");
 		 
 		if(!u.getLikedGags().containsKey(gagId) ) {
-			UserDAO.getInstance().vote(u.getUserId(), gagId, 1);
+			try {
+				UserDAO.getInstance().vote(u.getUserId(), gagId, 1);
+			} catch (SQLException e) {
+				return "errorPage";
+			}
 			
 			System.out.println("voted in controller");
 			
@@ -472,7 +484,12 @@ public class UserController {
 			 System.out.println(gagId);
 			 
 			 if(!u.getLikedGags().containsKey(gagId) ) {
-					UserDAO.getInstance().vote(u.getUserId(), gagId, -1);
+					try {
+						UserDAO.getInstance().vote(u.getUserId(), gagId, -1);
+					} catch (SQLException e) {
+						System.out.println("could not downvote..." + e.getMessage());
+						return "errorPage";
+					}
 					
 					System.out.println("voted in controller");
 					

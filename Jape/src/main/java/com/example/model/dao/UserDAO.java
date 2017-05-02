@@ -432,39 +432,42 @@ public User getUserById(long userId) throws SQLException{
 		return UserDAO.getInstance().getAllUsers().get(username).getPassword().equals(password);	
 	}
 	
-	public synchronized void vote(Long userId,Long gagId,int point) {
+	public synchronized void vote(Long userId,Long gagId,int point) throws SQLException {
 		
 		String sql = "INSERT INTO 9gag.liked_gags (user_id, gag_id, points) VALUES(?,?,?);";
 		
+		GagDAO gagDao = GagDAO.getInstance();
+		UserDAO userDao = UserDAO.getInstance();
+		
 		try {
+			conn.setAutoCommit(false);
+			
 			PreparedStatement pst = conn.prepareStatement(sql);
 			pst.setLong(1, userId);
 			pst.setLong(2, gagId);
 			pst.setInt(3, point);
 			pst.executeUpdate();
-			System.out.println("vote successfull dao");
 			
 			if(point == 1) {
-				GagDAO.getInstance().getGagById(gagId).Upvote();
-				System.out.println("gag upvoted in itself");
-				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, 1);
-				System.out.println("put in user liked collections");
+				gagDao.getGagById(gagId).Upvote();
+				userDao.getUserById(userId).getLikedGags().put(gagId, 1);
 			} else {
-				GagDAO.getInstance().getGagById(gagId).Downvote();
-				System.out.println("gag downvoted in itself");
-				UserDAO.getInstance().getUserById(userId).getLikedGags().put(gagId, -1);
-				System.out.println("put in user liked collections");
+				gagDao.getGagById(gagId).Downvote();
+				userDao.getUserById(userId).getLikedGags().put(gagId, -1);
 			}
 			
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
 			System.out.println("vote unsuccessful dao");
 			e.printStackTrace();
+		} finally {	
+			conn.setAutoCommit(true);
 		}	
 	}
 	
 	public synchronized void switchVote(Long userId, Long gagId, int point) throws SQLException {
+		GagDAO gagDao = GagDAO.getInstance();
 		PreparedStatement pst;
 		try {
 			conn.setAutoCommit(false);
@@ -477,24 +480,19 @@ public User getUserById(long userId) throws SQLException{
 			
 			pst.executeUpdate();
 			
-			System.out.println("success switch voting in dao");
-			
 			if(point == -1) {
 				
-				GagDAO.getInstance().getGagById(gagId).Downvote();
-				GagDAO.getInstance().getGagById(gagId).Downvote();
-				System.out.println("success switch voting in gag itself DOWN (decremented by two so 1 is -1 now");
+				gagDao.getGagById(gagId).Downvote();
+				gagDao.getGagById(gagId).Downvote();
 			} else {
 				
-				GagDAO.getInstance().getGagById(gagId).Upvote();
-				GagDAO.getInstance().getGagById(gagId).Upvote();
-				System.out.println("success switch voting in gag itself UP (incremented by two so -1 is 1 now");
+				gagDao.getGagById(gagId).Upvote();
+				gagDao.getGagById(gagId).Upvote();
 			}
 			
 			
 			
 			UserDAO.getInstance().getUserById(userId).addLikedGag(gagId, point);
-			System.out.println("switch voting collection done");
 			
 			conn.commit();
 			

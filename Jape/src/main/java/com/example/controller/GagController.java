@@ -235,7 +235,13 @@ public class GagController {
 		HttpSession session = request.getSession();
 		
 		if(title.trim().isEmpty() || url.trim().isEmpty() ){
-			model.addAttribute("problem", "Title/url can't be empty!");
+			session.setAttribute("problem", "Title/url can't be empty!");
+			//when with ajax return the same form
+			return "redirect:/video";
+		}
+		
+		if(title.length()>100  ){
+			session.setAttribute("problem", "Title/url can't be more than 100 characters");
 			//when with ajax return the same form
 			return "redirect:/video";
 		}
@@ -263,7 +269,7 @@ public class GagController {
 			}
 			else{
 				System.out.println("length of array is not 2");
-				model.addAttribute("problem", "Incorrect url. You can only upload youtube videos.");
+				session.setAttribute("problem", "Incorrect url. You can only upload youtube videos.");
 				return "video";
 				
 			}

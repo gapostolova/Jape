@@ -33,7 +33,8 @@ $(document).ready(function(e) {
 
 	<jsp:include page="navigationBar.jsp" />
 
-
+<div id="gags" class="container">
+    <div class="col-md-8">
   <div class="form">
       
       <ul class="tab-group">
@@ -123,6 +124,30 @@ $(document).ready(function(e) {
       </div><!-- tab-content -->
       
 </div> <!-- /form -->
+</div>
+
+
+<div class="container">
+               <div class="row">
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Side Widget Well -->
+                <div class="well">
+                <h3 style="color:grey;"> Some random japes</h3>
+                    <a href="/Jape/jape/1"><img src="/Jape/image/1" width="300"/></a> <br> <br>
+                     <a href="/Jape/jape/2"><img src="/Jape/image/2" width="300"/></a> <br> <br>
+                     <a href="/Jape/jape/3"><img src="/Jape/image/3" width="300"/></a> <br> <br>
+                    
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+        </div>
+
+
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script src="/Jape/js/index.js"></script>

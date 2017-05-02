@@ -106,10 +106,7 @@ $(document).ready(function(e) {
 
 
  <div id="gags" class="container">
-<c:if test ="${problem!=null}">
-			<h1 style="color:black"> <c:out value="${problem}"></c:out></h1>
-			
-	</c:if>
+
 <c:if test="${sessionScope.videos == null}">
     			<c:out value="No videos to show!"></c:out>
     			</c:if>
@@ -143,9 +140,9 @@ $(document).ready(function(e) {
         
         
         <div id="login">
-        <c:if test ="${problem!=null}">
-			<h1> <c:out value="${problem}"></c:out></h1>
-			
+        <c:if test ="${sessionScope.problem!=null}">
+			<h1> <c:out value="${sessionScope.problem}"></c:out></h1>
+			<c:set var="problem" value="" scope="session"></c:set>
 	</c:if>
 	     
 
@@ -155,7 +152,7 @@ $(document).ready(function(e) {
             <label>
              Title<span class="req">*</span>
             </label>
-            <input type="text" required autocomplete="off"  name="title"/>
+            <input type="text" required autocomplete="off" maxlength="100"  name="title"/>
           </div>
           
             <div class="field-wrap">

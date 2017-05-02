@@ -71,10 +71,10 @@ private static final int DEFAULT_COMMENT_ID = -1;
 	public String getComment(Model viewModel, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("repliedTo")==null){
-			return "errorPage";
+			return "redirect:/index";
 		}
 		
-		return  "gag";
+		return  "redirect:/index";
 	}
 	
 	@RequestMapping(value="/comment/{gagId}", method=RequestMethod.POST)
@@ -82,10 +82,12 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		HttpSession session = request.getSession();
 		Gag gag=null;
 		
+		
 		if( session.getAttribute("logged")==null||(boolean) session.getAttribute("logged")==false || session.getAttribute("user")==null || session.getAttribute("repliedTo")==null){
 			session.setAttribute("notAMember", "Log in to comment!");
 			return "redirect:/login";
 		}
+		
 		
 		
 		
@@ -125,6 +127,11 @@ private static final int DEFAULT_COMMENT_ID = -1;
 		if(content.trim().isEmpty()){
 			//set attribute to say that the comment was only spaces/empty
 			session.setAttribute("commentError" , "Comment can't be empty");
+			return  ("redirect:/jape/"+gagId);
+		}
+		
+		if(content.length()>=200){
+			session.setAttribute("commentError" , "Can't have more than 200 characters");
 			return  ("redirect:/jape/"+gagId);
 		}
 		
