@@ -68,18 +68,18 @@ $(document).ready(function(e) {
 				
 				<c:choose>
 				    <c:when test="${!sessionScope.user.isVoted(currentOpenGag.getGagID()) }">
-				    	<a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/29" width="50"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/30" width="50"></a>
+				    	<a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/like/PNG" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/downvote/PNG" width="50"></a>
 				    </c:when>
 				    <c:when test="${sessionScope.user.isVoted(currentOpenGag.getGagID())}">
 				    	<c:if test="${sessionScope.user.isLiked(currentOpenGag.getGagID())}">
-				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/31" width="50"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/30" width="50"></a>
+				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/likeBlue/PNG" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/downvote/PNG" width="50"></a>
 						</c:if>
 						
 						<c:if test="${!sessionScope.user.isLiked(currentOpenGag.getGagID())}">
-				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="image/29" width="50"></a>
-						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="image/32" width="50"></a>
+				        <a id="upvote" href="/Jape/upvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/like/PNG" width="50"></a>
+						<a id="downvote" href="/Jape/downvote?gagId=${currentOpenGag.getGagID()}"><img src="/Jape/commentPic/downvoteBlue/PNG" width="50"></a>
 						</c:if>
 						
 				    </c:when>

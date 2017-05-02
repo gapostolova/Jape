@@ -202,8 +202,7 @@ public class UserController {
 		String password = new String();
 		try {
 			password = User.hashPassword(pass);
-			System.out.println("%%%%%%%%%%%%%%%%%%%%");
-			System.out.println(password);
+			
 		} catch (NoSuchAlgorithmException e1) {
 			System.out.println("could not hash password in user controller " + e1.getMessage());
 		}
@@ -213,8 +212,7 @@ public class UserController {
 		String passConfirm = new String();
 		try {
 			passConfirm = User.hashPassword(passwordConfirm);
-			System.out.println("%%%%%%%%%%%%%%%%%%%%");
-			System.out.println(passConfirm);
+			
 		} catch (NoSuchAlgorithmException e1) {
 			System.out.println("could not hash password in user controller " + e1.getMessage());
 		}
