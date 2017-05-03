@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -245,11 +246,11 @@ public class GagController {
 			//when with ajax return the same form
 			return "redirect:/video";
 		}
-		
+		String[] link= null;
 		if(url.contains("=")){
-			String[] link = url.split("=");
+			 link = url.split("=");
 			if(link.length == 2 ){
-				if(link[1].equals("https://www.youtube.com/watch?v")){
+				if(link[0].equals("https://www.youtube.com/watch?v")){
 				
 					//make a new gag, add category Video
 					//https://www.youtube.com/embed/JntTS-7uMXg
@@ -274,6 +275,8 @@ public class GagController {
 				
 			}
 		}
+		
+		
 		
 		System.out.println("Url did not contain =");
 		

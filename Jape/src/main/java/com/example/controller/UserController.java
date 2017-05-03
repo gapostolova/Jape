@@ -263,6 +263,7 @@ public class UserController {
 				session.setAttribute("verificationResult", "acc not exist");
 				return "notverified";
 			}
+			
 			else { 
 				 
 				if(!UserDAO.getInstance().isVerified(email)){

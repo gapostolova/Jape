@@ -305,106 +305,35 @@ $(document).ready(function(e) {
 	<div class="service-section" id="service">
 		<div class="container">
 
-			<div class="service-grids">
-				<div class="col-md-4 service-grid">
-					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-					<h4>THE BEST DESIGN</h4>
-					<span> </span>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-						do eiusmod Lorem Ipsum passages containing of Letraset sheets</p>
-				</div>
-				<div class="col-md-4 service-grid">
-					<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-					<h4>THE BEST SUPPORT</h4>
-					<span> </span>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-						do eiusmod Lorem Ipsum passages containing of Letraset sheets</p>
-				</div>
-				<div class="col-md-4 service-grid">
-					<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
-					<h4>THE BEST SOLUTIONS</h4>
-					<span> </span>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-						do eiusmod Lorem Ipsum passages containing of Letraset sheets</p>
-				</div>
-				<div class="clearfix"></div>
-			</div>
+			
 		</div>
 	</div>
 	<!--end services-section-->
 	<!--start-social-section-->
 	<div class="social-icons">
-		<h3>Social Network</h3>
-		<div class="container">
-			<div class="col-md-3 face">
-				<p>
-					<i class="facebook"> </i> 733k
-				</p>
-				<h4>facebook likes</h4>
-			</div>
-			<div class="col-md-3 face">
-				<p>
-					<i class="twitter"> </i> 620k
-				</p>
-				<h4>twitter followers</h4>
-			</div>
-			<div class="col-md-3 face">
-				<p>
-					<i class="google"> </i> 412k
-				</p>
-				<h4>google+ followers</h4>
-			</div>
-			<div class="col-md-3 face">
-				<p>
-					<i class="beh"> </i> 322k
-				</p>
-				<h4>behance followers</h4>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+		
+		
 	</div>
 	<!--end-social-section-->
 	<!--start-contact-section-->
 	<div class="contact-section" id="contact">
 		<div class="container">
-			<h3>contact us</h3>
+			
 			<div class="contact-details">
-				<form>
-					<div class="col-md-6 contact-left">
-						<input type="text" class="text" value="Name *"
-							onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Name *';}">
-						<input type="text" class="text" value="Email *"
-							onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Email *';}">
-						<input type="text" class="text" value="phone *"
-							onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Phone *';}">
-					</div>
-					<div class="col-md-6 contact-right">
-						<textarea value="Message" onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Message';}">Message *</textarea>
-						<input type="submit" value="Send Message" />
-					</div>
-					<div class="clearfix"></div>
-				</form>
+				
 			</div>
 		</div>
 	</div>
 	<!--end-contact-section-->
 	<!--start-map-section-->
-	<div class="google-map">
-		<iframe
-			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114829.39166857985!2d-80.19154352520549!3d25.92148032545394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b2eec0a4b145%3A0x6fb7ea318103f481!2sCollins+Ave%2C+Sunny+Isles+Beach%2C+FL+33160%2C+USA!5e0!3m2!1sen!2sin!4v1436081255308"></iframe>
-	</div>
+	
 	<!--end-map-section-->
 	<!--start-footer-section-->
 	<div class="footer-section">
 		<div class="container">
 			<div class="footer-top">
 				<p>
-					&copy; 2015 <span>Hello.</span> All rights reserved | Design by <a
-						href="http://w3layouts.com">W3layouts</a>
+					&copy; 2017 <span>Hello.</span> All rights reserved 
 				</p>
 			</div>
 			<script type="text/javascript">
